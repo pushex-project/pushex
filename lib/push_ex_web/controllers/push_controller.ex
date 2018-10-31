@@ -6,7 +6,7 @@ defmodule PushExWeb.PushController do
 
     wrapped_channel
     |> Enum.each(fn channel ->
-      PushExWeb.PushChannel.broadcast({:msg, channel}, event, data)
+      PushEx.Push.ItemProducer.push(%PushEx.Push{channel: channel, data: data, event: event})
     end)
 
     conn

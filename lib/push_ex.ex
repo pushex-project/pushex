@@ -6,4 +6,6 @@ defmodule PushEx do
   Contexts are also responsible for managing your data, regardless
   if it comes from the database, an external API or others.
   """
+
+  def unix_now(), do: (:erlang.system_time() / 1_000_000) |> round()
 end

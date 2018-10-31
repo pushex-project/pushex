@@ -14,6 +14,16 @@ defmodule PushEx.Config do
     |> Keyword.get(:id_fn)
   end
 
+  def producer_max_buffer() do
+    Application.get_env(:push_ex, PushExWeb.PushSocket, [])
+    |> Keyword.get(:max_producer_buffer, 50_000)
+  end
+
+  def producer_max_concurrency() do
+    Application.get_env(:push_ex, PushExWeb.PushSocket, [])
+    |> Keyword.get(:max_producer_concurrency, 10)
+  end
+
   def check!() do
     check_push_socket_connect_fn!()
     check_push_socket_join_fn!()

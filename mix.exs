@@ -37,7 +37,8 @@ defmodule PushEx.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:plug, "~> 1.7"}
+      {:plug, "~> 1.7"},
+      {:gen_stage, "~> 0.14"}
     ]
   end
 end

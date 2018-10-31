@@ -7,6 +7,8 @@ defmodule PushEx.Application do
     PushEx.Config.check!()
 
     children = [
+      PushEx.Push.ItemProducer,
+      PushEx.Push.ItemConsumer,
       PushExWeb.Endpoint
     ]
 
