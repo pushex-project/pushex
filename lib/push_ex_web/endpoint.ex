@@ -1,7 +1,7 @@
 defmodule PushExWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :push_ex
 
-  socket "/socket", PushExWeb.ApiSocket,
+  socket "/push_socket", PushExWeb.PushSocket,
     websocket: true,
     longpoll: false
 

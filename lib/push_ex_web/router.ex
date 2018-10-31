@@ -7,5 +7,7 @@ defmodule PushExWeb.Router do
 
   scope "/api", PushExWeb do
     pipe_through :api
+
+    post "/push", PushController, :create
   end
 end

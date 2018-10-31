@@ -1,7 +1,7 @@
-defmodule PushExWeb.ApiSocket do
+defmodule PushExWeb.PushSocket do
   use Phoenix.Socket
 
-  # channel "room:*", PushExWeb.RoomChannel
+  channel "*", PushExWeb.PushChannel
 
   def connect(_params, socket) do
     {:ok, socket}
