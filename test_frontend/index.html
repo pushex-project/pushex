@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <script type="text/javascript" src="./node_modules/phoenix/priv/static/phoenix.js"></script>
+  </head>
+  <body>
+
+    <script  type="text/javascript">
+      const socket = new Phoenix.Socket("ws://localhost:4004/push_socket", {params: {}})
+      socket.connect()
+
+      joinChannel("test")
+      joinChannel("test2")
+
+      function joinChannel(name) {
+        const channel = socket.channel(name, {})
+        channel.on("msg", msg => console.log("Got message", name, msg) )
+
+        channel.join()
+          .receive("ok", () => console.log("Joined", name) )
+          .receive("error", ({ reason }) => console.log("failed join", name, reason) )
+          .receive("timeout", () => console.log("Networking issue. Still waiting...", name) )
+      }
+    </script>
+  </body>
+</html>

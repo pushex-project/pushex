@@ -1,0 +1,6 @@
+{
+  "name": "test_frontend",
+  "dependencies": {
+    "phoenix": "^1.3.4"
+  }
+}
