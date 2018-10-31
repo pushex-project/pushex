@@ -8,7 +8,6 @@ use Mix.Config
 # Configures the endpoint
 config :push_ex, PushExWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "A0Yd735De29km156OmmxOqt47Rvq2vzYyT+bI9YwwWZeLTo1MR0rOEfk9gxqMBp7",
   render_errors: [view: PushExWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: PushEx.PubSub, adapter: Phoenix.PubSub.PG2]
 
