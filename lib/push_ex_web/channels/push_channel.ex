@@ -10,8 +10,8 @@ defmodule PushExWeb.PushChannel do
 
   ## Socket API
 
-  def join(_ch, _params, socket) do
-    {:ok, socket}
+  def join(channel, params, socket) do
+    PushEx.Config.push_socket_join_fn().(channel, params, socket)
   end
 
   def handle_out("msg", params = %{}, socket) do
