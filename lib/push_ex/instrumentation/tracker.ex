@@ -6,6 +6,8 @@ defmodule PushEx.Instrumentation.Tracker do
   end
 
   def init(_) do
+    Process.flag(:trap_exit, true)
+
     {:ok, %{
       count: 0,
       pids: %{}
@@ -22,7 +24,7 @@ defmodule PushEx.Instrumentation.Tracker do
 
   ## Callbacks
 
-  def handle_call({:track, socket = %Phoenix.Socket{channel_pid: pid, topic: topic}}, _from, state = %{count: count, pids: pids}) do
+  def handle_call({:track, socket = %Phoenix.Socket{channel_pid: pid, topic: topic}}, _from, state = %{pids: pids}) do
     link_processes_to_capture_bidirectional_exits(pid)
 
     id = PushEx.Config.presence_identifier_fn().(socket)
@@ -33,16 +35,16 @@ defmodule PushEx.Instrumentation.Tracker do
       online_at: PushEx.unix_now(),
     })
 
-    {:reply, :ok, %{state | pids: new_pids, count: count + 1}}
+    {:reply, :ok, %{state | pids: new_pids, count: map_size(new_pids)}}
   end
 
   def handle_call(:state, _from, state) do
     {:reply, state, state}
   end
 
-  def handle_info({:DOWN, _ref, :process, pid, _reason}, state = %{count: count, pids: pids}) do
+  def handle_info({:EXIT, pid, _reason}, state = %{pids: pids}) do
     new_pids = Map.delete(pids, pid)
-    {:noreply, %{state  | pids: new_pids, count: count - 1}}
+    {:noreply, %{state  | pids: new_pids, count: map_size(new_pids)}}
   end
 
   defp link_processes_to_capture_bidirectional_exits(pid), do: Process.link(pid)
