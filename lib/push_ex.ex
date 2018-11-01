@@ -7,5 +7,12 @@ defmodule PushEx do
   if it comes from the database, an external API or others.
   """
 
+  alias PushEx.Push
+  alias Push.ItemProducer
+
+  def push(item = %Push{}) do
+    ItemProducer.push(item)
+  end
+
   def unix_now(), do: (:erlang.system_time() / 1_000_000) |> round()
 end
