@@ -11,6 +11,13 @@ defmodule PushEx.Push.ItemServer do
       Logger.debug("Push.ItemServer broadcast channel=#{channel} event=#{event} ms_in_stage=#{ms_since_insertion}")
 
       PushExWeb.PushChannel.broadcast({:msg, channel}, event, data)
+      |> case do
+        {:ok, :broadcast} ->
+          Logger.debug("Push.ItemServer broadcast channel=#{channel} event=#{event} ms_in_stage=#{ms_since_insertion}")
+
+        {:ok, :no_listeners} ->
+          Logger.debug("Push.ItemServer no_listeners channel=#{channel} event=#{event} ms_in_stage=#{ms_since_insertion}")
+      end
     end)
   end
 end

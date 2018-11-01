@@ -1,12 +1,18 @@
 defmodule PushExWeb.PushChannel do
   use Phoenix.Channel
 
+  alias PushExWeb.PushPresence
+
   intercept(["msg"])
 
   def broadcast({:msg, channel}, event, data = %{}, opts \\ []) when is_bitstring(event) do
-    endpoint_mod = Keyword.get(opts, :endpoint, PushEx.Config.endpoint())
-    endpoint_mod.broadcast!(channel, "msg", %{event: event, data: data})
-    :ok
+    if PushPresence.listeners?(channel) do
+      endpoint_mod = Keyword.get(opts, :endpoint, PushEx.Config.endpoint())
+      endpoint_mod.broadcast!(channel, "msg", %{event: event, data: data})
+      {:ok, :broadcast}
+    else
+      {:ok, :no_listeners}
+    end
   end
 
   ## Socket API
@@ -30,6 +36,7 @@ defmodule PushExWeb.PushChannel do
 
   def handle_info(:after_join, socket) do
     :ok = PushEx.Instrumentation.Tracker.track_socket(socket)
+    {:ok, _} = PushPresence.track(socket)
     {:noreply, socket}
   end
 end
