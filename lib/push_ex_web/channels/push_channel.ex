@@ -3,8 +3,9 @@ defmodule PushExWeb.PushChannel do
 
   intercept(["msg"])
 
-  def broadcast({:msg, channel}, event, data = %{}) when is_bitstring(event) do
-    PushExWeb.Endpoint.broadcast!(channel, "msg", %{event: event, data: data})
+  def broadcast({:msg, channel}, event, data = %{}, opts \\ []) when is_bitstring(event) do
+    endpoint_mod = Keyword.get(opts, :endpoint, PushEx.Config.endpoint())
+    endpoint_mod.broadcast!(channel, "msg", %{event: event, data: data})
     :ok
   end
 

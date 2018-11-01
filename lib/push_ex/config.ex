@@ -29,6 +29,11 @@ defmodule PushEx.Config do
     |> Keyword.get(:presence_identifier_fn)
   end
 
+  def endpoint() do
+    Application.get_env(:push_ex, PushExWeb.PushSocket, [])
+    |> Keyword.get(:endpoint, PushExWeb.Endpoint)
+  end
+
   def check!() do
     check_push_socket_connect_fn!()
     check_push_socket_join_fn!()
