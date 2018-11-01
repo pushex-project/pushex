@@ -24,10 +24,16 @@ defmodule PushEx.Config do
     |> Keyword.get(:max_producer_concurrency, 10)
   end
 
+  def presence_identifier_fn() do
+    Application.get_env(:push_ex, PushExWeb.PushSocket, [])
+    |> Keyword.get(:presence_identifier_fn)
+  end
+
   def check!() do
     check_push_socket_connect_fn!()
     check_push_socket_join_fn!()
     check_push_socket_id_fn!()
+    check_presence_identifier_fn!()
   end
 
   defp check_push_socket_connect_fn!() do
@@ -66,6 +72,19 @@ defmodule PushEx.Config do
 
       {:arity, arity} ->
         raise "config :push_ex, PushExWeb.PushSocket, id_fn must be arity 1, but is #{arity}"
+    end
+  end
+
+  defp check_presence_identifier_fn!() do
+    with {:func, func} when not is_nil(func) <- {:func, presence_identifier_fn()},
+         {:arity, 1} <- {:arity, :erlang.fun_info(func)[:arity]} do
+      true
+    else
+      {:func, _} ->
+        raise "config :push_ex, PushExWeb.PushSocket, presence_identifier_fn/1 must be set"
+
+      {:arity, arity} ->
+        raise "config :push_ex, PushExWeb.PushSocket, presence_identifier_fn must be arity 1, but is #{arity}"
     end
   end
 end

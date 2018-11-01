@@ -9,7 +9,8 @@ defmodule PushEx.Application do
     children = [
       PushEx.Push.ItemProducer,
       PushEx.Push.ItemConsumer,
-      PushExWeb.Endpoint
+      PushExWeb.Endpoint,
+      PushExWeb.PushPresence,
     ]
 
     opts = [strategy: :one_for_one, name: PushEx.Supervisor]

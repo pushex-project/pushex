@@ -12,7 +12,13 @@ defmodule PushEx.Push.ItemConsumer do
       worker(ItemServer, [], restart: :transient)
     ]
 
-    opts = [strategy: :one_for_one, subscribe_to: [{ItemProducer, max_demand: PushEx.Config.producer_max_concurrency(), min_demand: 1}]]
+    opts = [
+      strategy: :one_for_one,
+      subscribe_to: [
+        {ItemProducer, max_demand: PushEx.Config.producer_max_concurrency(), min_demand: 1}
+      ]
+    ]
+
     ConsumerSupervisor.init(children, opts)
   end
 end

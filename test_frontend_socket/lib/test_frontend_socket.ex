@@ -9,7 +9,11 @@ defmodule TestFrontendSocket do
   end
 
   def socket_id(%{assigns: %{secret_id: id}}) do
-    "secret:#{id}"
+    "id:#{id}"
+  end
+
+  def presence_identifier_fn(socket) do
+    socket_id(socket)
   end
 
   def channel_join(channel, params, socket) do
