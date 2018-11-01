@@ -23,8 +23,9 @@ defmodule PushEx.Instrumentation.Tracker do
   ## Callbacks
 
   def handle_call({:track, socket = %Phoenix.Socket{channel_pid: pid, topic: topic}}, _from, state = %{count: count, pids: pids}) do
+    link_processes_to_capture_bidirectional_exits(pid)
+
     id = PushEx.Config.presence_identifier_fn().(socket)
-    Process.monitor(pid)
 
     new_pids = Map.put(pids, pid, %{
       channel: topic,
@@ -43,4 +44,6 @@ defmodule PushEx.Instrumentation.Tracker do
     new_pids = Map.delete(pids, pid)
     {:noreply, %{state  | pids: new_pids, count: count - 1}}
   end
+
+  defp link_processes_to_capture_bidirectional_exits(pid), do: Process.link(pid)
 end
