@@ -9,7 +9,7 @@ defmodule PushExWeb.PushPresence do
     track(socket.channel_pid, "subscribed", id, %{
       channel: topic,
       identifier: id,
-      online_at: PushEx.unix_now(),
+      online_at: PushEx.unix_now()
     })
   end
 

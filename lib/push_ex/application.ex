@@ -10,7 +10,7 @@ defmodule PushEx.Application do
       PushEx.Push.ItemProducer,
       PushEx.Push.ItemConsumer,
       PushExWeb.Endpoint,
-      PushExWeb.PushPresence,
+      PushExWeb.PushPresence
     ]
 
     opts = [strategy: :one_for_one, name: PushEx.Supervisor]
