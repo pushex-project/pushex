@@ -7,15 +7,23 @@ defmodule PushEx.Application do
     PushEx.Config.check!()
 
     children = [
-      PushEx.Push.ItemProducer,
-      PushEx.Push.ItemConsumer,
+      pre_endpoint_children(),
       PushExWeb.Endpoint,
-      PushExWeb.PushPresence
-    ]
+      post_endpoint_children(),
+    ] |> List.flatten()
 
     opts = [strategy: :one_for_one, name: PushEx.Supervisor]
     Supervisor.start_link(children, opts)
   end
+
+  def pre_endpoint_children(), do: [
+    PushEx.Push.ItemProducer,
+    PushEx.Push.ItemConsumer,
+  ]
+
+  def post_endpoint_children(), do: [
+    PushExWeb.PushPresence
+  ]
 
   def config_change(changed, _new, removed) do
     PushExWeb.Endpoint.config_change(changed, removed)
