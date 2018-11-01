@@ -19,6 +19,7 @@ defmodule PushEx.Application do
   def pre_endpoint_children(), do: [
     PushEx.Push.ItemProducer,
     PushEx.Push.ItemConsumer,
+    PushEx.Instrumentation.Tracker,
   ]
 
   def post_endpoint_children(), do: [

@@ -29,7 +29,7 @@ defmodule PushExWeb.PushChannel do
   end
 
   def handle_info(:after_join, socket) do
-    {:ok, _} = PushExWeb.PushPresence.track(socket)
+    :ok = PushEx.Instrumentation.Tracker.track_socket(socket)
     {:noreply, socket}
   end
 end
