@@ -4,6 +4,8 @@ defmodule PushEx.Instrumentation.Push do
   defmodule Behaviour do
     @callback requested(%Push{}) :: any
     @callback delivered(%Push{}) :: any
+    @callback api_requested() :: any
+    @callback api_processed() :: any
   end
 
   @behaviour Behaviour
@@ -16,6 +18,16 @@ defmodule PushEx.Instrumentation.Push do
   def delivered(push = %Push{}) do
     listeners()
     |> Enum.each(& &1.delivered(push))
+  end
+
+  def api_requested() do
+    listeners()
+    |> Enum.each(& &1.api_requested())
+  end
+
+  def api_processed() do
+    listeners()
+    |> Enum.each(& &1.api_processed())
   end
 
   defp listeners() do

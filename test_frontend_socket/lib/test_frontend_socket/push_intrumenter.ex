@@ -10,4 +10,12 @@ defmodule TestFrontendSocket.PushInstrumenter do
   def requested(%PushEx.Push{} = push) do
     Logger.debug("#{__MODULE__} requested #{inspect(push)}")
   end
+
+  def api_requested() do
+    Logger.debug("#{__MODULE__} controller requested")
+  end
+
+  def api_processed() do
+    Logger.debug("#{__MODULE__} controller processed")
+  end
 end

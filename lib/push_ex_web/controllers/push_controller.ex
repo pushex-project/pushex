@@ -2,6 +2,8 @@ defmodule PushExWeb.PushController do
   use PushExWeb, :controller
 
   def create(conn, params) do
+    PushEx.Instrumentation.Push.api_requested()
+
     with_auth(conn, params, fn conn, params ->
       with_params_validation(conn, params, fn conn, %{"channel" => channel, "data" => data, "event" => event} ->
         wrapped_channel = List.wrap(channel)
@@ -11,6 +13,8 @@ defmodule PushExWeb.PushController do
           %PushEx.Push{channel: channel, data: data, event: event}
           |> PushEx.push()
         end)
+
+        PushEx.Instrumentation.Push.api_processed()
 
         conn
         |> json(%{channel: wrapped_channel, data: data, event: event})
