@@ -4,12 +4,14 @@ defmodule PushEx.MixProject do
   def project do
     [
       app: :push_ex,
-      version: "0.0.1",
+      version: "0.0.1-rc",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      description: "TODO",
+      package: package()
     ]
   end
 
@@ -20,6 +22,18 @@ defmodule PushEx.MixProject do
     [
       mod: {PushEx.Application, []},
       extra_applications: [:logger, :runtime_tools]
+    ]
+  end
+
+  defp package() do
+    [
+      maintainers: [
+        "Steve Bussey"
+      ],
+      licenses: ["TODO"],
+      links: %{github: "https://www.github.com/SalesLoft/push.ex"},
+      files: ~w(lib) ++
+        ~w(mix.exs README.md)
     ]
   end
 
@@ -38,7 +52,8 @@ defmodule PushEx.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:plug, "~> 1.7"},
-      {:gen_stage, "~> 0.14"}
+      {:gen_stage, "~> 0.14"},
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 end

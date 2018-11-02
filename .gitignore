@@ -36,3 +36,4 @@ push_ex-*.tar
 /config/*.secret.exs
 
 node_modules/
+doc
