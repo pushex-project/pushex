@@ -20,4 +20,8 @@ defmodule TestFrontendSocket do
     IO.inspect {"my channel_join invoked with", channel, params, socket}
     {:ok, socket}
   end
+
+  def controller_auth_fn(_conn, _params) do
+    :ok
+  end
 end

@@ -34,11 +34,17 @@ defmodule PushEx.Config do
     |> Keyword.get(:endpoint, PushExWeb.Endpoint)
   end
 
+  def controller_auth_fn() do
+    Application.get_env(:push_ex, PushExWeb.PushController, [])
+    |> Keyword.get(:auth_fn)
+  end
+
   def check!() do
     check_push_socket_connect_fn!()
     check_push_socket_join_fn!()
     check_push_socket_id_fn!()
     check_presence_identifier_fn!()
+    check_controller_auth_fn!()
   end
 
   defp check_push_socket_connect_fn!() do
@@ -57,16 +63,25 @@ defmodule PushEx.Config do
     check_fn!(:presence_identifier_fn, :presence_identifier_fn, 1)
   end
 
-  def check_fn!(config_name, func_name, expected_arity) do
+  defp check_controller_auth_fn!() do
+    check_fn!(:auth_fn, :controller_auth_fn, 2, config_mod: PushExWeb.PushController)
+  end
+
+  def check_fn!(config_name, func_name, expected_arity, opts \\ []) do
+    config_mod =
+      Keyword.get(opts, :config_mod, PushExWeb.PushSocket)
+      |> to_string()
+      |> String.replace("Elixir.", "")
+
     with {:func, func} when not is_nil(func) <- {:func, apply(__MODULE__, func_name, [])},
          {:arity, ^expected_arity} <- {:arity, :erlang.fun_info(func)[:arity]} do
       true
     else
       {:func, _} ->
-        raise "config :push_ex, PushExWeb.PushSocket, #{config_name}/#{expected_arity} must be set"
+        raise "config :push_ex, #{config_mod}, #{config_name}/#{expected_arity} must be set"
 
       {:arity, arity} ->
-        raise "config :push_ex, PushExWeb.PushSocket, #{config_name} must be arity #{expected_arity}, but is #{arity}"
+        raise "config :push_ex, #{config_mod}, #{config_name} must be arity #{expected_arity}, but is #{arity}"
     end
   end
 end

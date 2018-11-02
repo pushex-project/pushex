@@ -27,3 +27,6 @@ config :push_ex, PushExWeb.PushSocket,
   join_fn: &TestFrontendSocket.channel_join/3,
   id_fn: &TestFrontendSocket.socket_id/1,
   presence_identifier_fn: &TestFrontendSocket.presence_identifier_fn/1
+
+config :push_ex, PushExWeb.PushController,
+  auth_fn: &TestFrontendSocket.controller_auth_fn/2
