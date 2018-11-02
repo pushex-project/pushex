@@ -19,6 +19,9 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :push_ex, PushEx.Instrumentation,
+  push_listeners: [TestFrontendSocket.PushInstrumenter]
+
 config :push_ex, PushExWeb.PushSocket,
   connect_fn: &TestFrontendSocket.socket_connect/2,
   join_fn: &TestFrontendSocket.channel_join/3,

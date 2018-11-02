@@ -8,9 +8,11 @@ defmodule PushEx do
   """
 
   alias PushEx.Push
+  alias PushEx.Instrumentation
   alias Push.ItemProducer
 
   def push(item = %Push{}) do
+    Instrumentation.Push.requested(item)
     ItemProducer.push(item)
   end
 
