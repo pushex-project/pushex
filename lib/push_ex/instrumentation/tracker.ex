@@ -8,11 +8,7 @@ defmodule PushEx.Instrumentation.Tracker do
   def init(_) do
     Process.flag(:trap_exit, true)
 
-    {:ok,
-     %{
-       channel_pids: %{},
-       transport_pids: %{}
-     }}
+    {:ok, %{channel_pids: %{}, transport_pids: %{}}}
   end
 
   def track_channel(socket = %Phoenix.Socket{}) do
@@ -27,7 +23,23 @@ defmodule PushEx.Instrumentation.Tracker do
     GenServer.call(__MODULE__, :state)
   end
 
+  def connected_socket_count() do
+    GenServer.call(__MODULE__, :connected_socket_count)
+  end
+
+  def connected_channel_count() do
+    GenServer.call(__MODULE__, :connected_channel_count)
+  end
+
   ## Callbacks
+
+  def handle_call(:connected_channel_count, _from, state = %{channel_pids: pids}) do
+    {:reply, map_size(pids), state}
+  end
+
+  def handle_call(:connected_socket_count, _from, state = %{transport_pids: pids}) do
+    {:reply, map_size(pids), state}
+  end
 
   def handle_call(
         {:track, socket = %Phoenix.Socket{channel_pid: pid, topic: topic}},
