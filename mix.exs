@@ -32,8 +32,7 @@ defmodule PushEx.MixProject do
       ],
       licenses: ["TODO"],
       links: %{github: "https://www.github.com/SalesLoft/push.ex"},
-      files: ~w(lib) ++
-        ~w(mix.exs README.md)
+      files: ~w(lib) ++ ~w(mix.exs README.md)
     ]
   end
 

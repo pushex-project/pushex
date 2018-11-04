@@ -22,7 +22,8 @@ defmodule PushExWeb.PushController do
     end)
   end
 
-  defp with_params_validation(conn, params = %{"channel" => channel, "data" => _, "event" => event}, func) when (is_bitstring(channel) or is_list(channel)) and is_bitstring(event) do
+  defp with_params_validation(conn, params = %{"channel" => channel, "data" => _, "event" => event}, func)
+       when (is_bitstring(channel) or is_list(channel)) and is_bitstring(event) do
     func.(conn, params)
   end
 
