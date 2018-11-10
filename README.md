@@ -17,6 +17,8 @@ The best way to get started is by following the [Standalone Installation Guide](
 
 ## TODO (Prioritized)
 
+- Test PushEx
+- Test PushEx.js
 - Write JS documentation
 - Better controller 422 handling (show specific field reasons)
 - Load testing harness
