@@ -1,4 +1,4 @@
-# Installation - Standalone Application
+# Installation - Standalone
 
 PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.
 
@@ -15,7 +15,7 @@ Erlang/OTP 21 [erts-10.1.1] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threa
 Elixir 1.7.3 (compiled with Erlang/OTP 19)
 ```
 
-## Starting your project
+## Instructions
 
 1. Create a new supervised mix application
 

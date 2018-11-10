@@ -11,7 +11,8 @@ defmodule PushEx.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: "TODO",
-      package: package()
+      package: package(),
+      docs: docs()
     ]
   end
 
@@ -53,6 +54,17 @@ defmodule PushEx.MixProject do
       {:plug, "~> 1.7"},
       {:gen_stage, "~> 0.14"},
       {:ex_doc, ">= 0.0.0", only: :dev}
+    ]
+  end
+
+  defp docs() do
+    [
+      extras: [
+        "guides/installation/standalone.md",
+      ],
+      groups_for_extras: [
+        "Installation": Path.wildcard("guides/installation/*.md")
+      ],
     ]
   end
 end
