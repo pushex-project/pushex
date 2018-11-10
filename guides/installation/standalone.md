@@ -72,7 +72,7 @@ config :push_ex, PushExWeb.PushController, controller_impl: DemoApp.Controller
 # demo_app/socket.ex
 
 defmodule DemoApp.Socket do
-  @behaviour PushEx.SocketBehaviour
+  @behaviour PushEx.Behaviour.Socket
 
   def socket_connect(_params, socket) do
     {:ok, socket}
@@ -96,7 +96,7 @@ end
 # demo_app/controller.ex
 
 defmodule DemoApp.Controller do
-  @behaviour PushEx.ControllerBehaviour
+  @behaviour PushEx.Behaviour.Controller
 
   def auth(_conn, _params) do
     :ok
@@ -108,7 +108,7 @@ end
 # demo_app/push_instrumenter.ex
 
 defmodule DemoApp.PushInstrumenter do
-  @behaviour PushEx.Instrumentation.Push.Behaviour
+  @behaviour PushEx.Behaviour.PushInstrumentation
 
   require Logger
 
@@ -134,7 +134,7 @@ end
 
 It's crucial that your application ships with proper authentication logic, or anyone could access sensitive information over your sockets. This may be fine if you're pushing data down to all users of a marketing site, but would be unacceptable in any environment with separate users.
 
-The PushEx.ControllerBehaviour, PushEx.SocketBehaviour, PushEx.Instrumentation.Push.Behaviour behaviours are all documented with their types. It is possible to fully customize the flow of the system using these behaviours. An example of this is accepting a JWT on `socket_connect` + `channel_join` and enforcing that the JWT is valid and matches private channel claims.
+PushEx behaviours are all documented with their types. It is possible to fully customize the flow of the system using these behaviours. An example of this is accepting a JWT on `socket_connect` + `channel_join` and enforcing that the JWT is valid and matches private channel claims.
 
 Instrumentation can be used to gather insights into the running system, but is completely optional.
 

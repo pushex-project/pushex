@@ -1,5 +1,5 @@
 defmodule TestFrontendSocket.PushInstrumenter do
-  @behaviour PushEx.Instrumentation.Push.Behaviour
+  @behaviour PushEx.Behaviour.PushInstrumentation
 
   require Logger
 

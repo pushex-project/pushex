@@ -1,6 +1,6 @@
 defmodule TestFrontendSocket do
-  @behaviour PushEx.SocketBehaviour
-  @behaviour PushEx.ControllerBehaviour
+  @behaviour PushEx.Behaviour.Socket
+  @behaviour PushEx.Behaviour.Controller
 
   def socket_connect(params, socket) do
     IO.inspect({"my socket_connect invoked with", params, socket})
