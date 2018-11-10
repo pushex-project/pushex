@@ -34,7 +34,7 @@ defmodule PushExWeb.PushController do
   end
 
   defp with_auth(conn, params, func) do
-    case PushEx.Config.controller_auth_fn().(conn, params) do
+    case PushEx.Config.controller_impl().auth(conn, params) do
       :ok ->
         func.(conn, params)
 

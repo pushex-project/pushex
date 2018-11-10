@@ -1,4 +1,7 @@
 defmodule TestFrontendSocket do
+  @behaviour PushEx.SocketBehaviour
+  @behaviour PushEx.ControllerBehaviour
+
   def socket_connect(params, socket) do
     IO.inspect({"my socket_connect invoked with", params, socket})
 
@@ -11,7 +14,7 @@ defmodule TestFrontendSocket do
     "id:#{id}"
   end
 
-  def presence_identifier_fn(socket) do
+  def presence_identifier(socket) do
     socket_id(socket)
   end
 
@@ -20,7 +23,7 @@ defmodule TestFrontendSocket do
     {:ok, socket}
   end
 
-  def controller_auth_fn(_conn, _params) do
+  def auth(_conn, _params) do
     :ok
   end
 end

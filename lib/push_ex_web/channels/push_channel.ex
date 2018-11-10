@@ -19,7 +19,7 @@ defmodule PushExWeb.PushChannel do
   ## Socket API
 
   def join(channel, params, socket) do
-    PushEx.Config.push_socket_join_fn().(channel, params, socket)
+    PushEx.Config.socket_impl().channel_join(channel, params, socket)
     |> case do
       response = {:ok, _socket} ->
         send(self(), :after_join)

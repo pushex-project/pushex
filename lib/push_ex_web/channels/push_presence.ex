@@ -4,7 +4,7 @@ defmodule PushExWeb.PushPresence do
     pubsub_server: PushEx.PubSub
 
   def track(%Phoenix.Socket{topic: topic} = socket) do
-    id = PushEx.Config.presence_identifier_fn().(socket)
+    id = PushEx.Config.socket_impl().presence_identifier(socket)
 
     track(socket.channel_pid, topic, id, %{
       online_at: PushEx.unix_now()

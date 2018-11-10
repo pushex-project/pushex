@@ -15,10 +15,10 @@ defmodule PushExWeb.PushSocket do
   channel "*", PushExWeb.PushChannel
 
   def connect(params, socket) do
-    PushEx.Config.push_socket_connect_fn().(params, socket)
+    PushEx.Config.socket_impl().socket_connect(params, socket)
   end
 
   def id(socket) do
-    PushEx.Config.push_socket_id_fn().(socket)
+    PushEx.Config.socket_impl().socket_id(socket)
   end
 end
