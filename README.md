@@ -2,7 +2,6 @@
 
 ## TODO (Prioritized)
 
-- Write installation guide (standalone)
 - Write JS documentation
 - Better controller 422 handling (show specific field reasons)
 - Load testing harness
