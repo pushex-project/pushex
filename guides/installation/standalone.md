@@ -30,7 +30,7 @@ mix new demo_app --sup && cd demo_app
 
   defp deps do
     [
-      {:push_ex, "0.0.1-rc3"}
+      {:push_ex, "0.0.1-rc4"}
     ]
   end
 ```
