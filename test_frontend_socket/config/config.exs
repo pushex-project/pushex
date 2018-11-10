@@ -19,8 +19,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :push_ex, PushEx.Instrumentation,
-  push_listeners: [TestFrontendSocket.PushInstrumenter]
+config :push_ex, PushEx.Instrumentation, push_listeners: [TestFrontendSocket.PushInstrumenter]
 
 config :push_ex, PushExWeb.PushSocket,
   connect_fn: &TestFrontendSocket.socket_connect/2,
@@ -28,5 +27,4 @@ config :push_ex, PushExWeb.PushSocket,
   id_fn: &TestFrontendSocket.socket_id/1,
   presence_identifier_fn: &TestFrontendSocket.presence_identifier_fn/1
 
-config :push_ex, PushExWeb.PushController,
-  auth_fn: &TestFrontendSocket.controller_auth_fn/2
+config :push_ex, PushExWeb.PushController, auth_fn: &TestFrontendSocket.controller_auth_fn/2

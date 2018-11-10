@@ -1,9 +1,8 @@
 defmodule TestFrontendSocket do
   def socket_connect(params, socket) do
-    IO.inspect {"my socket_connect invoked with", params, socket}
+    IO.inspect({"my socket_connect invoked with", params, socket})
 
-    socket =
-      Phoenix.Socket.assign(socket, :secret_id, :rand.uniform(999999))
+    socket = Phoenix.Socket.assign(socket, :secret_id, :rand.uniform(999_999))
 
     {:ok, socket}
   end
@@ -17,7 +16,7 @@ defmodule TestFrontendSocket do
   end
 
   def channel_join(channel, params, socket) do
-    IO.inspect {"my channel_join invoked with", channel, params, socket}
+    IO.inspect({"my channel_join invoked with", channel, params, socket})
     {:ok, socket}
   end
 
