@@ -4,7 +4,7 @@ defmodule PushEx.MixProject do
   def project do
     [
       app: :push_ex,
-      version: "0.0.1-rc3",
+      version: "0.0.1-rc4",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
