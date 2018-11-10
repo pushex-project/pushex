@@ -1,4 +1,6 @@
 defmodule PushEx.Push.ItemConsumer do
+  @moduledoc false
+
   use ConsumerSupervisor
 
   alias PushEx.Push.{ItemProducer, ItemServer}

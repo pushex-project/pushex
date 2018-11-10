@@ -1,4 +1,6 @@
 defmodule PushExWeb.PushPresence do
+  @moduledoc false
+
   use Phoenix.Presence,
     otp_app: :push_ex,
     pubsub_server: PushEx.PubSub

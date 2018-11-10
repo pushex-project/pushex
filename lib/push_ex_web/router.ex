@@ -1,4 +1,6 @@
 defmodule PushExWeb.Router do
+  @moduledoc false
+
   use PushExWeb, :router
 
   pipeline :api do

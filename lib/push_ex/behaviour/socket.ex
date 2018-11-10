@@ -1,11 +1,16 @@
-defmodule PushEx.SocketBehaviour do
+defmodule PushEx.Behaviour.Socket do
+  @moduledoc """
+  Implementable functions that are used in the flow of socket/channel creation. It is crucial to implement secure connect/join functions
+  for all applications.
+  """
+
   @doc """
-  See https://hexdocs.pm/phoenix/Phoenix.Socket.html#c:connect/3
+  See `c:Phoenix.Socket.connect/3`
   """
   @callback socket_connect(map(), Phoenix.Socket.t()) :: {:ok, Phoenix.Socket.t()} | :error
 
   @doc """
-  See https://hexdocs.pm/phoenix/Phoenix.Channel.html#c:join/3
+  See `c:Phoenix.Channel.join/3`
   """
   @callback channel_join(bitstring(), map(), Phoenix.Socket.t()) ::
               {:ok, Phoenix.Socket.t()}
@@ -13,12 +18,12 @@ defmodule PushEx.SocketBehaviour do
               | {:error, reason :: map()}
 
   @doc """
-  See https://hexdocs.pm/phoenix/Phoenix.Socket.html#c:id/1
+  See `c:Phoenix.Socket.id/1`s
   """
   @callback socket_id(Phoenix.Socket.t()) :: bitstring()
 
   @doc """
-  See https://hexdocs.pm/phoenix/Phoenix.Presence.html#c:track/4 `key`
+  See `c:Phoenix.Presence.track/4` `key`
   """
   @callback presence_identifier(Phoenix.Socket.t()) :: bitstring()
 end

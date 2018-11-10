@@ -1,4 +1,6 @@
 defmodule PushExWeb.PushChannel do
+  @moduledoc false
+
   use Phoenix.Channel
 
   alias PushExWeb.PushPresence

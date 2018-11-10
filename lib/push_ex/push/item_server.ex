@@ -1,4 +1,6 @@
 defmodule PushEx.Push.ItemServer do
+  @moduledoc false
+
   require Logger
 
   def start_link(%{

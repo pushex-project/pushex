@@ -1,20 +1,22 @@
 defmodule PushEx do
   @moduledoc """
-  PushEx keeps the contexts that define your domain
-  and business logic.
-
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
+  PushEx context exposes functions related to the core competency of PushEx, enqueueing pushes.
   """
 
   alias PushEx.Push
   alias PushEx.Instrumentation
   alias Push.ItemProducer
 
+  @doc """
+  Triggers a Push to be instrumented/enqueued into the system
+  """
+  @spec push(%Push{}) :: true
   def push(item = %Push{}) do
     Instrumentation.Push.requested(item)
     ItemProducer.push(item)
+    true
   end
 
+  @doc false
   def unix_now(), do: (:erlang.system_time() / 1_000_000) |> round()
 end

@@ -1,4 +1,6 @@
 defmodule PushEx.Config do
+  @moduledoc false
+
   def socket_impl() do
     Application.get_env(:push_ex, PushExWeb.PushSocket, [])
     |> Keyword.get(:socket_impl)

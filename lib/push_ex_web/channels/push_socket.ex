@@ -1,4 +1,6 @@
 defmodule PushExWeb.PushSocket do
+  @moduledoc false
+
   def init(state) do
     case Phoenix.Socket.__init__(state) do
       res = {:ok, {_, %Phoenix.Socket{} = socket}} ->

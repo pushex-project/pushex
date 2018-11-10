@@ -1,34 +1,52 @@
 defmodule PushEx.Instrumentation.Tracker do
+  @moduledoc """
+  GenServer that tracks channels and transports to keep track of how many sockets/channels are connected currently.
+  All tracking is for the current node only. Presence must be used for full-cluster tracking.
+  """
+
   use GenServer
 
+  @doc false
   def start_link(_) do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
+  @doc false
   def init(_) do
     Process.flag(:trap_exit, true)
 
     {:ok, %{channel_pids: %{}, transport_pids: %{}}}
   end
 
-  def track_channel(socket = %Phoenix.Socket{}) do
-    GenServer.call(__MODULE__, {:track, socket})
-  end
-
-  def track_socket(socket = %Phoenix.Socket{}) do
-    GenServer.call(__MODULE__, {:track_socket, socket})
-  end
-
-  def state() do
-    GenServer.call(__MODULE__, :state)
-  end
-
+  @doc """
+  Returns the number of sockets (transports) connected to this node.
+  """
+  @spec connected_socket_count() :: non_neg_integer()
   def connected_socket_count() do
     GenServer.call(__MODULE__, :connected_socket_count)
   end
 
+  @doc """
+  Returns the number of channels connected to this node.
+  """
+  @spec connected_channel_count() :: non_neg_integer()
   def connected_channel_count() do
     GenServer.call(__MODULE__, :connected_channel_count)
+  end
+
+  @doc false
+  def track_channel(socket = %Phoenix.Socket{}) do
+    GenServer.call(__MODULE__, {:track, socket})
+  end
+
+  @doc false
+  def track_socket(socket = %Phoenix.Socket{}) do
+    GenServer.call(__MODULE__, {:track_socket, socket})
+  end
+
+  @doc false
+  def state() do
+    GenServer.call(__MODULE__, :state)
   end
 
   ## Callbacks

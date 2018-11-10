@@ -1,4 +1,6 @@
 defmodule PushExWeb.Endpoint do
+  @moduledoc false
+
   use Phoenix.Endpoint, otp_app: :push_ex
 
   socket "/push_socket", PushExWeb.PushSocket,

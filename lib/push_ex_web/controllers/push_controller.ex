@@ -1,4 +1,6 @@
 defmodule PushExWeb.PushController do
+  @moduledoc false
+
   use PushExWeb, :controller
 
   def create(conn, params) do

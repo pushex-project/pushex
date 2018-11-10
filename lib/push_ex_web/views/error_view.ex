@@ -1,4 +1,6 @@
 defmodule PushExWeb.ErrorView do
+  @moduledoc false
+
   use PushExWeb, :view
 
   def template_not_found(template, _assigns) do

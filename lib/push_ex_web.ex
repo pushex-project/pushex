@@ -1,6 +1,5 @@
 defmodule PushExWeb do
-  @moduledoc """
-  """
+  @moduledoc false
 
   def controller do
     quote do

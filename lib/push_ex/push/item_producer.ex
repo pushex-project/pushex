@@ -1,4 +1,6 @@
 defmodule PushEx.Push.ItemProducer do
+  @moduledoc false
+
   use GenStage
 
   def start_link(:nameless) do
