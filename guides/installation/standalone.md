@@ -4,6 +4,10 @@ PushEx is an implementation of Phoenix websockets/channels which handles best pr
 
 This guide will go through the steps necessary to create a standalone deployment of Push.ex tailored to your business needs, from start to finish.
 
+## Why Standalone?
+
+A standalone installation is preferred and is how I would run any serious push service. This is because push services change very infrequently and so should not be deployed to often. Each deploy causes reconnection of current sockets and a slight miss of messages in that time. Having a standalone service also allows for easier scaling, as new nodes can be added to the cluster to quickly meet your push capacity needs.
+
 ## Pre-installation
 
 Ensure that your Elixir is version >= 1.7 and that your Erlang is >= OTP21. You can attempt installation without this, but it is not recommended due to Phoenix 1.4 requirements:
