@@ -1,9 +1,15 @@
 # PushEx
 
-## TODO
+## TODO (Prioritized)
 
-- Replace `PushEx.Instrumentation.Push` implementation as phoenix instrumenters (for performance reasons)
 - Write installation guide (standalone)
-- Write installation guide (existing phoenix app)
 - Write JS documentation
 - Better controller 422 handling (show specific field reasons)
+- Load testing harness
+- Write installation guide (existing phoenix app)
+
+## Possible Enhancements
+
+- Replace `PushEx.Instrumentation.Push` implementation as phoenix instrumenters
+  - This would be for performance reasons
+  - It may not be necessary depending on the results of load testing
