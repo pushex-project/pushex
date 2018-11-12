@@ -42,6 +42,15 @@ defmodule PushEx.Config do
     |> Keyword.get(:endpoint, PushExWeb.Endpoint)
   end
 
+  @doc """
+  List of instrumentation modules that implement PushEx.Behaviour.PushInstrumentation, to be invoked at
+  different hook points.
+  """
+  def push_listeners() do
+    Application.get_env(:push_ex, PushEx.Instrumentation, [])
+    |> Keyword.get(:push_listeners, [])
+  end
+
   def check!() do
     check_socket_impl!()
     check_controller_impl!()

@@ -5,14 +5,14 @@ defmodule PushEx.ConfigTest do
 
   describe "socket_impl/0" do
     test "returns the correct impl" do
-      Application.put_env(:push_ex, PushExWeb.PushSocket, [socket_impl: "test"])
+      Application.put_env(:push_ex, PushExWeb.PushSocket, socket_impl: "test")
       assert Config.socket_impl() == "test"
     end
   end
 
   describe "controller_impl/0" do
     test "returns the correct impl" do
-      Application.put_env(:push_ex, PushExWeb.PushController, [controller_impl: "test"])
+      Application.put_env(:push_ex, PushExWeb.PushController, controller_impl: "test")
       assert Config.controller_impl() == "test"
     end
   end
@@ -24,7 +24,7 @@ defmodule PushEx.ConfigTest do
     end
 
     test "a value can be provided" do
-      Application.put_env(:push_ex, PushExWeb.PushSocket, [producer_max_buffer: 10_000])
+      Application.put_env(:push_ex, PushExWeb.PushSocket, producer_max_buffer: 10_000)
       assert Config.producer_max_buffer() == 10_000
     end
   end
@@ -36,7 +36,7 @@ defmodule PushEx.ConfigTest do
     end
 
     test "a value can be provided" do
-      Application.put_env(:push_ex, PushExWeb.PushSocket, [producer_max_concurrency: 5])
+      Application.put_env(:push_ex, PushExWeb.PushSocket, producer_max_concurrency: 5)
       assert Config.producer_max_concurrency() == 5
     end
   end
@@ -48,31 +48,45 @@ defmodule PushEx.ConfigTest do
     end
 
     test "a value can be provided" do
-      Application.put_env(:push_ex, PushExWeb.PushSocket, [endpoint: :test])
+      Application.put_env(:push_ex, PushExWeb.PushSocket, endpoint: :test)
       assert Config.endpoint() == :test
+    end
+  end
+
+  describe "push_listeners/0" do
+    test "defaults to []" do
+      Application.delete_env(:push_ex, PushEx.Instrumentation)
+      assert Config.push_listeners() == []
+    end
+
+    test "a value can be provided" do
+      Application.put_env(:push_ex, PushEx.Instrumentation, push_listeners: [:a])
+      assert Config.push_listeners() == [:a]
     end
   end
 
   describe "check!/0" do
     test "errors without a socket_impl" do
-      Application.put_env(:push_ex, PushExWeb.PushSocket, [socket_impl: nil])
-      Application.put_env(:push_ex, PushExWeb.PushController, [controller_impl: "test"])
+      Application.put_env(:push_ex, PushExWeb.PushSocket, socket_impl: nil)
+      Application.put_env(:push_ex, PushExWeb.PushController, controller_impl: "test")
+
       assert_raise(RuntimeError, "config :push_ex, PushExWeb.PushSocket, socket_impl: ModName must be set", fn ->
         Config.check!()
       end)
     end
 
     test "errors without a controller_impl" do
-      Application.put_env(:push_ex, PushExWeb.PushSocket, [socket_impl: "test"])
-      Application.put_env(:push_ex, PushExWeb.PushController, [controller_impl: nil])
+      Application.put_env(:push_ex, PushExWeb.PushSocket, socket_impl: "test")
+      Application.put_env(:push_ex, PushExWeb.PushController, controller_impl: nil)
+
       assert_raise(RuntimeError, "config :push_ex, PushExWeb.PushController, controller_impl: ModName must be set", fn ->
         Config.check!()
       end)
     end
 
     test "no errors normally" do
-      Application.put_env(:push_ex, PushExWeb.PushSocket, [socket_impl: "test"])
-      Application.put_env(:push_ex, PushExWeb.PushController, [controller_impl: "test"])
+      Application.put_env(:push_ex, PushExWeb.PushSocket, socket_impl: "test")
+      Application.put_env(:push_ex, PushExWeb.PushController, controller_impl: "test")
       Config.check!()
     end
   end
