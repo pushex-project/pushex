@@ -13,12 +13,12 @@ defmodule PushEx.Config do
 
   def producer_max_buffer() do
     Application.get_env(:push_ex, PushExWeb.PushSocket, [])
-    |> Keyword.get(:max_producer_buffer, 50_000)
+    |> Keyword.get(:producer_max_buffer, 50_000)
   end
 
   def producer_max_concurrency() do
     Application.get_env(:push_ex, PushExWeb.PushSocket, [])
-    |> Keyword.get(:max_producer_concurrency, 10)
+    |> Keyword.get(:producer_max_concurrency, 10)
   end
 
   def endpoint() do

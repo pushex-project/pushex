@@ -4,7 +4,7 @@ defmodule PushEx.Application do
   use Application
 
   def start(_type, _args) do
-    PushEx.Config.check!()
+    check_config!()
 
     children =
       [
@@ -16,6 +16,12 @@ defmodule PushEx.Application do
 
     opts = [strategy: :one_for_one, name: PushEx.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  if Mix.env() == :test do
+    defp check_config!(), do: nil
+  else
+    defp check_config!(), do: PushEx.Config.check!()
   end
 
   def pre_endpoint_children(),
