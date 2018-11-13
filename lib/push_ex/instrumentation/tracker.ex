@@ -22,31 +22,36 @@ defmodule PushEx.Instrumentation.Tracker do
   Returns the number of sockets (transports) connected to this node.
   """
   @spec connected_socket_count() :: non_neg_integer()
-  def connected_socket_count() do
-    GenServer.call(__MODULE__, :connected_socket_count)
+  def connected_socket_count(opts \\ []) do
+    pid = Keyword.get(opts, :pid, __MODULE__)
+    GenServer.call(pid, :connected_socket_count)
   end
 
   @doc """
   Returns the number of channels connected to this node.
   """
   @spec connected_channel_count() :: non_neg_integer()
-  def connected_channel_count() do
-    GenServer.call(__MODULE__, :connected_channel_count)
+  def connected_channel_count(opts \\ []) do
+    pid = Keyword.get(opts, :pid, __MODULE__)
+    GenServer.call(pid, :connected_channel_count)
   end
 
   @doc false
-  def track_channel(socket = %Phoenix.Socket{}) do
-    GenServer.call(__MODULE__, {:track, socket})
+  def track_channel(socket = %Phoenix.Socket{}, opts \\ []) do
+    pid = Keyword.get(opts, :pid, __MODULE__)
+    GenServer.call(pid, {:track, socket})
   end
 
   @doc false
-  def track_socket(socket = %Phoenix.Socket{}) do
-    GenServer.call(__MODULE__, {:track_socket, socket})
+  def track_socket(socket = %Phoenix.Socket{}, opts \\ []) do
+    pid = Keyword.get(opts, :pid, __MODULE__)
+    GenServer.call(pid, {:track_socket, socket})
   end
 
   @doc false
-  def state() do
-    GenServer.call(__MODULE__, :state)
+  def state(opts \\ []) do
+    pid = Keyword.get(opts, :pid, __MODULE__)
+    GenServer.call(pid, :state)
   end
 
   ## Callbacks
