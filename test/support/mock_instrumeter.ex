@@ -8,8 +8,12 @@ defmodule PushEx.Test.MockInstrumenter do
     api_requested: []
   }
 
-  def setup_config() do
-    Application.put_env(:push_ex, PushEx.Instrumentation, push_listeners: [__MODULE__])
+  def setup_config(opts \\ []) do
+    count = Keyword.get(opts, :count, 1)
+    listeners = for i <- 0..count, i > 0, do: __MODULE__
+
+    reset()
+    Application.put_env(:push_ex, PushEx.Instrumentation, push_listeners: listeners)
   end
 
   def setup() do
@@ -25,18 +29,18 @@ defmodule PushEx.Test.MockInstrumenter do
   end
 
   def api_processed() do
-
+    Agent.update(__MODULE__, fn state = %{api_processed: list} -> %{state | api_processed: [[] | list]} end)
   end
 
   def api_requested() do
-
+    Agent.update(__MODULE__, fn state = %{api_requested: list} -> %{state | api_requested: [[] | list]} end)
   end
 
   def delivered(p = %PushEx.Push{}) do
-    Agent.update(__MODULE__, fn state = %{delivered: list} -> %{state | delivered: [p | list]} end)
+    Agent.update(__MODULE__, fn state = %{delivered: list} -> %{state | delivered: [[p] | list]} end)
   end
 
   def requested(p = %PushEx.Push{}) do
-    Agent.update(__MODULE__, fn state = %{requested: list} -> %{state | requested: [p | list]} end)
+    Agent.update(__MODULE__, fn state = %{requested: list} -> %{state | requested: [[p] | list]} end)
   end
 end

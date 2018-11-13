@@ -8,7 +8,7 @@ defmodule PushExTest do
       push = %PushEx.Push{channel: "c", event: "e", data: "d"}
       PushEx.push(push)
 
-      assert PushEx.Test.MockInstrumenter.state().requested == [push]
+      assert PushEx.Test.MockInstrumenter.state().requested == [[push]]
     end
 
     test "ItemProducer receives the push" do
@@ -32,7 +32,6 @@ defmodule PushExTest do
 
   defp with_instrumentation(_) do
     PushEx.Test.MockInstrumenter.setup_config()
-    PushEx.Test.MockInstrumenter.reset()
 
     :ok
   end
