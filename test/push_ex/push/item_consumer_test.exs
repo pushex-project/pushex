@@ -25,7 +25,8 @@ defmodule PushEx.Push.ItemConsumerTest do
   @push %PushEx.Push{
     channel: "c",
     event: "e",
-    data: "d"
+    data: "d",
+    unix_ms: 0
   }
 
   describe "GenStage integration" do

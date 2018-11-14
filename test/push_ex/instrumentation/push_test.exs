@@ -6,7 +6,8 @@ defmodule PushEx.Instrumentation.PushTest do
   @push %Push{
     channel: "c",
     event: "e",
-    data: "d"
+    data: "d",
+    unix_ms: 0
   }
 
   describe "requested/1" do

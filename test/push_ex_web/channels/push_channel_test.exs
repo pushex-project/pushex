@@ -7,7 +7,8 @@ defmodule PushExWeb.PushChannelTest do
   @push %PushEx.Push{
     channel: "c",
     event: "e",
-    data: "d"
+    data: "d",
+    unix_ms: 0
   }
 
   describe "join/3" do

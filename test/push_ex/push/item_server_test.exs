@@ -7,7 +7,8 @@ defmodule PushEx.Push.ItemServerTest do
   @push %PushEx.Push{
     channel: "c",
     event: "e",
-    data: "d"
+    data: "d",
+    unix_ms: 0
   }
 
   defmodule MockChannelApi do
@@ -31,7 +32,7 @@ defmodule PushEx.Push.ItemServerTest do
       log =
         capture_log(fn ->
           assert {:ok, pid} = ItemServer.start_link(%{item: @push, at: 1}, channel_api_mod: MockChannelApi)
-          Process.sleep(20)
+          Process.sleep(50)
         end)
 
       assert log =~ "[debug] Push.ItemServer broadcast channel=c event=e ms_in_stage="

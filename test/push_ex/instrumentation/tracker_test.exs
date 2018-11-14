@@ -15,23 +15,24 @@ defmodule PushEx.Instrumentation.TrackerTest do
 
       assert Tracker.track_channel(socket, pid: pid) == :ok
 
-      assert Tracker.state(pid: pid) == %{
-               channel_pids: %{channel_pid => %{channel: "topic", identifier: "id", online_at: PushEx.unix_ms_now()}},
-               transport_pids: %{}
-             }
+      assert %{
+        channel_pids: %{^channel_pid => %{channel: "topic", identifier: "id", online_at: _}},
+        transport_pids: %{}
+      } = Tracker.state(pid: pid)
 
       assert Tracker.connected_channel_count(pid: pid) == 1
       assert Tracker.connected_socket_count(pid: pid) == 0
 
       assert Tracker.track_channel(socket2, pid: pid) == :ok
 
-      assert Tracker.state(pid: pid) == %{
-               channel_pids: %{
-                 channel_pid => %{channel: "topic", identifier: "id", online_at: PushEx.unix_ms_now()},
-                 channel_pid2 => %{channel: "topic2", identifier: "id", online_at: PushEx.unix_ms_now()}
-               },
-               transport_pids: %{}
-             }
+      empty_map = %{}
+      assert %{
+        channel_pids: %{
+          ^channel_pid => %{channel: "topic", identifier: "id", online_at: _},
+          ^channel_pid2 => %{channel: "topic2", identifier: "id", online_at: _}
+        },
+        transport_pids: ^empty_map
+      } = Tracker.state(pid: pid)
 
       assert Tracker.connected_channel_count(pid: pid) == 2
 
@@ -78,24 +79,24 @@ defmodule PushEx.Instrumentation.TrackerTest do
       PushEx.Test.MockSocket.setup_config()
 
       assert Tracker.track_socket(socket, pid: pid) == :ok
-
-      assert Tracker.state(pid: pid) == %{
-               channel_pids: %{},
-               transport_pids: %{transport_pid => %{type: :ws, identifier: "id", online_at: PushEx.unix_ms_now()}}
-             }
+      empty_map = %{}
+      assert %{
+        channel_pids: ^empty_map,
+        transport_pids: %{^transport_pid => %{type: :ws, identifier: "id", online_at: _}}
+      } = Tracker.state(pid: pid)
 
       assert Tracker.connected_channel_count(pid: pid) == 0
       assert Tracker.connected_socket_count(pid: pid) == 1
 
       assert Tracker.track_socket(socket2, pid: pid) == :ok
-
-      assert Tracker.state(pid: pid) == %{
-               channel_pids: %{},
-               transport_pids: %{
-                 transport_pid => %{type: :ws, identifier: "id", online_at: PushEx.unix_ms_now()},
-                 transport_pid2 => %{type: :ws, identifier: "id", online_at: PushEx.unix_ms_now()}
-               }
-             }
+      empty_map = %{}
+      assert %{
+        channel_pids: ^empty_map,
+        transport_pids: %{
+          ^transport_pid => %{type: :ws, identifier: "id", online_at: _},
+          ^transport_pid2 => %{type: :ws, identifier: "id", online_at: _}
+        }
+      } = Tracker.state(pid: pid)
 
       Process.exit(transport_pid, :kill) && Process.sleep(10)
       assert Tracker.connected_socket_count(pid: pid) == 1

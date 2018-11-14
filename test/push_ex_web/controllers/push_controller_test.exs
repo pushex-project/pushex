@@ -16,12 +16,12 @@ defmodule PushExWeb.PushControllerTest do
                |> json_response(200) == %{"channel" => [channel], "data" => "d", "event" => "e"}
       end)
 
-    assert PushEx.Test.MockInstrumenter.state() == %{
-             api_processed: [[]],
-             api_requested: [[]],
-             delivered: [],
-             requested: [[%PushEx.Push{channel: channel, data: "d", event: "e"}]]
-           }
+    assert %{
+      api_processed: [[]],
+      api_requested: [[]],
+      delivered: [],
+      requested: [[%PushEx.Push{channel: ^channel, data: "d", event: "e", unix_ms: _}]]
+    } = PushEx.Test.MockInstrumenter.state()
 
     assert log =~ "LoggingController auth/2 " <> inspect({"conn", params})
     assert log =~ "Push.ItemServer no_listeners channel=#{channel}"
@@ -40,15 +40,21 @@ defmodule PushExWeb.PushControllerTest do
                |> json_response(200) == %{"channel" => channels, "data" => "d", "event" => "e"}
       end)
 
-    assert PushEx.Test.MockInstrumenter.state() == %{
-             api_processed: [[]],
-             api_requested: [[]],
-             delivered: [],
-             requested: [
-               [%PushEx.Push{channel: Enum.at(channels, 1), data: "d", event: "e"}],
-               [%PushEx.Push{channel: Enum.at(channels, 0), data: "d", event: "e"}]
-             ]
-           }
+    ch0 = Enum.at(channels, 0)
+    ch1 = Enum.at(channels, 1)
+
+    assert %{
+      api_processed: api_processed,
+      api_requested: api_requested,
+      delivered: delivered,
+      requested: [
+        [%PushEx.Push{channel: ^ch1, data: "d", event: "e", unix_ms: _}],
+        [%PushEx.Push{channel: ^ch0, data: "d", event: "e", unix_ms: _}]
+      ]
+    } = PushEx.Test.MockInstrumenter.state()
+    assert api_processed == [[]]
+    assert api_requested == [[]]
+    assert delivered == []
 
     assert log =~ "LoggingController auth/2 " <> inspect({"conn", params})
     assert log =~ "Push.ItemServer no_listeners channel=#{Enum.at(channels, 0)}"

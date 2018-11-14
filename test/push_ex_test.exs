@@ -5,7 +5,7 @@ defmodule PushExTest do
     setup :with_instrumentation
 
     test "Push.Instrumentation requested is invoked" do
-      push = %PushEx.Push{channel: "c", event: "e", data: "d"}
+      push = %PushEx.Push{channel: "c", event: "e", data: "d", unix_ms: 0}
       PushEx.push(push)
 
       assert PushEx.Test.MockInstrumenter.state().requested == [[push]]
@@ -15,7 +15,7 @@ defmodule PushExTest do
       pid = Process.whereis(PushEx.Push.ItemProducer)
       :erlang.trace(pid, true, [:receive])
 
-      push = %PushEx.Push{channel: "c", event: "e", data: "d"}
+      push = %PushEx.Push{channel: "c", event: "e", data: "d", unix_ms: 0}
       PushEx.push(push)
 
       assert_receive {:trace, ^pid, :receive, {:"$gen_cast", {:notify, ^push}}}

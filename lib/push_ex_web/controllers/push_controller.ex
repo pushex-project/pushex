@@ -12,7 +12,7 @@ defmodule PushExWeb.PushController do
 
         wrapped_channel
         |> Enum.each(fn channel ->
-          %PushEx.Push{channel: channel, data: data, event: event}
+          %PushEx.Push{channel: channel, data: data, event: event, unix_ms: PushEx.unix_ms_now()}
           |> PushEx.push()
         end)
 
