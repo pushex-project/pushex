@@ -17,7 +17,6 @@ The best way to get started is by following the [Standalone Installation Guide](
 
 ## TODO (Prioritized)
 
-- Test PushEx
 - Include propagation time in item analytics
 - Method to get the size of the item buffer
 - Test PushEx.js

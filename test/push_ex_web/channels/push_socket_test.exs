@@ -8,9 +8,10 @@ defmodule PushExWeb.PushSocketTest do
     test "the connection logic defers to the socket_impl" do
       PushEx.Test.MockSocket.setup_logging_config()
 
-      log = capture_log(fn ->
-        assert {:ok, socket} = connect(PushSocket, %{})
-      end)
+      log =
+        capture_log(fn ->
+          assert {:ok, socket} = connect(PushSocket, %{})
+        end)
 
       assert log =~ "Replied PushExWeb.PushSocket :ok"
       assert log =~ "LoggingSocket socket_connect/2 #{inspect({%{}, "socket"})}"
@@ -23,25 +24,26 @@ defmodule PushExWeb.PushSocketTest do
       PushEx.Test.MockSocket.setup_config()
 
       assert PushEx.Instrumentation.Tracker.state() == %{
-        channel_pids: %{},
-        transport_pids: %{}
-      }
+               channel_pids: %{},
+               transport_pids: %{}
+             }
 
       capture_log([level: :info], fn ->
         assert {:ok, socket} = connect(PushSocket, %{})
         Process.sleep(10)
 
         transport_pid = socket.transport_pid
+
         assert PushEx.Instrumentation.Tracker.state() == %{
-          channel_pids: %{},
-          transport_pids: %{
-            transport_pid => %{
-              identifier: "id",
-              online_at: PushEx.unix_now(),
-              type: :channel_test
-            }
-          }
-        }
+                 channel_pids: %{},
+                 transport_pids: %{
+                   transport_pid => %{
+                     identifier: "id",
+                     online_at: PushEx.unix_now(),
+                     type: :channel_test
+                   }
+                 }
+               }
       end)
     end
   end

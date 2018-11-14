@@ -34,22 +34,22 @@ defmodule PushEx.Test.MockSocket do
     require Logger
 
     def socket_connect(params, socket) do
-      Logger.debug "LoggingSocket socket_connect/2 #{inspect({params, "socket"})}"
+      Logger.debug("LoggingSocket socket_connect/2 #{inspect({params, "socket"})}")
       {:ok, socket}
     end
 
     def channel_join(channel, params, socket) do
-      Logger.debug "LoggingSocket channel_join/3 #{inspect({channel, params, "socket"})}"
+      Logger.debug("LoggingSocket channel_join/3 #{inspect({channel, params, "socket"})}")
       {:ok, socket}
     end
 
     def socket_id(_socket) do
-      Logger.debug "LoggingSocket socket_id/1 {socket}"
+      Logger.debug("LoggingSocket socket_id/1 {socket}")
       "id"
     end
 
     def presence_identifier(_socket) do
-      Logger.debug "LoggingSocket presence_identifier/1 {socket}"
+      Logger.debug("LoggingSocket presence_identifier/1 {socket}")
       "id"
     end
   end

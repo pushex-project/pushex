@@ -14,10 +14,11 @@ defmodule PushExWeb.PushChannelTest do
     test "the join function defers to the socket_impl" do
       PushEx.Test.MockSocket.setup_logging_config()
 
-      log = capture_log(fn ->
-        socket(PushSocket, "test", %{})
-        |> subscribe_and_join(PushChannel, "c")
-      end)
+      log =
+        capture_log(fn ->
+          socket(PushSocket, "test", %{})
+          |> subscribe_and_join(PushChannel, "c")
+        end)
 
       assert log =~ "Replied c :ok"
       assert log =~ "LoggingSocket channel_join/3 #{inspect({"c", %{}, "socket"})}"
@@ -33,6 +34,7 @@ defmodule PushExWeb.PushChannelTest do
       capture_log(fn ->
         socket(PushSocket, "test", %{})
         |> subscribe_and_join(PushChannel, "c")
+
         Process.sleep(20)
       end)
 
@@ -45,10 +47,11 @@ defmodule PushExWeb.PushChannelTest do
       PushEx.Test.MockSocket.setup_config(:channel_fail)
 
       assert capture_log(fn ->
-        assert socket(PushSocket, "test", %{})
-        |> subscribe_and_join(PushChannel, "c") == {:error, %{reason: "unauthorized"}}
-        Process.sleep(20)
-      end) =~ "Replied c :error"
+               assert socket(PushSocket, "test", %{})
+                      |> subscribe_and_join(PushChannel, "c") == {:error, %{reason: "unauthorized"}}
+
+               Process.sleep(20)
+             end) =~ "Replied c :error"
 
       assert PushEx.Instrumentation.Tracker.connected_channel_count() == 0
       refute PushExWeb.PushPresence.listeners?("c")
@@ -87,8 +90,8 @@ defmodule PushExWeb.PushChannelTest do
       Process.sleep(10)
 
       assert capture_log(fn ->
-        assert PushChannel.broadcast({:msg, "c"}, @push, endpoint: PushEx.Test.MockEndpoint) == {:ok, :broadcast}
-      end) =~ "MockEndpoint broadcast!/3 #{inspect({"c", "msg", @push})}"
+               assert PushChannel.broadcast({:msg, "c"}, @push, endpoint: PushEx.Test.MockEndpoint) == {:ok, :broadcast}
+             end) =~ "MockEndpoint broadcast!/3 #{inspect({"c", "msg", @push})}"
     end
   end
 
