@@ -20,7 +20,7 @@ defmodule PushEx.Push.ItemProducer do
   end
 
   def handle_cast({:notify, item}, state) do
-    {:noreply, [%{item: item, at: PushEx.unix_now()}], state}
+    {:noreply, [%{item: item, at: PushEx.unix_ms_now()}], state}
   end
 
   def handle_demand(demand, keys) when demand > 0 do

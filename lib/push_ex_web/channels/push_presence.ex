@@ -9,7 +9,7 @@ defmodule PushExWeb.PushPresence do
     id = PushEx.Config.socket_impl().presence_identifier(socket)
 
     track(socket.channel_pid, topic, id, %{
-      online_at: PushEx.unix_now()
+      online_at: PushEx.unix_ms_now()
     })
   end
 

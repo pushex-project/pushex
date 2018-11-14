@@ -72,7 +72,7 @@ defmodule PushEx.Instrumentation.Tracker do
     link_processes_to_capture_bidirectional_exits(pid)
 
     id = PushEx.Config.socket_impl().presence_identifier(socket)
-    online_at = PushEx.unix_now()
+    online_at = PushEx.unix_ms_now()
 
     new_channel_pids =
       Map.put(pids, pid, %{
@@ -92,7 +92,7 @@ defmodule PushEx.Instrumentation.Tracker do
     link_processes_to_capture_bidirectional_exits(transport_pid)
 
     id = PushEx.Config.socket_impl().presence_identifier(socket)
-    online_at = PushEx.unix_now()
+    online_at = PushEx.unix_ms_now()
 
     new_transport_pids =
       Map.put(transport_pids, transport_pid, %{

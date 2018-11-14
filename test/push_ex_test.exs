@@ -22,11 +22,11 @@ defmodule PushExTest do
     end
   end
 
-  describe "unix_now/0" do
-    test "is a 10 digit integer" do
-      assert PushEx.unix_now()
+  describe "unix_ms_now/0" do
+    test "is a 13 digit integer" do
+      assert PushEx.unix_ms_now()
              |> Integer.digits()
-             |> length() == 10
+             |> length() == 13
     end
   end
 

@@ -35,7 +35,7 @@ defmodule PushEx.Push.ItemConsumerTest do
       {:ok, producer_pid} = ItemProducer.start_link(:nameless)
       {:ok, _consumer_pid} = ConsumerSupervisor.start_link(ItemConsumer, [subscribe_to: producer_pid, worker: MockItemServer], name: __MODULE__)
       push = Map.put(@push, :data, agent_pid)
-      at = PushEx.unix_now()
+      at = PushEx.unix_ms_now()
       ItemProducer.push(push, producer_pid)
       ItemProducer.push(push, producer_pid)
       ItemProducer.push(push, producer_pid)

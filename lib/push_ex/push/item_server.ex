@@ -12,7 +12,7 @@ defmodule PushEx.Push.ItemServer do
       ) do
     Task.start_link(fn ->
       channel_api_mod = Keyword.get(opts, :channel_api_mod, PushExWeb.PushChannel)
-      ms_since_insertion = PushEx.unix_now() - unix_inserted_at
+      ms_since_insertion = PushEx.unix_ms_now() - unix_inserted_at
 
       channel_api_mod.broadcast({:msg, channel}, item)
       |> case do

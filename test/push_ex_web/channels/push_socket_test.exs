@@ -33,17 +33,18 @@ defmodule PushExWeb.PushSocketTest do
         Process.sleep(10)
 
         transport_pid = socket.transport_pid
+        empty_map = %{}
 
-        assert PushEx.Instrumentation.Tracker.state() == %{
-                 channel_pids: %{},
-                 transport_pids: %{
-                   transport_pid => %{
-                     identifier: "id",
-                     online_at: PushEx.unix_now(),
-                     type: :channel_test
-                   }
-                 }
-               }
+        assert %{
+          channel_pids: ^empty_map,
+          transport_pids: %{
+            ^transport_pid => %{
+              identifier: "id",
+              online_at: _,
+              type: :channel_test
+            }
+          }
+        } = PushEx.Instrumentation.Tracker.state()
       end)
     end
   end

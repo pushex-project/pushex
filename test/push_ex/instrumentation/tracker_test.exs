@@ -16,7 +16,7 @@ defmodule PushEx.Instrumentation.TrackerTest do
       assert Tracker.track_channel(socket, pid: pid) == :ok
 
       assert Tracker.state(pid: pid) == %{
-               channel_pids: %{channel_pid => %{channel: "topic", identifier: "id", online_at: PushEx.unix_now()}},
+               channel_pids: %{channel_pid => %{channel: "topic", identifier: "id", online_at: PushEx.unix_ms_now()}},
                transport_pids: %{}
              }
 
@@ -27,8 +27,8 @@ defmodule PushEx.Instrumentation.TrackerTest do
 
       assert Tracker.state(pid: pid) == %{
                channel_pids: %{
-                 channel_pid => %{channel: "topic", identifier: "id", online_at: PushEx.unix_now()},
-                 channel_pid2 => %{channel: "topic2", identifier: "id", online_at: PushEx.unix_now()}
+                 channel_pid => %{channel: "topic", identifier: "id", online_at: PushEx.unix_ms_now()},
+                 channel_pid2 => %{channel: "topic2", identifier: "id", online_at: PushEx.unix_ms_now()}
                },
                transport_pids: %{}
              }
@@ -81,7 +81,7 @@ defmodule PushEx.Instrumentation.TrackerTest do
 
       assert Tracker.state(pid: pid) == %{
                channel_pids: %{},
-               transport_pids: %{transport_pid => %{type: :ws, identifier: "id", online_at: PushEx.unix_now()}}
+               transport_pids: %{transport_pid => %{type: :ws, identifier: "id", online_at: PushEx.unix_ms_now()}}
              }
 
       assert Tracker.connected_channel_count(pid: pid) == 0
@@ -92,8 +92,8 @@ defmodule PushEx.Instrumentation.TrackerTest do
       assert Tracker.state(pid: pid) == %{
                channel_pids: %{},
                transport_pids: %{
-                 transport_pid => %{type: :ws, identifier: "id", online_at: PushEx.unix_now()},
-                 transport_pid2 => %{type: :ws, identifier: "id", online_at: PushEx.unix_now()}
+                 transport_pid => %{type: :ws, identifier: "id", online_at: PushEx.unix_ms_now()},
+                 transport_pid2 => %{type: :ws, identifier: "id", online_at: PushEx.unix_ms_now()}
                }
              }
 

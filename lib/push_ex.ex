@@ -18,5 +18,5 @@ defmodule PushEx do
   end
 
   @doc false
-  def unix_now(), do: (:erlang.system_time() / 1_000_000_000) |> round()
+  def unix_ms_now(), do: (:erlang.system_time() / 1_000_000) |> round()
 end
