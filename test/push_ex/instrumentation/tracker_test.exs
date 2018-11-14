@@ -120,6 +120,7 @@ defmodule PushEx.Instrumentation.TrackerTest do
       assert Tracker.track_socket(socket2, pid: pid) == :ok
 
       Process.exit(pid, :kill)
+      Process.sleep(10)
 
       refute Process.alive?(pid)
       refute Process.alive?(transport_pid)
