@@ -6,5 +6,4 @@ config :push_ex, PushExWeb.Endpoint,
   http: [port: 4001],
   server: false
 
-# Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :debug

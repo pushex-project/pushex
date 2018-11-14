@@ -4,10 +4,10 @@ defmodule PushEx.Push do
   """
 
   @type t :: %PushEx.Push{
-    channel: bitstring(),
-    data: any(),
-    event: bitstring()
-  }
+          channel: bitstring(),
+          data: any(),
+          event: bitstring()
+        }
 
   @enforce_keys [:channel, :data, :event]
   defstruct @enforce_keys

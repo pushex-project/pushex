@@ -60,11 +60,11 @@ defmodule PushEx.MixProject do
   defp docs() do
     [
       extras: [
-        "guides/installation/standalone.md",
+        "guides/installation/standalone.md"
       ],
       groups_for_extras: [
-        "Installation": Path.wildcard("guides/installation/*.md")
-      ],
+        Installation: Path.wildcard("guides/installation/*.md")
+      ]
     ]
   end
 end

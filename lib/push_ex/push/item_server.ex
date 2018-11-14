@@ -3,14 +3,18 @@ defmodule PushEx.Push.ItemServer do
 
   require Logger
 
-  def start_link(%{
-        item: item = %PushEx.Push{channel: channel, event: event},
-        at: unix_inserted_at
-      }) do
+  def start_link(
+        %{
+          item: item = %PushEx.Push{channel: channel, event: event},
+          at: unix_inserted_at
+        },
+        opts \\ []
+      ) do
     Task.start_link(fn ->
+      channel_api_mod = Keyword.get(opts, :channel_api_mod, PushExWeb.PushChannel)
       ms_since_insertion = PushEx.unix_now() - unix_inserted_at
 
-      PushExWeb.PushChannel.broadcast({:msg, channel}, item)
+      channel_api_mod.broadcast({:msg, channel}, item)
       |> case do
         {:ok, :broadcast} ->
           Logger.debug("Push.ItemServer broadcast channel=#{channel} event=#{event} ms_in_stage=#{ms_since_insertion}")
