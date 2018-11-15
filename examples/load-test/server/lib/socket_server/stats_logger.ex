@@ -5,23 +5,22 @@ defmodule SocketServer.StatsLogger do
     GenServer.start_link(__MODULE__, opts)
   end
 
-  def init(tick: tick_ms) do
+  def init(collector: collector_mod, tick: tick_ms, writer: writer_mod) do
     schedule_tick(tick_ms)
-    {:ok, %{tick_ms: tick_ms}}
+    {:ok, %{collector_mod: collector_mod, tick_ms: tick_ms, writer_mod: writer_mod}}
   end
 
-  def handle_info(:write, state = %{tick_ms: tick_ms}) do
+  def handle_info(
+        :write,
+        state = %{collector_mod: collector_mod, tick_ms: tick_ms, writer_mod: writer_mod}
+      ) do
     schedule_tick(tick_ms)
-    IO.puts(log_line())
+
+    collector_mod.collect()
+    |> writer_mod.write()
+
     {:noreply, state}
   end
 
   defp schedule_tick(tick_ms), do: Process.send_after(self(), :write, tick_ms)
-
-  defp log_line() do
-    [
-      PushEx.Instrumentation.Tracker.connected_socket_count(),
-      PushEx.Instrumentation.Tracker.connected_channel_count(),
-    ] |> Enum.join(", ")
-  end
 end

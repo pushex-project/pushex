@@ -7,7 +7,12 @@ defmodule SocketServer.Application do
 
   def start(_type, _args) do
     children = [
-      {SocketServer.StatsLogger, [tick: 1_000]}
+      {SocketServer.StatsLogger,
+       [
+         collector: SocketServer.Collector.Verbose,
+         tick: 1_000,
+         writer: SocketServer.Writer.StdOut
+       ]}
     ]
 
     opts = [strategy: :one_for_one, name: SocketServer.Supervisor]
