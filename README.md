@@ -17,7 +17,6 @@ The best way to get started is by following the [Standalone Installation Guide](
 
 ## TODO (Prioritized)
 
-- Method to get the size of the item buffer
 - Test PushEx.js
 - Write JS documentation
 - Better controller 422 handling (show specific field reasons)
