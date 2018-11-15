@@ -1,26 +1,8 @@
 defmodule PushEx.Push.ItemConsumerTest do
   use ExUnit.Case, async: true
 
+  alias PushEx.Test.MockItemServer
   alias PushEx.Push.{ItemProducer, ItemConsumer}
-
-  defmodule MockItemServer do
-    def setup() do
-      {:ok, agent} = Agent.start_link(fn -> [] end)
-      agent
-    end
-
-    def start_link(
-          arg = %{
-            item: %PushEx.Push{data: agent_pid},
-            at: _
-          }
-        ) do
-      Task.start_link(fn ->
-        # Maintain async by passing in the agent_pid through the item
-        Agent.update(agent_pid, fn calls -> [[arg] | calls] end)
-      end)
-    end
-  end
 
   @push %PushEx.Push{
     channel: "c",
@@ -44,7 +26,8 @@ defmodule PushEx.Push.ItemConsumerTest do
       Process.sleep(30)
 
       calls = Agent.get(agent_pid, & &1)
-      assert calls == [[%{item: push, at: at}], [%{item: push, at: at}], [%{item: push, at: at}]]
+      assert [[%{item: ^push, at: test_at}], [%{item: ^push, at: _}], [%{item: ^push, at: _}]] = calls
+      assert_in_delta(test_at, at, 5)
     end
   end
 end

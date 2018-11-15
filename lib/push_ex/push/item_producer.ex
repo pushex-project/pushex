@@ -15,6 +15,11 @@ defmodule PushEx.Push.ItemProducer do
     {:producer, [], [buffer_size: PushEx.Config.producer_max_buffer()]}
   end
 
+  def in_buffer_count(pid \\ __MODULE__) do
+    %GenStage{buffer: {_, size, _}} = :sys.get_state(pid)
+    size
+  end
+
   def push(item = %PushEx.Push{}, pid \\ __MODULE__) do
     GenStage.cast(pid, {:notify, item})
   end
