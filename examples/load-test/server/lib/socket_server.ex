@@ -1,8 +1,8 @@
-defmodule TestFrontendSocket do
+defmodule SocketServer do
   @behaviour PushEx.Behaviour.Socket
   @behaviour PushEx.Behaviour.Controller
 
-  def socket_connect(params, socket) do
+  def socket_connect(_params, socket) do
     socket = Phoenix.Socket.assign(socket, :secret_id, :rand.uniform(999_999))
 
     {:ok, socket}
@@ -16,7 +16,7 @@ defmodule TestFrontendSocket do
     socket_id(socket)
   end
 
-  def channel_join(channel, params, socket) do
+  def channel_join(_channel, _params, socket) do
     {:ok, socket}
   end
 

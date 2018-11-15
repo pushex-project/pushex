@@ -1,4 +1,4 @@
-defmodule TestFrontendSocket.PushInstrumenter do
+defmodule SocketServer.PushInstrumenter do
   @behaviour PushEx.Behaviour.PushInstrumentation
 
   require Logger

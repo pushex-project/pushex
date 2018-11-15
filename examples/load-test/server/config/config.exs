@@ -21,6 +21,6 @@ config :phoenix, :json_library, Jason
 
 config :push_ex, PushEx.Instrumentation, push_listeners: []
 
-config :push_ex, PushExWeb.PushSocket, socket_impl: TestFrontendSocket
+config :push_ex, PushExWeb.PushSocket, socket_impl: SocketServer
 
-config :push_ex, PushExWeb.PushController, controller_impl: TestFrontendSocket
+config :push_ex, PushExWeb.PushController, controller_impl: SocketServer

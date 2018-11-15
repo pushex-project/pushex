@@ -1,9 +1,9 @@
-defmodule TestFrontendSocket.MixProject do
+defmodule SocketServer.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :test_frontend_socket,
+      app: :socket_server,
       version: "0.1.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule TestFrontendSocket.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {TestFrontendSocket.Application, []}
+      mod: {SocketServer.Application, []}
     ]
   end
 
