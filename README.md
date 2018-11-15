@@ -19,12 +19,12 @@ The best way to get started is by following the [Standalone Installation Guide](
 
 - Test PushEx.js
 - Write JS documentation
-- Better controller 422 handling (show specific field reasons)
 - Load testing harness
 - Write installation guide (existing phoenix app)
 
-## Possible Enhancements
+## Icebox
 
+- Better controller 422 handling (show specific field reasons)
 - Replace `PushEx.Instrumentation.Push` implementation as phoenix instrumenters
   - This would be for performance reasons
   - It may not be necessary depending on the results of load testing
