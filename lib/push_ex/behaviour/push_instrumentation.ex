@@ -1,6 +1,6 @@
 defmodule PushEx.Behaviour.PushInstrumentation do
   @moduledoc """
-  Implements different hook in points for push lifecycle instrumentation. Callbacks are required but do not need to do anything.
+  Implementable hook points for push lifecycle instrumentation. Callbacks are required but do not need to do anything.
   """
 
   alias PushEx.Push
