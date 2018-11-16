@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!ELEMENT tsung (information?, clients, servers, monitoring?, load, options?, sessions)>
+
+<!ELEMENT information (name|description|username|organisation)*>
+
+
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT username (#PCDATA)>
+<!ELEMENT organisation (#PCDATA)>
+
+<!ATTLIST tsung
+     dumptraffic (true | false | light | protocol | protocol_local) "false"
+     backend     (text | json| rrdtool | fullstats) "text"
+     loglevel    (emergency|critical|error|warning|notice|info|debug) "notice"
+     version     NMTOKEN #IMPLIED>
+
+<!ELEMENT servers (server+)>
+<!ELEMENT server EMPTY>
+<!ATTLIST server
+     host   NMTOKEN #REQUIRED
+     port   NMTOKEN #REQUIRED
+     weight NMTOKEN "1"
+     type (ssl | tcp | udp | erlang | ssl6 | tcp6 | udp6 |bosh | bosh_ssl | websocket | websocket_ssl ) #REQUIRED>
+
+<!ELEMENT clients (client+)>
+<!ELEMENT client (ip*| iprange) >
+<!ATTLIST client
+     cpu      NMTOKEN "1"
+     type     (machine | batch)  "machine"
+     host     NMTOKEN #IMPLIED
+     batch    (torque | pbs | lsf | oar) #IMPLIED
+     scan_intf NMTOKEN #IMPLIED
+     maxusers NMTOKEN "800"
+     use_controller_vm (true | false) "false"
+     weight   NMTOKEN "1">
+
+<!ELEMENT ip EMPTY>
+<!ATTLIST ip
+          value NMTOKEN #REQUIRED
+          scan (true| false)  "false"
+>
+<!ELEMENT iprange EMPTY>
+<!ATTLIST iprange
+          value NMTOKEN #REQUIRED
+          version NMTOKEN  "v4"
+>
+
+<!ELEMENT monitoring ( monitor+ )>
+<!ELEMENT monitor ( snmp? | munin? | mysqladmin? )>
+<!ATTLIST monitor
+     host NMTOKEN #REQUIRED
+     batch (true | false) "false"
+     type (snmp | erlang | munin) "erlang">
+
+<!ELEMENT mysqladmin EMPTY>
+<!ATTLIST mysqladmin
+     port  NMTOKEN "3306"
+     username  NMTOKEN "root"
+     password NMTOKEN #IMPLIED>
+
+<!ELEMENT snmp (oid)*>
+<!ATTLIST snmp
+     version   (v1 | v2) "v1"
+     community NMTOKEN "public"
+     port      NMTOKEN "161">
+
+<!ELEMENT oid EMPTY>
+<!ATTLIST oid
+     value   NMTOKEN #REQUIRED
+     name    NMTOKEN #REQUIRED
+     type    NMTOKEN "sample"
+     eval    CDATA   #IMPLIED>
+
+<!ELEMENT munin EMPTY>
+<!ATTLIST munin
+     port      NMTOKEN "4949">
+
+<!ELEMENT load (arrivalphase | user)+>
+<!ATTLIST load
+     duration NMTOKEN #IMPLIED
+     unit     (hour | minute | second) "second"
+     loop     NMTOKEN "0"
+     >
+
+<!ELEMENT arrivalphase (users | session_setup)+>
+<!ATTLIST arrivalphase
+     duration NMTOKEN #REQUIRED
+     phase    NMTOKEN #REQUIRED
+     wait_all_sessions_end NMTOKEN "false"
+     unit     (hour | minute | second | millisecond) #REQUIRED>
+
+<!ELEMENT users EMPTY>
+<!ATTLIST users
+     interarrival NMTOKEN #IMPLIED
+     arrivalrate  NMTOKEN #IMPLIED
+     unit (hour | minute | second) #REQUIRED
+     maxnumber NMTOKEN #IMPLIED>
+
+<!ELEMENT user EMPTY>
+<!ATTLIST user
+     start_time NMTOKEN #IMPLIED
+     unit (hour | minute | second  | millisecond) "second"
+     session      CDATA #REQUIRED>
+
+<!ELEMENT options (option*)>
+<!ELEMENT option (user_agent*)>
+<!ATTLIST option
+    name     NMTOKEN #REQUIRED
+    override (true | false) #IMPLIED
+    random   (true | false) #IMPLIED
+    id       NMTOKEN #IMPLIED
+    min      NMTOKEN #IMPLIED
+    max      NMTOKEN #IMPLIED
+    type     (ts_http | ts_jabber | ts_pgsql | ts_amqp) #IMPLIED
+    value    CDATA #IMPLIED>
+
+<!ELEMENT set_option (user_agent*| certificate)>
+<!ATTLIST set_option
+    name     NMTOKEN #REQUIRED
+    id       NMTOKEN #IMPLIED
+    min      NMTOKEN #IMPLIED
+    max      NMTOKEN #IMPLIED
+    type     (ts_http | ts_jabber | ts_pgsql) #IMPLIED
+    value    CDATA #IMPLIED>
+
+<!ELEMENT certificate EMPTY >
+<!ATTLIST certificate
+    cacertfile  CDATA #IMPLIED
+    keyfile     CDATA #IMPLIED
+    keypass     CDATA #IMPLIED
+    certfile    CDATA #IMPLIED
+>
+
+<!ELEMENT sessions (session+)>
+<!ELEMENT session ( request | thinktime | transaction | setdynvars | for |
+repeat | if | change_type | foreach | set_option | interaction | abort )*>
+<!ATTLIST session
+    name         CDATA #REQUIRED
+    bidi         CDATA #IMPLIED
+    persistent   (true | false) #IMPLIED
+    probability   NMTOKEN #IMPLIED
+    weight        NMTOKEN #IMPLIED
+    type         (ts_jabber | ts_http | ts_raw | ts_pgsql | ts_ldap | ts_webdav |ts_mysql| ts_fs | ts_shell | ts_job | ts_websocket | ts_amqp | ts_mqtt) #REQUIRED>
+
+<!ELEMENT session_setup EMPTY>
+<!ATTLIST session_setup
+    name         CDATA #REQUIRED
+    probability  NMTOKEN #IMPLIED
+    weight       NMTOKEN #IMPLIED
+>
+
+<!ELEMENT abort EMPTY>
+<!ATTLIST abort
+          type (session|all) "session" >
+
+<!ELEMENT interaction EMPTY>
+<!ATTLIST interaction
+          action (send|receive) #REQUIRED
+          id     CDATA #REQUIRED>
+
+<!ELEMENT change_type EMPTY>
+<!ATTLIST change_type
+     new_type         (ts_jabber | ts_http | ts_raw | ts_pgsql | ts_ldap | ts_webdav | ts_mysql | ts_fs | ts_shell | ts_job | ts_websocket | ts_amqp | ts_mqtt) #REQUIRED
+     host CDATA #REQUIRED
+     port CDATA #REQUIRED
+     server_type NMTOKEN #REQUIRED
+     store  ( true | false ) "false"
+     restore ( true | false ) "false"
+     bidi ( true | false ) "false"
+    >
+
+<!ELEMENT request ( match*, dyn_variable*, ( http | jabber | raw |
+          pgsql | ldap | mysql |fs | shell | job | websocket | amqp | mqtt) )>
+<!ATTLIST request
+    subst (true|false|all_except_body) "false"
+    tag   NMTOKEN "undefined"
+    >
+
+<!ELEMENT match (#PCDATA)>
+<!ATTLIST match
+    do (continue|loop|abort|restart|log|dump|abort_test) "continue"
+    when (match|nomatch) "match"
+    subst (true|false) "false"
+    loop_back   NMTOKEN "0"
+    name NMTOKEN "-"
+    max_loop    NMTOKEN "20"
+    max_restart NMTOKEN "3"
+    sleep_loop  NMTOKEN "5"
+    apply_to_content  NMTOKEN "undefined"
+    skip_headers      NMTOKEN "no"
+    >
+
+<!ELEMENT thinktime EMPTY>
+<!ATTLIST thinktime
+    random (true|false) "false"
+    value  CDATA #IMPLIED
+    min    NMTOKEN #IMPLIED
+    max    NMTOKEN #IMPLIED
+    >
+
+<!ELEMENT user_agent (#PCDATA)*>
+<!ATTLIST user_agent
+    probability NMTOKEN #REQUIRED
+    >
+
+<!ELEMENT transaction (request | setdynvars | thinktime | for | repeat
+          | if | foreach | interaction | abort )+>
+<!ATTLIST transaction name NMTOKEN #REQUIRED>
+
+<!ELEMENT http (oauth?, www_authenticate?, soap?, http_header*, add_cookie*)>
+<!ATTLIST http
+    contents           CDATA #IMPLIED
+    contents_from_file CDATA #IMPLIED
+    content_type       CDATA #IMPLIED
+    if_modified_since  CDATA #IMPLIED
+    method             (GET | POST | PUT | PATCH | DELETE | HEAD | PROPFIND | PROPPATCH | COPY | MOVE | LOCK | UNLOCK | MKCOL | MKACTIVITY | OPTIONS | REPORT | VERSION-CONTROL | MERGE | CHECKOUT) "GET"
+    url                CDATA #REQUIRED
+    version            (1.0 | 1.1) "1.1" >
+
+<!ELEMENT soap EMPTY >
+<!ATTLIST soap action CDATA #REQUIRED >
+
+<!ELEMENT dyn_variable EMPTY >
+<!ATTLIST dyn_variable
+    name       CDATA #REQUIRED
+    xpath      CDATA #IMPLIED
+    re         CDATA #IMPLIED
+    jsonpath   CDATA #IMPLIED
+    pgsql_expr CDATA #IMPLIED
+    regexp     CDATA #IMPLIED
+    header     CDATA #IMPLIED
+    decode     (html_entities | false) "false" >
+
+<!ELEMENT http_header EMPTY >
+<!ATTLIST http_header
+    name     CDATA #REQUIRED
+    encoding CDATA #IMPLIED
+    value    CDATA #IMPLIED >
+
+<!ELEMENT add_cookie EMPTY >
+<!ATTLIST add_cookie
+    key     CDATA #REQUIRED
+    domain  CDATA #IMPLIED
+    path    CDATA #IMPLIED
+    value   CDATA #REQUIRED >
+
+<!ELEMENT www_authenticate EMPTY >
+<!ATTLIST www_authenticate
+    passwd CDATA #REQUIRED
+    userid CDATA #REQUIRED
+    nonce  CDATA #IMPLIED
+    opaque CDATA #IMPLIED
+    cnonce  CDATA #IMPLIED
+    nc CDATA #IMPLIED
+    realm CDATA #IMPLIED
+    qop CDATA #IMPLIED
+    type (basic | digest) "basic" >
+
+<!ELEMENT oauth EMPTY >
+<!ATTLIST oauth
+    consumer_key CDATA #REQUIRED
+    consumer_secret CDATA #REQUIRED
+    access_token CDATA #IMPLIED
+    access_token_secret CDATA #IMPLIED
+    method  (HMAC-SHA1 | PLAINTEXT | RSA-SHA1) "HMAC-SHA1">
+
+<!ELEMENT jabber (xmpp_authenticate?) >
+<!ATTLIST jabber
+    ack         (global | local | no_ack | parse | bidi_ack) #REQUIRED
+    destination (online | offline | random | unique | previous) "random"
+    id          NMTOKEN #IMPLIED
+    size        NMTOKEN "0"
+    data        CDATA   #IMPLIED
+    type        NMTOKEN #REQUIRED
+    stamped     (true | false) "false"
+    show        (away|chat|dnd|xa) "chat"
+    status      CDATA   "Available"
+    nick        CDATA #IMPLIED
+    room        CDATA #IMPLIED
+    group       CDATA #IMPLIED
+    node        CDATA #IMPLIED
+    send_version (true | false) "false"
+    regexp      CDATA #IMPLIED
+    resource    CDATA "tsung"
+    node_type   CDATA #IMPLIED
+    version     CDATA #IMPLIED
+    cacertfile  CDATA #IMPLIED
+    keyfile     CDATA #IMPLIED
+    keypass     CDATA #IMPLIED
+    certfile    CDATA #IMPLIED
+    subid       CDATA #IMPLIED >
+
+<!ELEMENT xmpp_authenticate EMPTY >
+<!ATTLIST xmpp_authenticate
+    passwd   CDATA #REQUIRED
+    username CDATA #REQUIRED >
+
+
+<!ELEMENT fs EMPTY >
+<!ATTLIST fs
+    cmd
+          (read|write|open|delete|stat|copy|read_chunk|write_chunk|close|make_dir|del_dir|make_symlink)  "write"
+    path     CDATA   #IMPLIED
+    size     CDATA   "1024"
+    position CDATA   #IMPLIED
+    mode     (read | write | append ) #IMPLIED
+    dest     CDATA   #IMPLIED
+>
+
+<!ELEMENT shell EMPTY >
+<!ATTLIST shell
+    cmd      CDATA   #REQUIRED
+    args     CDATA   ""
+>
+
+<!ELEMENT job EMPTY >
+<!ATTLIST job
+    type     (oar|torque) "oar"
+    req      (submit|delete|stat|suspend|resume|wait_jobs) #REQUIRED
+    script   CDATA     #IMPLIED
+    walltime CDATA     #IMPLIED
+    duration CDATA     #IMPLIED
+    jobid    CDATA     #IMPLIED
+    resources CDATA    #IMPLIED
+    nodes    CDATA   #IMPLIED
+    queue    CDATA   #IMPLIED
+    options  CDATA     #IMPLIED
+    user     CDATA   #IMPLIED
+    name     CDATA   "tsung"
+    notify_port  CDATA   #IMPLIED
+    notify_script  CDATA   #IMPLIED
+>
+
+<!ELEMENT pgsql (#PCDATA) >
+<!ATTLIST pgsql
+    password     CDATA   #IMPLIED
+    database     CDATA   #IMPLIED
+    username     CDATA   #IMPLIED
+    name_portal   CDATA   #IMPLIED
+    name_prepared CDATA   #IMPLIED
+    query         CDATA   #IMPLIED
+    parameters    CDATA   #IMPLIED
+    max_rows      CDATA   "0"
+    formats       CDATA   #IMPLIED
+    formats_results CDATA   #IMPLIED
+    contents_from_file CDATA #IMPLIED
+    type        (connect | authenticate | sql | close | bind | parse | cancel|call| sync | execute | describe | flush | copy | copydone| copyfail) #REQUIRED >
+
+<!ELEMENT mysql (#PCDATA) >
+<!ATTLIST mysql
+    password     CDATA   #IMPLIED
+    database     CDATA   #IMPLIED
+    username     CDATA   #IMPLIED
+    type        (connect | authenticate | sql | close) #REQUIRED >
+
+<!ELEMENT raw EMPTY >
+<!ATTLIST raw
+    ack         (global | local | no_ack) #REQUIRED
+    datasize CDATA #IMPLIED
+    data     CDATA #IMPLIED>
+
+<!ELEMENT ldap (attr* | modification*) >
+<!ATTLIST ldap
+    password    CDATA   #IMPLIED
+    user        CDATA   #IMPLIED
+    type        (bind | unbind | search | start_tls | add | modify ) #REQUIRED
+    result_var  CDATA   #IMPLIED
+    filter      CDATA   #IMPLIED
+    base        CDATA   #IMPLIED
+    scope       (singleLevel | baseObject | wholeSubtree) #IMPLIED
+    cacertfile  CDATA   #IMPLIED
+    keyfile     CDATA   #IMPLIED
+    certfile    CDATA   #IMPLIED
+    dn          CDATA   #IMPLIED
+    >
+<!ELEMENT websocket (#PCDATA) >
+<!ATTLIST websocket
+    type (connect | message | close) #REQUIRED
+    ack  (no_ack | parse) #IMPLIED
+    frame (binary | text) #IMPLIED
+    origin CDATA ""
+    subprotocols CDATA ""
+    path CDATA "/" >
+
+<!ELEMENT amqp (#PCDATA) >
+<!ATTLIST amqp
+    type CDATA #REQUIRED
+    vhost CDATA "/"
+    channel CDATA "-1"
+    exchange CDATA ""
+    routing_key CDATA ""
+    payload CDATA ""
+    payload_size CDATA "100"
+    prefetch_size CDATA "0"
+    prefetch_count CDATA "0"
+    persistent CDATA "false"
+    queue CDATA ""
+    timeout CDATA "1"
+    ack CDATA "false" >
+
+<!ELEMENT mqtt (#PCDATA) >
+<!ATTLIST mqtt
+    type CDATA #REQUIRED
+    clean_start CDATA "false"
+    keepalive CDATA "10"
+    will_topic CDATA ""
+    will_qos CDATA "0"
+    will_msg CDATA ""
+    will_retain CDATA "false"
+    topic CDATA ""
+    qos CDATA "0"
+    retained CDATA "false"
+    timeout CDATA "1"
+    username CDATA ""
+    password CDATA "">
+
+<!ELEMENT modification (attr*) >
+<!ATTLIST modification
+    type CDATA #REQUIRED>
+
+
+<!ELEMENT attr (value+) >
+<!ATTLIST attr
+    type CDATA #REQUIRED>
+
+<!ELEMENT value (#PCDATA) >
+
+
+<!ELEMENT setdynvars (var*) >
+<!ATTLIST setdynvars
+    sourcetype   (random_string | urandom_string | random_number |
+          file | erlang | eval| jsonpath | value | server)  #REQUIRED
+    callback     CDATA   #IMPLIED
+    code         CDATA   #IMPLIED
+    fileid       CDATA   #IMPLIED
+    order        (iter | random ) #IMPLIED
+    delimiter    CDATA   #IMPLIED
+    length       CDATA   #IMPLIED
+    start        CDATA   #IMPLIED
+    end          CDATA   #IMPLIED
+    from         CDATA   #IMPLIED
+    jsonpath     CDATA   #IMPLIED
+    value        CDATA   #IMPLIED
+    >
+<!ELEMENT var (#PCDATA) >
+<!ATTLIST var
+    name CDATA #REQUIRED>
+
+<!ELEMENT for (request | thinktime | transaction | setdynvars | for |
+          if | repeat | change_type | foreach | interaction | abort )+>
+<!ATTLIST for
+    var      CDATA      #REQUIRED
+    from     CDATA      #REQUIRED
+    to       CDATA      #REQUIRED
+    incr     NMTOKEN   "1">
+
+<!ELEMENT foreach (request | thinktime | transaction | setdynvars | foreach |
+          if | repeat | change_type | for  | interaction | abort )+>
+<!ATTLIST foreach
+    name     NMTOKEN    #REQUIRED
+    in       NMTOKEN    #REQUIRED
+    include    CDATA    #IMPLIED
+    exclude    CDATA    #IMPLIED
+>
+
+<!ELEMENT repeat (request | thinktime | transaction | setdynvars | for | repeat
+| while | if | until | change_type | foreach  | interaction | abort )+>
+<!ATTLIST repeat
+    name      NMTOKEN    #REQUIRED
+    max_repeat  NMTOKEN   "20">
+
+<!ELEMENT if (request | thinktime | transaction | setdynvars | for | repeat
+| while | if | until | change_type | foreach | interaction | abort )+>
+<!ATTLIST if
+    var       CDATA #REQUIRED
+    eq        CDATA #IMPLIED
+    neq       CDATA #IMPLIED
+    gt        CDATA #IMPLIED
+    gte       CDATA #IMPLIED
+    lt        CDATA #IMPLIED
+    lte       CDATA #IMPLIED >
+
+<!ELEMENT while EMPTY>
+<!ATTLIST while
+    var       CDATA #REQUIRED
+    eq        CDATA #IMPLIED
+    neq       CDATA #IMPLIED
+    gt        CDATA #IMPLIED
+    gte       CDATA #IMPLIED
+    lt        CDATA #IMPLIED
+    lte       CDATA #IMPLIED >
+
+<!ELEMENT until EMPTY>
+<!ATTLIST until
+    var       CDATA #REQUIRED
+    eq        CDATA #IMPLIED
+    neq       CDATA #IMPLIED
+    gt        CDATA #IMPLIED
+    gte       CDATA #IMPLIED
+    lt        CDATA #IMPLIED
+    lte       CDATA #IMPLIED >

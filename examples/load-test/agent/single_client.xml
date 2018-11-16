@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "./tsung-1.0.dtd">
+<!-- tsung -I CONTROLLER_IP -f single_client.xml start -->
+<tsung loglevel="debug" version="1.0">
+  <clients>
+    <client host="68.183.119.40" cpu="4" use_controller_vm="false" maxusers="64000" />
+    <!-- <client host="68.183.128.148" cpu="4" use_controller_vm="false" maxusers="64000" /> -->
+  </clients>
+
+  <servers>
+    <server host="68.183.115.152" port="4006" type="tcp" />
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="100" unit="second">
+      <users maxnumber="100000" arrivalrate="2000" unit="second" />
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option name="ports_range" min="1025" max="65535"/>
+  </options>
+
+  <sessions>
+    <session name="websocket" probability="100" type="ts_websocket">
+      <request>
+        <websocket type="connect" path="/push_socket/websocket"></websocket>
+      </request>
+
+      <request subst="true">
+        <websocket type="message">{"topic":"%%ts_user_server:get_unique_id%%", "event":"phx_join", "payload": {}, "ref":"1"}</websocket>
+      </request>
+
+      <for var="i" from="2" to="1000" incr="1">
+        <thinktime value="30"/>
+        <request>
+          <websocket ack="no_ack" type="message">{"topic":"phoenix","event":"heartbeat","payload":{},"ref":"%%i%%"}</websocket>
+        </request>
+      </for>
+    </session>
+  </sessions>
+</tsung>
