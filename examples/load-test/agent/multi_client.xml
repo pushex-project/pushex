@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "./tsung-1.0.dtd">
+<!-- tsung -I 142.93.116.75 -f single_client.xml start -->
+<tsung loglevel="debug" version="1.0">
+  <clients>
+    <!-- Setup clients of your agent IPs. The controller must be able to ssh to them -->
+    <client host="142.93.241.14" cpu="4" use_controller_vm="false" maxusers="64000" />
+    <client host="206.189.199.187" cpu="4" use_controller_vm="false" maxusers="64000" />
+    <client host="142.93.112.35" cpu="4" use_controller_vm="false" maxusers="64000" />
+  </clients>
+
+  <servers>
+    <!-- There should be a single server host, either a load balancer or a direct connection -->
+    <server host="68.183.134.108" port="4006" type="tcp" />
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="200" unit="second">
+      <users maxnumber="192000" arrivalrate="1500" unit="second" />
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option name="ports_range" min="1025" max="65535"/>
+  </options>
+
+  <sessions>
+    <session name="websocket" probability="100" type="ts_websocket">
+      <request>
+        <websocket type="connect" path="/push_socket/websocket"></websocket>
+      </request>
+
+      <request subst="true">
+        <websocket type="message">{"topic":"%%ts_user_server:get_unique_id%%", "event":"phx_join", "payload": {}, "ref":"1"}</websocket>
+      </request>
+
+      <for var="i" from="2" to="1000" incr="1">
+        <thinktime value="30"/>
+        <request>
+          <websocket ack="no_ack" type="message">{"topic":"phoenix","event":"heartbeat","payload":{},"ref":"%%i%%"}</websocket>
+        </request>
+      </for>
+    </session>
+  </sessions>
+</tsung>
