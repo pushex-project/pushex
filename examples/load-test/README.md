@@ -44,7 +44,7 @@ cat ~/.ssh/id_rsa.pub  >> /root/.ssh/authorized_keys
 ```
 cd examples/load-test/agent/
 # Add all clients/server IP to the single_client.xml file
-tsung -I CONTROLLER_IP -f single_client.xml start # Runs a test
+tsung -I CONTROLLER_IP -f multi_client.xml start # Runs a test
 ```
 
 Visit CONTROLLER_IP:8091 for the Tsung dashboard

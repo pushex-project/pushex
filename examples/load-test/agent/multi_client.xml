@@ -1,19 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE tsung SYSTEM "./tsung-1.0.dtd">
-<!-- tsung -I 68.183.114.41 -f single_client.xml start -->
+<!-- tsung -I 142.93.116.75 -f single_client.xml start -->
 <tsung loglevel="debug" version="1.0">
   <clients>
-    <client host="68.183.141.122" cpu="4" use_controller_vm="false" maxusers="64000" />
-    <client host="159.89.234.78" cpu="4" use_controller_vm="false" maxusers="64000" />
+    <!-- Setup clients of your agent IPs. The controller must be able to ssh to them -->
+    <client host="142.93.241.14" cpu="4" use_controller_vm="false" maxusers="64000" />
+    <client host="206.189.199.187" cpu="4" use_controller_vm="false" maxusers="64000" />
+    <client host="142.93.112.35" cpu="4" use_controller_vm="false" maxusers="64000" />
   </clients>
 
   <servers>
-    <server host="68.183.141.121" port="4006" type="tcp" />
+    <!-- There should be a single server host, either a load balancer or a direct connection -->
+    <server host="68.183.134.108" port="4006" type="tcp" />
   </servers>
 
   <load>
     <arrivalphase phase="1" duration="200" unit="second">
-      <users maxnumber="128000" arrivalrate="1500" unit="second" />
+      <users maxnumber="192000" arrivalrate="1500" unit="second" />
     </arrivalphase>
   </load>
 
