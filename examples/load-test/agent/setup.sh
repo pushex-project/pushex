@@ -14,7 +14,6 @@ cd ..
 
 echo "root soft nofile 4000000" >> /etc/security/limits.conf
 echo "root hard nofile 4000000" >> /etc/security/limits.conf
-
 sysctl -w fs.file-max=12000500
 sysctl -w fs.nr_open=20000500
 ulimit -n 4000000
@@ -23,3 +22,5 @@ sysctl -w net.ipv4.tcp_rmem='1024 4096 16384'
 sysctl -w net.ipv4.tcp_wmem='1024 4096 16384'
 sysctl -w net.core.rmem_max=16384
 sysctl -w net.core.wmem_max=16384
+
+cat ~/.ssh/id_rsa.pub  >> /root/.ssh/authorized_keys
