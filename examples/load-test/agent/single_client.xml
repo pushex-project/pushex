@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE tsung SYSTEM "./tsung-1.0.dtd">
-<!-- tsung -I CONTROLLER_IP -f single_client.xml start -->
+<!-- tsung -I 68.183.114.41 -f single_client.xml start -->
 <tsung loglevel="debug" version="1.0">
   <clients>
-    <client host="68.183.119.40" cpu="4" use_controller_vm="false" maxusers="64000" />
-    <!-- <client host="68.183.128.148" cpu="4" use_controller_vm="false" maxusers="64000" /> -->
+    <client host="68.183.141.122" cpu="4" use_controller_vm="false" maxusers="64000" />
+    <client host="159.89.234.78" cpu="4" use_controller_vm="false" maxusers="64000" />
   </clients>
 
   <servers>
-    <server host="68.183.115.152" port="4006" type="tcp" />
+    <server host="68.183.141.121" port="4006" type="tcp" />
   </servers>
 
   <load>
-    <arrivalphase phase="1" duration="100" unit="second">
-      <users maxnumber="100000" arrivalrate="2000" unit="second" />
+    <arrivalphase phase="1" duration="200" unit="second">
+      <users maxnumber="128000" arrivalrate="1500" unit="second" />
     </arrivalphase>
   </load>
 
