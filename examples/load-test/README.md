@@ -14,7 +14,7 @@ The controller / clients all need to have Tsung installed and to also be network
 
 The server is installed by copying all of agent/setup.sh onto the Ubuntu node. Tsung is not used, but it's okay to keep it there for simplicity.
 
-Run `/usr/local/bin/elixir --name pushex@push.server --cookie cookie -S mix run --no-halt` to start up the server.
+Run `ELIXIR_ERL_OPTIONS="+P 5000000" /usr/local/bin/elixir --name pushex@push.server --cookie cookie -S mix run --no-halt` to start up the server.
 
 Open another console and run `epmd -names` to open a remote observer, following https://gist.github.com/pnc/9e957e17d4f9c6c81294.
 
