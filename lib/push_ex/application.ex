@@ -33,7 +33,7 @@ defmodule PushEx.Application do
 
   def post_endpoint_children(),
     do: [
-      PushExWeb.PushPresence
+      {PushExWeb.PushPresence, [pool_size: 4]}
     ]
 
   def config_change(changed, _new, removed) do
