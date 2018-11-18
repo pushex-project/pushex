@@ -1,6 +1,10 @@
 defmodule PushExWeb.PushPresence do
   @moduledoc false
 
+  def handle_diff(_diff, state) do
+    {:ok, state}
+  end
+
   use Phoenix.Presence,
     otp_app: :push_ex,
     pubsub_server: PushEx.PubSub
