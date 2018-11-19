@@ -33,11 +33,17 @@ defmodule PushEx.Application do
 
   def post_endpoint_children(),
     do: [
-      PushExWeb.PushPresence
+      {PushExWeb.PushPresence, [pool_size: presence_pool_size()]}
     ]
 
   def config_change(changed, _new, removed) do
     PushExWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  def presence_pool_size do
+    Application.get_env(:push_ex, PushExWeb.Endpoint)
+    |> Keyword.get(:pubsub, [])
+    |> Keyword.get(:pool_size, 1)
   end
 end

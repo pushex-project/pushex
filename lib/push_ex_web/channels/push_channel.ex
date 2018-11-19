@@ -6,7 +6,7 @@ defmodule PushExWeb.PushChannel do
   alias PushExWeb.PushPresence
   alias PushEx.Instrumentation
 
-  intercept(["msg", "presence_diff"])
+  intercept(["msg"])
 
   def broadcast({:msg, channel}, item = %PushEx.Push{event: event}, opts \\ []) when is_bitstring(event) do
     if PushPresence.listeners?(channel) do
@@ -35,10 +35,6 @@ defmodule PushExWeb.PushChannel do
   def handle_out("msg", item = %PushEx.Push{data: data, event: event}, socket) do
     push(socket, "msg", %{data: data, event: event})
     Instrumentation.Push.delivered(item)
-    {:noreply, socket}
-  end
-
-  def handle_out("presence_diff", _msg, socket) do
     {:noreply, socket}
   end
 
