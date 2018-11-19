@@ -114,22 +114,4 @@ defmodule PushExWeb.PushChannelTest do
       assert PushEx.Test.MockInstrumenter.state().delivered == [[@push]]
     end
   end
-
-  describe "handle_out presence_diff" do
-    test "no push is sent" do
-      PushEx.Test.MockSocket.setup_config()
-      PushEx.Test.MockInstrumenter.setup_config()
-
-      capture_log(fn ->
-        {:ok, _, socket} =
-          socket(PushSocket, "test", %{})
-          |> subscribe_and_join(PushChannel, "c")
-
-        broadcast_from!(socket, "presence_diff", %{mock: true})
-        refute_push(_, _)
-      end)
-
-      assert PushEx.Test.MockInstrumenter.state().delivered == []
-    end
-  end
 end
