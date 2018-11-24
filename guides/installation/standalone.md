@@ -146,4 +146,4 @@ Instrumentation can be used to gather insights into the running system, but is c
 
 The app that you've created is a normal Elixir app. This means that you can utilize your normal deployment / monitoring solutions without much additional ceremony.
 
-If you deploy your app as a cluster, it is important that the nodes are able to communicate with each other. If they cannot, then the PG2 system will not work and you will receive missed messages. You can use your standard clustering methods on the nodes, or you can opt to switch out the pubsub `Phoenix.PubSub.PG2` with  `Phoenix.PubSub.Redis`. It is a requirement to use Redis pubsub on Heroku, as it does not have private networking.
+If you deploy your app as a cluster, it is important that the nodes are able to communicate with each other. If they cannot, then the PG2 system will not work and you will receive missed messages. You can use your standard clustering methods on the nodes, or you can opt to switch out the pubsub `Phoenix.PubSub.PG2` with `Phoenix.PubSub.Redis`. It is a requirement to use Redis pubsub on Heroku, as it does not have private networking.
