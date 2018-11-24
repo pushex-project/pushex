@@ -1,6 +1,6 @@
 # Installation - Standalone
 
-PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.
+Push.ex is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.
 
 This guide will go through the steps necessary to create a standalone deployment of Push.ex tailored to your business needs, from start to finish.
 
@@ -138,7 +138,7 @@ end
 
 It's crucial that your application ships with proper authentication logic, or anyone could access sensitive information over your sockets. This may be fine if you're pushing data down to all users of a marketing site, but would be unacceptable in any environment with separate users.
 
-PushEx behaviours are all documented with their types. It is possible to fully customize the flow of the system using these behaviours. An example of this is accepting a JWT on `socket_connect` + `channel_join` and enforcing that the JWT is valid and matches private channel claims.
+Push.ex behaviours are all documented with their types. It is possible to fully customize the flow of the system using these behaviours. An example of this is accepting a JWT on `socket_connect` + `channel_join` and enforcing that the JWT is valid and matches private channel claims.
 
 Instrumentation can be used to gather insights into the running system, but is completely optional.
 
