@@ -16,7 +16,7 @@ Ensure that your Elixir is version >= 1.7 and that your Erlang is >= OTP21. You 
 elixir --version
 Erlang/OTP 21 [erts-10.1.1] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe]
 
-Elixir 1.7.3 (compiled with Erlang/OTP 19)
+Elixir 1.7.4 (compiled with Erlang/OTP 21)
 ```
 
 ## Instructions
