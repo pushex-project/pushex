@@ -17,7 +17,6 @@ The best way to get started is by following the [Standalone Installation Guide](
 
 ## TODO (Prioritized)
 
-- Load testing harness
 - Test PushEx.js
 - Write JS documentation
 - Write installation guide (existing phoenix app)
