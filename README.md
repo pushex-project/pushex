@@ -1,8 +1,8 @@
-# Push.ex
+# PushEx
 
-Push.ex is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.
+PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.
 
-Push.ex is currently in a pre-release stage as requirements of full release are being met (tests, documentation, load testing).
+PushEx is currently in a pre-release stage as requirements of full release are being met (tests, documentation, load testing).
 
 ## Features
 
@@ -15,7 +15,7 @@ Push.ex is currently in a pre-release stage as requirements of full release are 
 
 The best way to get started is by following the [Standalone Installation Guide](https://hexdocs.pm/push_ex/standalone.html).
 
-It is possible to integrate Push.ex with an existing Phoenix application, although this is not recommended for appplications which are deployed often. The installation guide for this case is slated for the future. Please open an issue if you'd like it for your use case.
+It is possible to integrate PushEx with an existing Phoenix application, although this is not recommended for appplications which are deployed often. The installation guide for this case is slated for the future. Please open an issue if you'd like it for your use case.
 
 ## TODO (Prioritized)
 
@@ -26,6 +26,6 @@ It is possible to integrate Push.ex with an existing Phoenix application, althou
 ## Icebox
 
 - Better controller 422 handling (show specific field reasons)
-- Replace `Push.ex.Instrumentation.Push` implementation as phoenix instrumenters
+- Replace `PushEx.Instrumentation.Push` implementation as phoenix instrumenters
   - This would be for performance reasons
   - It may not be necessary depending on the results of load testing
