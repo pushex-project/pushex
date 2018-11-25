@@ -19,7 +19,6 @@ It is possible to integrate PushEx with an existing Phoenix application, althoug
 
 ## TODO (Prioritized)
 
-- Test Pushex.js
 - Write JS documentation
 - Write installation guide (existing phoenix app)
 
