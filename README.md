@@ -10,6 +10,7 @@ PushEx is currently in a pre-release stage as requirements of full release are b
 - Push API implementation
 - Customizable hook points to allow authentication and instrumentation
 - Designed for performance with a large number of connections and messages
+- JS client built on top of Phoenix.js
 
 ## Get Started
 
