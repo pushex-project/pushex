@@ -8,6 +8,7 @@ PushEx is currently in a pre-release stage as requirements of full release are b
 
 - [Hexdocs.pm](https://hexdocs.pm/push_ex)
 - [Pushex.js Github](https://github.com/pushex-project/pushex.js)
+- [Pushex.js npm](https://www.npmjs.com/package/pushex.js)
 
 ## Features
 
