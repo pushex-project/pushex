@@ -3,7 +3,7 @@ defmodule PushEx.MixProject do
 
   def project do
     [
-      app: :pushex,
+      app: :push_ex,
       version: "0.2.0-rc1",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
