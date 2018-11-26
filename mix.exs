@@ -60,11 +60,25 @@ defmodule PushEx.MixProject do
   defp docs() do
     [
       extras: [
-        "guides/installation/standalone.md"
+        "guides/installation/standalone.md",
+        "guides/js.md"
       ],
       groups_for_extras: [
-        Installation: Path.wildcard("guides/installation/*.md")
-      ]
+        "Installation": Path.wildcard("guides/installation/*.md")
+      ],
+      groups_for_modules: [
+        "Behaviours": [
+          PushEx.Behaviour.Controller,
+          PushEx.Behaviour.PushInstrumentation,
+          PushEx.Behaviour.Socket
+        ],
+        "Data Types": [
+          PushEx.Push
+        ],
+        "Misc": [
+          PushExWeb.Router.Helpers
+        ]
+      ],
     ]
   end
 end
