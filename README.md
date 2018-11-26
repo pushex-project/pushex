@@ -4,6 +4,11 @@ PushEx is an implementation of Phoenix websockets/channels which handles best pr
 
 PushEx is currently in a pre-release stage as requirements of full release are being met (tests, documentation, load testing).
 
+## Key Links
+
+- [Hexdocs.pm](https://hexdocs.pm/push_ex)
+- [Pushex.js Github](https://github.com/pushex-project/pushex.js)
+
 ## Features
 
 - Push socket/channel implementation
@@ -17,15 +22,3 @@ PushEx is currently in a pre-release stage as requirements of full release are b
 The best way to get started is by following the [Standalone Installation Guide](https://hexdocs.pm/push_ex/standalone.html).
 
 It is possible to integrate PushEx with an existing Phoenix application, although this is not recommended for appplications which are deployed often. The installation guide for this case is slated for the future. Please open an issue if you'd like it for your use case.
-
-## TODO (Prioritized)
-
-- Write JS documentation
-- Write installation guide (existing phoenix app)
-
-## Icebox
-
-- Better controller 422 handling (show specific field reasons)
-- Replace `PushEx.Instrumentation.Push` implementation as phoenix instrumenters
-  - This would be for performance reasons
-  - It may not be necessary depending on the results of load testing
