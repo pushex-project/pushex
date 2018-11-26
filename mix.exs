@@ -3,14 +3,14 @@ defmodule PushEx.MixProject do
 
   def project do
     [
-      app: :push_ex,
-      version: "0.1.0-rc1",
+      app: :pushex,
+      version: "0.2.0-rc1",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      description: "TODO",
+      description: "PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.",
       package: package(),
       docs: docs()
     ]
@@ -31,8 +31,8 @@ defmodule PushEx.MixProject do
       maintainers: [
         "Steve Bussey"
       ],
-      licenses: ["TODO"],
-      links: %{github: "https://www.github.com/SalesLoft/push.ex"},
+      licenses: ["MIT"],
+      links: %{github: "https://github.com/pushex-project/pushex"},
       files: ~w(lib) ++ ~w(mix.exs README.md)
     ]
   end

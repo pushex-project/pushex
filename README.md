@@ -22,3 +22,11 @@ PushEx is currently in a pre-release stage as requirements of full release are b
 The best way to get started is by following the [Standalone Installation Guide](https://hexdocs.pm/push_ex/standalone.html).
 
 It is possible to integrate PushEx with an existing Phoenix application, although this is not recommended for appplications which are deployed often. The installation guide for this case is slated for the future. Please open an issue if you'd like it for your use case.
+
+## Current Version
+
+Add the following to your mix.exs `deps` in order to get the latest version of PushEx:
+
+```
+  {:pushex, "~> 0.2.0-rc1"},
+```
