@@ -1,5 +1,10 @@
 # PushEx
 
+[![Hex.pm](https://img.shields.io/hexpm/v/push_ex.svg)](https://hex.pm/packages/push_ex)
+[![Hex.pm](https://img.shields.io/hexpm/dt/push_ex.svg)](https://hex.pm/packages/push_ex)
+[![Hex.pm](https://img.shields.io/hexpm/l/push_ex.svg)](https://github.com/pushex-project/pushex/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/pushex-project/pushex.svg?branch=master)](https://travis-ci.org/pushex-project/pushex)
+
 PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.
 
 PushEx is currently in a pre-release stage as requirements of full release are being met (tests, documentation, load testing).
