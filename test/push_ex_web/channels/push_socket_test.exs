@@ -36,15 +36,15 @@ defmodule PushExWeb.PushSocketTest do
         empty_map = %{}
 
         assert %{
-          channel_pids: ^empty_map,
-          transport_pids: %{
-            ^transport_pid => %{
-              identifier: "id",
-              online_at: _,
-              type: :channel_test
-            }
-          }
-        } = PushEx.Instrumentation.Tracker.state()
+                 channel_pids: ^empty_map,
+                 transport_pids: %{
+                   ^transport_pid => %{
+                     identifier: "id",
+                     online_at: _,
+                     type: :channel_test
+                   }
+                 }
+               } = PushEx.Instrumentation.Tracker.state()
       end)
     end
   end

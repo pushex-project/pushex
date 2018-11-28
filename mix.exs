@@ -10,7 +10,8 @@ defmodule PushEx.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      description: "PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.",
+      description:
+        "PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.",
       package: package(),
       docs: docs()
     ]
@@ -64,10 +65,10 @@ defmodule PushEx.MixProject do
         "guides/js.md"
       ],
       groups_for_extras: [
-        "Installation": Path.wildcard("guides/installation/*.md")
+        Installation: Path.wildcard("guides/installation/*.md")
       ],
       groups_for_modules: [
-        "Behaviours": [
+        Behaviours: [
           PushEx.Behaviour.Controller,
           PushEx.Behaviour.PushInstrumentation,
           PushEx.Behaviour.Socket
@@ -75,10 +76,10 @@ defmodule PushEx.MixProject do
         "Data Types": [
           PushEx.Push
         ],
-        "Misc": [
+        Misc: [
           PushExWeb.Router.Helpers
         ]
-      ],
+      ]
     ]
   end
 end
