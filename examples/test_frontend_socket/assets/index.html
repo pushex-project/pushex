@@ -2,10 +2,11 @@
   <head>
     <link rel="icon" type="image/gif" href="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
     <script type="text/javascript" src="./node_modules/phoenix/priv/static/phoenix.js"></script>
+    <script type="text/javascript" src="./node_modules/pushex/dist/pushex.js"></script>
   </head>
   <body>
 
-    <script  type="text/javascript">
+    <script type="text/javascript">
       const socket = new Phoenix.Socket("ws://localhost:4004/push_socket", {params: {}})
       socket.connect()
 
@@ -22,5 +23,34 @@
           .receive("timeout", () => console.log("Networking issue. Still waiting...", name) )
       }
     </script>
+
+    <script type="text/javascript">
+      const pushex = new Pushex.Pushex('ws://localhost:4004/push_socket', {})
+      pushex.subscribe('test').bind('*', (event, data) => {
+        console.log('test channel received event/data', event, data)
+      })
+      pushex.subscribe('test2').bind('*', (event, data) => {
+        console.log('test2 channel received event/data', event, data)
+      })
+      pushex.connect()
+    </script>
+
+    <p>
+      Paste the following code into cURL to test API requests.
+      Note that CORS isn't supported by default and this demo runs on multiple ports.
+    </p>
+    <p>
+      Tweak the payload to change what is sent.
+    </p>
+    <textarea rows="10" cols="50">
+      curl -X POST \
+        http://localhost:4004/api/push \
+        -H 'content-type: application/json' \
+        -d '{
+        "channel": ["test", "test2", "test", "not connected"],
+        "data": "data",
+        "event": "woohoo"
+      }'
+    </textarea>
   </body>
 </html>
