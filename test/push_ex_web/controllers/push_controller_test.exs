@@ -14,6 +14,8 @@ defmodule PushExWeb.PushControllerTest do
         assert conn
                |> post("/api/push", params)
                |> json_response(200) == %{"channel" => [channel], "data" => "d", "event" => "e"}
+
+        Process.sleep(20)
       end)
 
     assert %{
@@ -75,6 +77,8 @@ defmodule PushExWeb.PushControllerTest do
           assert conn
                  |> post("/api/push", params)
                  |> json_response(422) == %{"error" => "Invalid push arguments: channel, data, event are required."}
+
+          Process.sleep(20)
         end)
 
       refute log =~ "Push.ItemServer"
@@ -91,6 +95,8 @@ defmodule PushExWeb.PushControllerTest do
           assert conn
                  |> post("/api/push", params)
                  |> json_response(403) == %{"error" => "Access forbidden"}
+
+          Process.sleep(20)
         end)
 
       refute log =~ "Push.ItemServer"
@@ -105,6 +111,8 @@ defmodule PushExWeb.PushControllerTest do
           assert conn
                  |> post("/api/push", params)
                  |> response(400) == "resp"
+
+          Process.sleep(20)
         end)
 
       refute log =~ "Push.ItemServer"
