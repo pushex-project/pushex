@@ -8,7 +8,10 @@ defmodule PushExWeb.PushController do
 
     with_auth(conn, params, fn conn, params ->
       with_params_validation(conn, params, fn conn, %{"channel" => channel, "data" => data, "event" => event} ->
-        wrapped_channel = List.wrap(channel)
+        wrapped_channel =
+          channel
+          |> List.wrap()
+          |> Enum.uniq()
 
         wrapped_channel
         |> Enum.each(fn channel ->

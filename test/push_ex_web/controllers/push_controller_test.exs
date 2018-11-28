@@ -27,11 +27,11 @@ defmodule PushExWeb.PushControllerTest do
     assert log =~ "Push.ItemServer no_listeners channel=#{channel}"
   end
 
-  test "multiple channels can be pushed to", %{conn: conn, test: channel} do
+  test "multiple channels can be pushed to, without duplicates", %{conn: conn, test: channel} do
     PushEx.Test.MockController.setup_config(:logging)
     PushEx.Test.MockInstrumenter.setup_config()
     channels = [to_string(channel), to_string(channel) <> "2"]
-    params = %{"channel" => channels, "data" => "d", "event" => "e"}
+    params = %{"channel" => [to_string(channel) | channels], "data" => "d", "event" => "e"}
 
     log =
       capture_log(fn ->
