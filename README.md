@@ -31,3 +31,7 @@ Add the following to your mix.exs `deps` in order to get the latest version of P
 ```
   {:push_ex, "~> 0.2.0-rc2"},
 ```
+
+## Examples
+
+Examples are located in the examples directory. The test_frontend_socket example is the most complete and simple example.
