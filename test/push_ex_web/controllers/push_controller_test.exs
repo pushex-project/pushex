@@ -38,6 +38,7 @@ defmodule PushExWeb.PushControllerTest do
         assert conn
                |> post("/api/push", params)
                |> json_response(200) == %{"channel" => channels, "data" => "d", "event" => "e"}
+
         Process.sleep(20)
       end)
 
@@ -118,6 +119,7 @@ defmodule PushExWeb.PushControllerTest do
           assert conn
                  |> post("/api/push", params)
                  |> json_response(202) == %{"channel" => ["modified"], "data" => "d", "event" => "e"}
+
           Process.sleep(20)
         end)
 
