@@ -30,6 +30,18 @@ defmodule PushExTest do
     end
   end
 
+  describe "connected_channel_count/0" do
+    test "it is exposed" do
+      assert PushEx.connected_channel_count() == 0
+    end
+  end
+
+  describe "connected_socket_count/0" do
+    test "it is exposed" do
+      assert PushEx.connected_socket_count() == 0
+    end
+  end
+
   defp with_instrumentation(_) do
     PushEx.Test.MockInstrumenter.setup_config()
 

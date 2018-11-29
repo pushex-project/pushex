@@ -1,8 +1,5 @@
 defmodule PushEx.Instrumentation.Tracker do
-  @moduledoc """
-  GenServer that tracks channels and transports to keep track of how many sockets/channels are connected currently.
-  All tracking is for the current node only. Presence must be used for full-cluster tracking.
-  """
+  @moduledoc false
 
   use GenServer
 
@@ -18,19 +15,11 @@ defmodule PushEx.Instrumentation.Tracker do
     {:ok, %{channel_pids: %{}, transport_pids: %{}}}
   end
 
-  @doc """
-  Returns the number of sockets (transports) connected to this node.
-  """
-  @spec connected_socket_count() :: non_neg_integer()
   def connected_socket_count(opts \\ []) do
     pid = Keyword.get(opts, :pid, __MODULE__)
     GenServer.call(pid, :connected_socket_count)
   end
 
-  @doc """
-  Returns the number of channels connected to this node.
-  """
-  @spec connected_channel_count() :: non_neg_integer()
   def connected_channel_count(opts \\ []) do
     pid = Keyword.get(opts, :pid, __MODULE__)
     GenServer.call(pid, :connected_channel_count)
