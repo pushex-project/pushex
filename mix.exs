@@ -64,7 +64,7 @@ defmodule PushEx.MixProject do
   defp docs() do
     [
       source_ref: "v#{@version}",
-      main: "README",
+      main: "readme",
       extra_section: "GUIDES",
       extras: [
         "README.md",
