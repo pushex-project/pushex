@@ -1,14 +1,25 @@
 defmodule PushEx do
   @moduledoc """
-  PushEx context exposes functions related to the core competency of PushEx, enqueueing pushes.
+  PushEx context exposes public API functions.
   """
 
-  alias PushEx.Push
-  alias PushEx.Instrumentation
+  alias PushEx.{Instrumentation, Push}
   alias Push.ItemProducer
 
   @doc """
-  Triggers a Push to be instrumented/enqueued into the system
+  Returns the number of sockets (transports) connected to this node.
+  """
+  @spec connected_socket_count() :: non_neg_integer()
+  defdelegate connected_socket_count(), to: Instrumentation.Tracker
+
+  @doc """
+  Returns the number of channels connected to this node.
+  """
+  @spec connected_channel_count() :: non_neg_integer()
+  defdelegate connected_channel_count(), to: Instrumentation.Tracker
+
+  @doc """
+  Triggers a Push to be instrumented/enqueued into the system.
   """
   @spec push(%Push{}) :: true
   def push(item = %Push{}) do
