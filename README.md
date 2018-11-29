@@ -34,7 +34,7 @@ It is possible to integrate PushEx with an existing Phoenix application, althoug
 Add the following to your mix.exs `deps` in order to get the latest version of PushEx:
 
 ```
-  {:push_ex, "~> 0.2.0-rc2"},
+  {:push_ex, "~> 1.0.0-rc1"},
 ```
 
 ## Examples
