@@ -1,6 +1,6 @@
 defmodule PushEx do
   @moduledoc """
-  PushEx context exposes public API functions of PushEx, following the context model encouraged by Elixir.
+  PushEx context exposes public API functions
   """
 
   alias PushEx.{Instrumentation, Push}
