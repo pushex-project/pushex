@@ -1,4 +1,4 @@
-# Usage - Push API
+# HTTP Push API
 
 PushEx exposes a very small interface to create pushes that are sent to connected clients. This interface is exposed automatically for you, and is protected through the `PushEx.Behaviour.Controller` implementation that is defined for your application.
 

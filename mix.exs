@@ -1,15 +1,18 @@
 defmodule PushEx.MixProject do
   use Mix.Project
 
+  @version "1.0.0-rc2"
+
   def project do
     [
       app: :push_ex,
-      version: "1.0.0-rc2",
+      version: @version,
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      name: "PushEx",
       description:
         "PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.",
       package: package(),
@@ -60,11 +63,14 @@ defmodule PushEx.MixProject do
 
   defp docs() do
     [
+      source_ref: "v#{@version}",
+      main: "README",
+      extra_section: "GUIDES",
       extras: [
         "README.md",
-        "guides/js.md",
         "guides/installation/standalone.md",
-        "guides/usage/push_api.md"
+        "guides/usage/push_api.md",
+        "guides/usage/js.md",
       ],
       groups_for_extras: [
         Installation: Path.wildcard("guides/installation/*.md"),
