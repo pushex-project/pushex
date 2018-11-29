@@ -19,7 +19,7 @@ defmodule PushEx do
   defdelegate connected_channel_count(), to: Instrumentation.Tracker
 
   @doc """
-  Triggers a Push to be instrumented/enqueued into the system
+  Triggers a Push to be instrumented/enqueued into the system.
   """
   @spec push(%Push{}) :: true
   def push(item = %Push{}) do
