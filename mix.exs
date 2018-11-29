@@ -61,6 +61,7 @@ defmodule PushEx.MixProject do
   defp docs() do
     [
       extras: [
+        "README.md",
         "guides/installation/standalone.md",
         "guides/js.md"
       ],
