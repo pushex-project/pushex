@@ -1,6 +1,6 @@
 defmodule PushEx do
   @moduledoc """
-  PushEx context exposes public API functions
+  PushEx context exposes public API functions.
   """
 
   alias PushEx.{Instrumentation, Push}
