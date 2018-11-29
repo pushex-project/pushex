@@ -18,7 +18,7 @@ defmodule PushEx.Behaviour.Socket do
               | {:error, reason :: map()}
 
   @doc """
-  See `c:Phoenix.Socket.id/1`s
+  See `c:Phoenix.Socket.id/1`
   """
   @callback socket_id(Phoenix.Socket.t()) :: bitstring()
 
