@@ -40,3 +40,7 @@ Add the following to your mix.exs `deps` in order to get the latest version of P
 ## Examples
 
 Examples are located in the examples directory. The test_frontend_socket example is the most complete and simple example.
+
+## Company Sponsor
+
+A big thanks to [SalesLoft](https://salesloft.com) for helping with the development and open-sourcing of PushEx. Their support of my professional and personal time into this project (it was formed in an Innovation Week) is the type of thing that makes them [Atlanta's best place to work](https://www.ajc.com/business/growing-software-firm-built-core-values/Xjnm3EnCNe4Cub0JNbPOZL/).
