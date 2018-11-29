@@ -34,7 +34,7 @@ mix new demo_app --sup && cd demo_app
 
   defp deps do
     [
-      {:push_ex, "0.0.1-rc4"}
+      {:push_ex, "FROM README"}
     ]
   end
 ```
@@ -44,7 +44,7 @@ mix new demo_app --sup && cd demo_app
 ```
 use Mix.Config
 
-# Configures the endpoint
+# Configures the endpoint, these are Phoenix Endpoint options
 config :push_ex, PushExWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: PushExWeb.ErrorView, accepts: ~w(json)],
@@ -54,9 +54,9 @@ config :push_ex, PushExWeb.Endpoint,
   watchers: [],
   server: true
 
-# Configures Elixir's Logger
+# Configures Elixir's Logger (vary based on deployment environment)
 config :logger, :console,
-  level: :debug,
+  level: :error,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
