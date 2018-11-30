@@ -72,6 +72,7 @@ defmodule PushEx.MixProject do
         "guides/usage/authentication.md",
         "guides/usage/instrumentation.md",
         "guides/usage/js.md",
+        "guides/usage/pub_sub.md",
         "guides/usage/push_api.md",
       ],
       groups_for_extras: [
