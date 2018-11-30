@@ -19,10 +19,10 @@ defmodule PushExWeb.PushControllerTest do
       end)
 
     assert %{
-             api_processed: [[]],
-             api_requested: [[]],
+             api_processed: [[:ctx]],
+             api_requested: [[:ctx]],
              delivered: [],
-             requested: [[%PushEx.Push{channel: ^channel, data: "d", event: "e", unix_ms: _}]]
+             requested: [[%PushEx.Push{channel: ^channel, data: "d", event: "e", unix_ms: _}, :ctx]]
            } = PushEx.Test.MockInstrumenter.state()
 
     assert log =~ "LoggingController auth/2 " <> inspect({"conn", params})
@@ -52,13 +52,13 @@ defmodule PushExWeb.PushControllerTest do
              api_requested: api_requested,
              delivered: delivered,
              requested: [
-               [%PushEx.Push{channel: ^ch1, data: "d", event: "e", unix_ms: _}],
-               [%PushEx.Push{channel: ^ch0, data: "d", event: "e", unix_ms: _}]
+               [%PushEx.Push{channel: ^ch1, data: "d", event: "e", unix_ms: _}, :ctx],
+               [%PushEx.Push{channel: ^ch0, data: "d", event: "e", unix_ms: _}, :ctx]
              ]
            } = PushEx.Test.MockInstrumenter.state()
 
-    assert api_processed == [[]]
-    assert api_requested == [[]]
+    assert api_processed == [[:ctx]]
+    assert api_requested == [[:ctx]]
     assert delivered == []
 
     assert log =~ "LoggingController auth/2 " <> inspect({"conn", params})

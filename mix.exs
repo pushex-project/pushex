@@ -87,7 +87,8 @@ defmodule PushEx.MixProject do
           PushEx.Behaviour.Socket
         ],
         "Data Types": [
-          PushEx.Push
+          PushEx.Push,
+          PushEx.Instrumentation.Push.Context
         ],
         Misc: [
           PushExWeb.Router.Helpers
