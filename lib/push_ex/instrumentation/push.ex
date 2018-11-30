@@ -21,33 +21,47 @@ defmodule PushEx.Instrumentation.Push do
     end
   end
 
-  alias PushEx.{Config, Push}
+  alias PushEx.{Config, Instrumentation, Push}
 
   def requested(push = %Push{}) do
     ctx = Context.new()
 
-    Config.push_listeners()
-    |> Enum.each(& &1.requested(push, ctx))
+    on_shard(ctx, fn ->
+      Config.push_listeners()
+      |> Enum.each(& &1.requested(push, ctx))
+    end)
   end
 
   def delivered(push = %Push{}) do
     ctx = Context.new()
 
-    Config.push_listeners()
-    |> Enum.each(& &1.delivered(push, ctx))
+    on_shard(ctx, fn ->
+      Config.push_listeners()
+      |> Enum.each(& &1.delivered(push, ctx))
+    end)
   end
 
   def api_requested() do
     ctx = Context.new()
 
-    Config.push_listeners()
-    |> Enum.each(& &1.api_requested(ctx))
+    on_shard(ctx, fn ->
+      Config.push_listeners()
+      |> Enum.each(& &1.api_requested(ctx))
+    end)
   end
 
   def api_processed() do
     ctx = Context.new()
 
-    Config.push_listeners()
-    |> Enum.each(& &1.api_processed(ctx))
+    on_shard(ctx, fn ->
+      Config.push_listeners()
+      |> Enum.each(& &1.api_processed(ctx))
+    end)
+  end
+
+  defp on_shard(%Context{unix_ms_occurred_at: time}, func) do
+    time
+    |> Instrumentation.Supervisor.shard_for_time()
+    |> Instrumentation.Shard.execute(func)
   end
 end

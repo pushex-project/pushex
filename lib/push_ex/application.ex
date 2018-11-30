@@ -5,6 +5,7 @@ defmodule PushEx.Application do
 
   def start(_type, _args) do
     check_config!()
+    set_pool_config()
 
     children =
       [
@@ -28,12 +29,13 @@ defmodule PushEx.Application do
     do: [
       PushEx.Push.ItemProducer,
       PushEx.Push.ItemConsumer,
-      PushEx.Instrumentation.Tracker
+      PushEx.Instrumentation.Tracker,
+      PushEx.Instrumentation.Supervisor
     ]
 
   def post_endpoint_children(),
     do: [
-      {PushExWeb.PushPresence, [pool_size: presence_pool_size()]}
+      {PushExWeb.PushPresence, [pool_size: pool_size()]}
     ]
 
   def config_change(changed, _new, removed) do
@@ -41,9 +43,16 @@ defmodule PushEx.Application do
     :ok
   end
 
-  def presence_pool_size do
-    Application.get_env(:push_ex, PushExWeb.Endpoint)
-    |> Keyword.get(:pubsub, [])
-    |> Keyword.get(:pool_size, 1)
+  def pool_size do
+    Application.get_env(:push_ex, :internal_pool_size, 1)
+  end
+
+  defp set_pool_config() do
+    presence_pool_size =
+      Application.get_env(:push_ex, PushExWeb.Endpoint)
+      |> Keyword.get(:pubsub, [])
+      |> Keyword.get(:pool_size, 1)
+
+    Application.put_env(:push_ex, :internal_pool_size, presence_pool_size)
   end
 end
