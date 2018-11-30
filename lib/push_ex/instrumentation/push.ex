@@ -3,7 +3,7 @@ defmodule PushEx.Instrumentation.Push do
 
   defmodule Context do
     @moduledoc """
-    Generic information about the instrumentation event
+    Generic information about the instrumentation event.
     """
 
     @type t :: %PushEx.Instrumentation.Push.Context{
@@ -13,6 +13,7 @@ defmodule PushEx.Instrumentation.Push do
     @enforce_keys [:unix_ms_occurred_at]
     defstruct @enforce_keys
 
+    @doc false
     def new() do
       %__MODULE__{
         unix_ms_occurred_at: PushEx.unix_ms_now()
