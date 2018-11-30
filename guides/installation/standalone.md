@@ -150,6 +150,6 @@ The app that you've created is a normal Elixir app. This means that you can util
 mix run --no-halt
 ```
 
-However, it is recommended to use Distillery for all production releases.
+You can read more about deployment in the [Deployment](/deployment.html) guide.
 
 If you deploy your app as a cluster, it is important that the nodes are able to communicate with each other. If they cannot, then the PG2 system will not work and you will receive missed messages. You can read about different clustering solutions in the [Phoenix PubSub](/pub_sub.html) guide.
