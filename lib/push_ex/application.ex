@@ -5,7 +5,7 @@ defmodule PushEx.Application do
 
   def start(_type, _args) do
     check_config!()
-    set_pool_config()
+    set_pool_size()
 
     children =
       [
@@ -47,7 +47,7 @@ defmodule PushEx.Application do
     Application.get_env(:push_ex, :internal_pool_size, 1)
   end
 
-  defp set_pool_config() do
+  defp set_pool_size() do
     presence_pool_size =
       Application.get_env(:push_ex, PushExWeb.Endpoint)
       |> Keyword.get(:pubsub, [])
