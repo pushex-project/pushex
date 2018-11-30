@@ -27,7 +27,9 @@ PushEx is currently in a pre-release stage as requirements of full release are b
 
 The best way to get started is by following the [Standalone Installation Guide](https://hexdocs.pm/push_ex/standalone.html).
 
-It is possible to integrate PushEx with an existing Phoenix application, although this is not recommended for appplications which are deployed often. The installation guide for this case is slated for the future. Please open an issue if you'd like it for your use case.
+It is possible to integrate PushEx with an existing Phoenix application, although this is not recommended for applications which are deployed often. The installation guide for this case is slated for the future. Please open an issue if you'd like it for your use case.
+
+The [PushEx docs](https://hexdocs.pm/push_ex) contain many guides such as authentication, deployment, instrumentation, PushEx.js, PubSub, API usage. Please see this guide for up to date information. You can also access these guides in the repo folder `guides`.
 
 ## Current Version
 
