@@ -5,7 +5,7 @@ defmodule PushEx.Instrumentation.SupervisorTest do
 
   describe "start_link/1" do
     test "it can be started", %{test: test} do
-      assert {:ok, pid} = Supervisor.start_link([prefix: test])
+      assert {:ok, pid} = Supervisor.start_link(prefix: test)
     end
   end
 
@@ -17,7 +17,7 @@ defmodule PushEx.Instrumentation.SupervisorTest do
     end
 
     test "it can accept dynamic pool sizes", %{test: test} do
-      assert {:ok, pid} = Supervisor.start_link([prefix: test, pool_size: 2])
+      assert {:ok, pid} = Supervisor.start_link(prefix: test, pool_size: 2)
 
       assert pid = Supervisor.shard_for_time(0, prefix: test, pool_size: 2)
       assert is_pid(pid)

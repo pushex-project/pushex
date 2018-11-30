@@ -7,8 +7,8 @@ defmodule PushEx.Instrumentation.Push do
     """
 
     @type t :: %PushEx.Instrumentation.Push.Context{
-      unix_ms_occurred_at: non_neg_integer()
-    }
+            unix_ms_occurred_at: non_neg_integer()
+          }
 
     @enforce_keys [:unix_ms_occurred_at]
     defstruct @enforce_keys

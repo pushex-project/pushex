@@ -13,19 +13,19 @@ defmodule PushEx.Instrumentation.ShardTest do
 
   describe "start_link/1" do
     test "a Shard can start" do
-      assert {:ok, pid} = Shard.start_link(name: :"TestShard_0")
+      assert {:ok, pid} = Shard.start_link(name: :TestShard_0)
       assert is_pid(pid)
     end
   end
 
   describe "execute/2" do
     test "a Shard asynchronously executes the given function" do
-      assert {:ok, pid} = Shard.start_link(name: :"TestShard_0")
+      assert {:ok, pid} = Shard.start_link(name: :TestShard_0)
       test = self()
 
       Shard.execute(pid, fn ->
         assert pid == self()
-        send test, :done
+        send(test, :done)
       end)
 
       assert_receive :done
