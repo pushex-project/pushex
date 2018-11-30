@@ -24,6 +24,12 @@ The socket and channel authentication are a bit more complex than the controller
 
 A user may be generally allowed to open a socket to the system (they aren't listening to messages, but have the ability to start) but may be denied from joining certain channels. An example of this is that "user 1" is logged in (has ability to open a socket) but cannot join "user 2"'s push channel. Two different authentication strategies must be provided based on this.
 
+You can set your socket authentication implementation by using:
+
+```elixir
+config :push_ex, PushExWeb.PushSocket, socket_impl: DemoApp.Socket
+```
+
 ### Socket
 
 Socket authentication answers the question "should this request be able to connect to websockets at all?". Due to limitations in Phoenix Websocket implementation, it is not possible to use cookies when implementing socket authentication. Thus, it is very common to include a server signed token when connecting to a socket.
