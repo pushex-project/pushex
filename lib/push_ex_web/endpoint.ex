@@ -3,8 +3,10 @@ defmodule PushExWeb.Endpoint do
 
   use Phoenix.Endpoint, otp_app: :push_ex
 
+  @heroku_timeout_accommodation 45_000
+
   socket "/push_socket", PushExWeb.PushSocket,
-    websocket: true,
+    websocket: [timeout: @heroku_timeout_accommodation],
     longpoll: false
 
   # Code reloading can be explicitly enabled under the
