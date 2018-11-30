@@ -152,4 +152,4 @@ mix run --no-halt
 
 However, it is recommended to use Distillery for all production releases.
 
-If you deploy your app as a cluster, it is important that the nodes are able to communicate with each other. If they cannot, then the PG2 system will not work and you will receive missed messages. You can use your standard clustering methods on the nodes, or you can opt to switch out the pubsub `Phoenix.PubSub.PG2` with `Phoenix.PubSub.Redis`. It is a requirement to use Redis pubsub on Heroku, as it does not have private networking.
+If you deploy your app as a cluster, it is important that the nodes are able to communicate with each other. If they cannot, then the PG2 system will not work and you will receive missed messages. You can read about different clustering solutions in the [Phoenix PubSub](/pub_sub.html) guide.
