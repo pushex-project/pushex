@@ -69,8 +69,12 @@ defmodule PushEx.MixProject do
       extras: [
         "README.md",
         "guides/installation/standalone.md",
-        "guides/usage/push_api.md",
-        "guides/usage/js.md"
+        "guides/usage/authentication.md",
+        "guides/usage/deployment.md",
+        "guides/usage/instrumentation.md",
+        "guides/usage/js.md",
+        "guides/usage/pub_sub.md",
+        "guides/usage/push_api.md"
       ],
       groups_for_extras: [
         Installation: Path.wildcard("guides/installation/*.md"),

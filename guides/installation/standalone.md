@@ -6,7 +6,7 @@ This guide will go through the steps necessary to create a standalone deployment
 
 ## Why Standalone?
 
-A standalone installation is preferred and is how I would run any serious push service. This is because push services change very infrequently and so should not be deployed to often. Each deploy causes reconnection of current sockets and a slight miss of messages in that time. Having a standalone service also allows for easier scaling, as new nodes can be added to the cluster to quickly meet your push capacity needs.
+A standalone installation is preferred and is how I would run any serious push service. This is because push services change very infrequently and so should not be deployed to often. Each deploy causes reconnection of current sockets and a slight miss of messages in that time. Having a standalone service also allows for easier scaling, as new nodes can be added to the cluster too quickly meet your push capacity needs.
 
 ## Pre-installation
 
@@ -48,7 +48,7 @@ use Mix.Config
 config :push_ex, PushExWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: PushExWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: PushEx.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub: [name: PushEx.PubSub, adapter: Phoenix.PubSub.PG2, pool_size: 4],
   http: [port: 4004],
   check_origin: false,
   watchers: [],
