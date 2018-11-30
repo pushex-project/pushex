@@ -111,7 +111,7 @@ defmodule PushExWeb.PushChannelTest do
         assert_push("msg", ^output)
       end)
 
-      assert PushEx.Test.MockInstrumenter.state().delivered == [[@push]]
+      assert PushEx.Test.MockInstrumenter.state().delivered == [[@push, :ctx]]
     end
   end
 end
