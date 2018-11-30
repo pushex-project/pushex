@@ -17,6 +17,8 @@ Each instrumentation includes a `PushEx.Instrumentation.Push.Context` argument w
 
 The instrumentation behaviour provides `api_requested/1` and `api_processed/1`. This allows you to know each time that an API call is invoked and when it finishes.
 
+The `%Plug.Conn{}` and `params` map are currently *not* passed into this analytics function, because it could become very expensive to maintain the binaries longer than necessary. If you desire to log specific information at the controller level, you could do so in your authentication function, which receives the `%Plug.Conn{}` and `params`.
+
 ## Push Delivery
 
 The instrumentation behaviour provides `requested/2` and `delivered/2`. `requested` is invoked with the `PushEx.Push` contents when a Push originates in the system. `delivered` is invoked with the `PushEx.Push` contents when a Push is delivered to a channel.
