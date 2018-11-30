@@ -3,10 +3,11 @@
 Several hooks are provided to gather information about the execution of your PushEx server. These are provided by `PushEx.Behaviour.PushInstrumentation` and are configured by using:
 
 ```elixir
+# Note that you can set multiple listeners by including multiple in the list.
 config :push_ex, PushEx.Instrumentation, push_listeners: [DemoApp.PushInstrumenter]
 ```
 
-Note that you can set multiple listeners by including multiple in the list.
+Be careful with how you are handling your push logging. There could be sensitive information in the payload, and the payload could be quite large. If logging out every push / API call to disk or another logging service, it would be very easy to send a large amount of bytes very quickly.
 
 ## HTTP API
 
