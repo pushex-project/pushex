@@ -36,7 +36,7 @@ The [PushEx docs](https://hexdocs.pm/push_ex) contain many guides such as authen
 Add the following to your mix.exs `deps` in order to get the latest version of PushEx:
 
 ```
-  {:push_ex, "~> 1.0.0-rc3"},
+  {:push_ex, "~> 1.0.0-rc4"},
 ```
 
 ## Examples
