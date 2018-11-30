@@ -6,7 +6,7 @@ This guide will go through the steps necessary to create a standalone deployment
 
 ## Why Standalone?
 
-A standalone installation is preferred and is how I would run any serious push service. This is because push services change very infrequently and so should not be deployed to often. Each deploy causes reconnection of current sockets and a slight miss of messages in that time. Having a standalone service also allows for easier scaling, as new nodes can be added to the cluster too quickly meet your push capacity needs.
+A standalone installation is preferred and is how I would run any serious push service. This is because push services change very infrequently and so should not be deployed often. Each deploy causes reconnection of current sockets and a slight miss of messages in that time. Having a standalone service also allows for easier scaling, as new nodes can be added to the cluster too quickly meet your push capacity needs.
 
 ## Pre-installation
 
