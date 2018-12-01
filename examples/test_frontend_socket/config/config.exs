@@ -25,13 +25,13 @@ config :push_ex, PushExWeb.PushSocket, socket_impl: TestFrontendSocket
 
 config :push_ex, PushExWeb.PushController, controller_impl: TestFrontendSocket
 
-config :push_ex, PushExWeb.Router,
-  additional_plug_setup: fn ->
-    quote do
-      scope "/api", PushExWeb do
-        pipe_through :api
+additional_plug = quote do
+  scope "/api", PushExWeb do
+    pipe_through :api
 
-        post "/push2", PushController, :create
-      end
-    end
+    post "/push2", PushController, :create
   end
+end
+
+config :push_ex, PushExWeb.Router,
+  additional_plug_setup: additional_plug
