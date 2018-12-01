@@ -34,4 +34,4 @@ additional_plug = quote do
 end
 
 config :push_ex, PushExWeb.Router,
-  additional_plug_setup: additional_plug
+  additional_setup: additional_plug
