@@ -35,7 +35,7 @@ defmodule PushExWeb.PushChannel do
   def handle_out("msg", item = %PushEx.Push{data: data, event: event}, socket) do
     push(socket, "msg", %{data: data, event: event})
     Instrumentation.Push.delivered(item)
-    {:noreply, socket}
+    {:noreply, socket, :hibernate}
   end
 
   def handle_info(:after_join, socket) do

@@ -21,6 +21,6 @@ defmodule PushEx.Instrumentation.Shard do
 
   def handle_cast({:exec, func}, state) do
     func.()
-    {:noreply, state}
+    {:noreply, state, :hibernate}
   end
 end
