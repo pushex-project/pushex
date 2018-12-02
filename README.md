@@ -7,7 +7,7 @@
 
 PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.
 
-PushEx is currently in a pre-release stage as requirements of full release are being met (tests, documentation, load testing).
+PushEx is currently in release candidate of `1.0.0`. The library is fully functional, but I am waiting until we are using this in production before releasing `1.0.0`.
 
 ## Key Links
 
