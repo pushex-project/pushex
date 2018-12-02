@@ -26,6 +26,15 @@ config :push_ex, PushExWeb.PushSocket, socket_impl: TestFrontendSocket
 config :push_ex, PushExWeb.PushController, controller_impl: TestFrontendSocket
 
 additional_plug = quote do
+  pipeline :empty do
+  end
+
+  scope "/", TestFrontendSocket.Controller do
+    pipe_through :empty
+
+    get "/status7", Status, :show
+  end
+
   scope "/api", PushExWeb do
     pipe_through :api
 
@@ -34,4 +43,5 @@ additional_plug = quote do
 end
 
 config :push_ex, PushExWeb.Router,
-  additional_setup: additional_plug
+  additional_setup: additional_plug,
+  config_path: __ENV__.file

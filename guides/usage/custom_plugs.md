@@ -12,9 +12,12 @@ additional_setup = quote do
 end
 
 config :push_ex, PushExWeb.Router,
-  additional_setup: additional_setup
+  additional_setup: additional_setup,
+  config_path: __ENV__.file
 ```
 
 You can see that the additional setup uses a quoted block in order to include the custom code. This code will then be injected into the PushExWeb.Router at compile time.
 
-Due to this needing to happen at compile time, you must use a quoted block and not a module in your application's lib. Your app is compiled after all dependencies, but PushEx dependency would need access to a module in your app. This would cause an incorrect ordering and you would encounter a module not defined error. This also means that you would not be able to `use MyApp.CustomPlug` because `MyApp` isn't available during PushEx compilation.
+Due to this needing to happen at compile time, you must use a quoted block and not a module in your application's lib. Your app is compiled after all dependencies, but PushEx dependency would need access to a module in your app. This would cause an incorrect ordering and you would encounter a module not defined error. This also means that you would not be able to `use MyApp.CustomPlug` because `MyApp` isn't available during PushEx compilation. However, you are capable of writing controllers in your application similar to how `examples/test_frontend_socket` does with `Controller.Status`.
+
+You must path `config_path` for the additional plug setup to be compiled. This is due to needing to utilize `@external_resource` on your config file to cause PushEx to recompile on config.exs changes.

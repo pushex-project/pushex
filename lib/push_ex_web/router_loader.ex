@@ -12,4 +12,9 @@ defmodule PushExWeb.RouterLoader do
       ast
     end
   end
+
+  def external_resource() do
+    Application.get_env(:push_ex, PushExWeb.Router, [])
+    |> Keyword.get(:config_path)
+  end
 end

@@ -7,7 +7,10 @@ defmodule PushExWeb.Router do
     plug :accepts, ["json"]
   end
 
-  use PushExWeb.RouterLoader
+  if PushExWeb.RouterLoader.external_resource() do
+    use PushExWeb.RouterLoader
+    @external_resource PushExWeb.RouterLoader.external_resource()
+  end
 
   scope "/api", PushExWeb do
     pipe_through :api
