@@ -22,7 +22,8 @@ defmodule TestFrontendSocket.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:push_ex, ">= 0.0.0", path: "../.."}
+      {:push_ex, ">= 0.0.0", path: "../.."},
+      {:benchee, "~> 0.11", only: :dev}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
     ]
