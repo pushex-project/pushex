@@ -7,6 +7,8 @@ defmodule PushExWeb.Router do
     plug :accepts, ["json"]
   end
 
+  use PushExWeb.RouterLoader
+
   scope "/api", PushExWeb do
     pipe_through :api
 

@@ -70,6 +70,7 @@ defmodule PushEx.MixProject do
         "README.md",
         "guides/installation/standalone.md",
         "guides/usage/authentication.md",
+        "guides/usage/custom_plugs.md",
         "guides/usage/deployment.md",
         "guides/usage/instrumentation.md",
         "guides/usage/js.md",

@@ -24,3 +24,14 @@ config :push_ex, PushEx.Instrumentation, push_listeners: [TestFrontendSocket.Pus
 config :push_ex, PushExWeb.PushSocket, socket_impl: TestFrontendSocket
 
 config :push_ex, PushExWeb.PushController, controller_impl: TestFrontendSocket
+
+additional_plug = quote do
+  scope "/api", PushExWeb do
+    pipe_through :api
+
+    post "/push2", PushController, :create
+  end
+end
+
+config :push_ex, PushExWeb.Router,
+  additional_setup: additional_plug
