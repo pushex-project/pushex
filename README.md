@@ -25,7 +25,9 @@ PushEx is currently in release candidate of `1.0.0`. The library is fully functi
 
 ## Compared to Phoenix
 
-PushEx is built on top of Phoenix Channel and Presence. If you look at the source code, it is actually a very thin layer on top of this core functionality. Most of the code is around ensuring a scalable system which is set up for success without knowing how Phoenix works. PushEx is better compared to a pre-built microservice that is ready to go. By implementing a few functions, you can bring a fully baked push WebSocket server to your application. You will also benefit from community upgrades regarding functionality and performance; this is true both for Phoenix changes and PushEx changes. You do *not* need to know how Phoenix works in order to built a scalable system.
+PushEx is built on top of Phoenix Channel and Presence. If you look at the source code, it is actually a very thin layer on top of this core functionality; most of the code is around ensuring a scalable system which is set up for success without knowing how Phoenix works.
+
+PushEx is better compared to a pre-built microservice that is ready to go. By implementing a few application specific functions, you can bring a fully baked push WebSocket server to your application. You will also benefit from community upgrades regarding functionality and performance; this is true both for Phoenix changes and PushEx changes. You do *not* need to know how Phoenix works in order to built a scalable system.
 
 ## Get Started
 
