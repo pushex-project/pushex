@@ -37,9 +37,7 @@ defmodule PushExWeb.PushTracker do
   end
 
   def listeners?(topic) do
-    Phoenix.Presence.list(__MODULE__, topic)
+    Phoenix.Tracker.list(__MODULE__, topic)
     |> Enum.any?()
   end
-
-  def fetch(_topic, presences), do: presences
 end
