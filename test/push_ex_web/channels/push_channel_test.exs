@@ -28,7 +28,7 @@ defmodule PushExWeb.PushChannelTest do
 
     test "the channel is tracked in Instrumentation.Tracker and PushPresence" do
       assert PushEx.Instrumentation.Tracker.connected_channel_count() == 0
-      refute PushExWeb.PushPresence.listeners?("c")
+      refute PushExWeb.PushTracker.listeners?("c")
 
       PushEx.Test.MockSocket.setup_logging_config()
 
@@ -40,7 +40,7 @@ defmodule PushExWeb.PushChannelTest do
       end)
 
       assert PushEx.Instrumentation.Tracker.connected_channel_count() == 1
-      assert PushExWeb.PushPresence.listeners?("c")
+      assert PushExWeb.PushTracker.listeners?("c")
     end
 
     test "the channel can be error'd, which prevents tracking" do
@@ -55,7 +55,7 @@ defmodule PushExWeb.PushChannelTest do
              end) =~ "Replied c :error"
 
       assert PushEx.Instrumentation.Tracker.connected_channel_count() == 0
-      refute PushExWeb.PushPresence.listeners?("c")
+      refute PushExWeb.PushTracker.listeners?("c")
     end
   end
 

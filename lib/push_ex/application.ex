@@ -35,7 +35,7 @@ defmodule PushEx.Application do
 
   def post_endpoint_children(),
     do: [
-      {PushExWeb.PushPresence, [pool_size: pool_size()]}
+      {PushExWeb.PushTracker, [pool_size: pool_size()]}
     ]
 
   def config_change(changed, _new, removed) do
