@@ -1,0 +1,45 @@
+defmodule PushExWeb.PushTracker do
+  @behaviour Phoenix.Tracker
+
+  def child_spec(opts) do
+    %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [opts]},
+      type: :supervisor
+    }
+  end
+
+  def start_link(opts) do
+    opts =
+      opts
+      |> Keyword.put(:name, __MODULE__)
+      |> Keyword.merge(Application.get_env(:push_ex, __MODULE__) || [])
+      |> Keyword.put(:pubsub_server, PushEx.PubSub)
+
+    Phoenix.Tracker.start_link(__MODULE__, opts, opts)
+  end
+
+  def init(opts) do
+    server = Keyword.fetch!(opts, :pubsub_server)
+    {:ok, %{pubsub_server: server, node_name: Phoenix.PubSub.node_name(server)}}
+  end
+
+  def handle_diff(_diff, state) do
+    {:ok, state}
+  end
+
+  def track(%Phoenix.Socket{topic: topic} = socket) do
+    id = PushEx.Config.socket_impl().presence_identifier(socket)
+
+    Phoenix.Tracker.track(__MODULE__, socket.channel_pid, topic, id, %{
+      online_at: PushEx.unix_ms_now()
+    })
+  end
+
+  def listeners?(topic) do
+    Phoenix.Presence.list(__MODULE__, topic)
+    |> Enum.any?()
+  end
+
+  def fetch(_topic, presences), do: presences
+end
