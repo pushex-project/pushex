@@ -5,36 +5,6 @@
     <script type="text/javascript" src="./node_modules/pushex/dist/pushex.js"></script>
   </head>
   <body>
-
-    <script type="text/javascript">
-      const socket = new Phoenix.Socket("ws://localhost:4004/push_socket", {params: {}})
-      socket.connect()
-
-      joinChannel("test")
-      joinChannel("test2")
-
-      function joinChannel(name) {
-        const channel = socket.channel(name, {})
-        channel.on("msg", msg => console.log("Got message", name, msg) )
-
-        channel.join()
-          .receive("ok", () => console.log("Joined", name) )
-          .receive("error", ({ reason }) => console.log("failed join", name, reason) )
-          .receive("timeout", () => console.log("Networking issue. Still waiting...", name) )
-      }
-    </script>
-
-    <script type="text/javascript">
-      const pushex = new Pushex.Pushex('ws://localhost:4004/push_socket', {})
-      pushex.subscribe('test').bind('*', (event, data) => {
-        console.log('test channel received event/data', event, data)
-      })
-      pushex.subscribe('test2').bind('*', (event, data) => {
-        console.log('test2 channel received event/data', event, data)
-      })
-      pushex.connect()
-    </script>
-
     <p>
       Paste the following code into cURL to test API requests.
       Note that CORS isn't supported by default and this demo runs on multiple ports.
@@ -52,5 +22,6 @@
         "event": "woohoo"
       }'
     </textarea>
+    <script src="./app.js" defer></script>
   </body>
 </html>
