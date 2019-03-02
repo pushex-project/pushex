@@ -12,43 +12,31 @@
       .receive("timeout", () => console.log("Networking issue. Still waiting...", name) )
   }
 
-
-  function notifyMe() {
-      // Let's check if the browser supports notifications
-    if (!("Notification" in window)) {
-      alert("This browser does not support desktop notification");
-    }
-
-    // Let's check whether notification permissions have already been granted
-    else if (Notification.permission === "granted") {
-      // If it's okay let's create a notification
-      var notification = new Notification("Hi there!");
-    }
-
-    // Otherwise, we need to ask the user for permission
-    else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then(function (permission) {
-        // If the user accepts, let's create a notification
-        if (permission === "granted") {
-          var notification = new Notification("Hi there!");
-        }
-      });
-    }
-
-    // At last, if the user has denied notifications, and you 
-    // want to be respectful there is no need to bother them any more.
-  }
-
   Notification.requestPermission().then(function(result) {
-      console.log(result);
+    console.log('Notification.requestPermission', result)
   })
 
-  function spawnNotification(body, icon, title) {
+  let stagedNotifications = []
+
+  function stageNotification(body) {
+    stagedNotifications.push(body)
+    setTimeout(clearNotifications, 250)
+  }
+
+  function clearNotifications() {
+    if (stagedNotifications.length > 0) {
+      const body = stagedNotifications.join('\n')
+      stagedNotifications = []
+      spawnNotification(body)
+    }
+  }
+
+  function spawnNotification(body) {
       var options = {
-          body: body,
-          icon: icon
-      };
-      var n = new Notification(title, options);
+        body: body,
+        icon: '/icon.png'
+      }
+      new Notification('Got data', options)
   }
 
   socket.connect()
@@ -57,11 +45,11 @@
   joinChannel("test2")
 
   pushex.subscribe('test').bind('*', (event, data) => {
-    spawnNotification(data, 'https://avatars1.githubusercontent.com/u/45110683?s=200&v=4', event)
+    stageNotification(`test: ${event}-${data}`)
     console.log('test channel received event/data', event, data)
   })
   pushex.subscribe('test2').bind('*', (event, data) => {
-    spawnNotification(data, 'https://avatars1.githubusercontent.com/u/45110683?s=200&v=4', event)
+    stageNotification(`test2: ${event}: ${data}`)
     console.log('test2 channel received event/data', event, data)
   })
 
