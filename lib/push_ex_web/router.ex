@@ -3,13 +3,13 @@ defmodule PushExWeb.Router do
 
   use PushExWeb, :router
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   if PushExWeb.RouterLoader.external_resource() do
     use PushExWeb.RouterLoader
     @external_resource PushExWeb.RouterLoader.external_resource()
+  end
+
+  pipeline :api do
+    plug :accepts, ["json"]
   end
 
   scope "/api", PushExWeb do
