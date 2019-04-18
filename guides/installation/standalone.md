@@ -39,7 +39,7 @@ mix new demo_app --sup && cd demo_app
   end
 ```
 
-1. Add `PushEx` to your Application children:
+3. Add `PushEx` to your Application children:
 
 ```
  # my_app/application.ex
@@ -86,7 +86,7 @@ config :push_ex, PushExWeb.PushSocket, socket_impl: DemoApp.Socket
 config :push_ex, PushExWeb.PushController, controller_impl: DemoApp.Controller
 ```
 
-4. Implement Socket, Controller, Instrumentation modules
+5. Implement Socket, Controller, Instrumentation modules
 
 ```
 # demo_app/socket.ex
@@ -150,7 +150,7 @@ defmodule DemoApp.PushInstrumenter do
 end
 ```
 
-5. Implement your custom application logic
+6. Implement your custom application logic
 
 It's crucial that your application ships with proper authentication logic, or anyone could access sensitive information over your sockets. This may be fine if you're pushing data down to all users of a marketing site, but would be unacceptable in any environment with separate users.
 
@@ -158,7 +158,7 @@ PushEx behaviours are all documented with their types. It is possible to fully c
 
 Instrumentation can be used to gather insights into the running system, but is completely optional.
 
-6. Deploy / Monitor your app as normal
+7. Deploy / Monitor your app as normal
 
 The app that you've created is a normal Elixir app. This means that you can utilize your normal deployment / monitoring solutions without much additional ceremony. You can run your app locally by using:
 
