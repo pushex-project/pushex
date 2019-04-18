@@ -8,14 +8,10 @@ defmodule PushEx.Supervisor do
   def init(_) do
     children = [
       PushExWeb.Endpoint,
-      {PushExWeb.PushTracker, [pool_size: pool_size()]}
+      {PushExWeb.PushTracker, [pool_size: PushEx.Application.pool_size()]}
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__]
     Supervisor.init(children, opts)
-  end
-
-  def pool_size do
-    Application.get_env(:push_ex, :internal_pool_size, 1)
   end
 end
