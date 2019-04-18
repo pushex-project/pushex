@@ -39,7 +39,23 @@ mix new demo_app --sup && cd demo_app
   end
 ```
 
-3. Setup required options in config.exs
+3. Add `PushEx.Supervisor` to your Application children:
+
+```
+ # my_app/application.ex
+
+ ...
+ children = [
+   ...
+  PushEx.Supervisor,
+ ]
+ ...
+```
+
+This step helps ensure that you can start PushEx in the correct location. For instance, you may
+want to start it after Statix boots if you are using StatsD instrumentation.
+
+4. Setup required options in config.exs
 
 ```
 use Mix.Config
