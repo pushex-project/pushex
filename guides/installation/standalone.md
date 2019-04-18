@@ -39,7 +39,7 @@ mix new demo_app --sup && cd demo_app
   end
 ```
 
-3. Add `PushEx.Supervisor` to your Application children:
+1. Add `PushEx` to your Application children:
 
 ```
  # my_app/application.ex
@@ -47,7 +47,7 @@ mix new demo_app --sup && cd demo_app
  ...
  children = [
    ...
-  PushEx.Supervisor,
+  PushEx,
  ]
  ...
 ```

@@ -7,7 +7,7 @@ defmodule TestFrontendSocket.Application do
 
   def start(_type, _args) do
     children = [
-      PushEx.Supervisor,
+      PushEx,
       Plug.Cowboy.child_spec(
         scheme: :http,
         plug: {Plug.Static, [at: "/", from: "assets"]},
