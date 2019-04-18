@@ -19,6 +19,11 @@ defmodule PushEx do
   defdelegate connected_channel_count(), to: Instrumentation.Tracker
 
   @doc """
+  Returns a child_spec that can be used to start the PushEx web endpoint.
+  """
+  defdelegate child_spec(opts), to: PushEx.Supervisor
+
+  @doc """
   Triggers a Push to be instrumented/enqueued into the system.
   """
   @spec push(%Push{}) :: true

@@ -7,6 +7,7 @@ defmodule SocketServer.Application do
 
   def start(_type, _args) do
     children = [
+      PushEx,
       {SocketServer.StatsLogger,
        [
          collector: SocketServer.Collector.Verbose,
