@@ -1,28 +1,23 @@
-defmodule PushEx.Application do
-  @moduledoc false
+defmodule PushEx.Supervisor do
+  def start_link(opts) do
+    Supervisor.start_link(__MODULE__, opts)
+  end
 
-  use Application
-
-  def start(_type, _args) do
+  def init(_) do
     check_config!()
     set_pool_size()
 
-    children =
-      [
-        pre_endpoint_children(),
-        PushExWeb.Endpoint,
-        post_endpoint_children()
-      ]
-      |> List.flatten()
-
-    opts = [strategy: :one_for_one, name: PushEx.Supervisor]
-    Supervisor.start_link(children, opts)
+    opts = [strategy: :one_for_one, name: __MODULE__]
+    Supervisor.init(children(), opts)
   end
 
-  if Mix.env() == :test do
-    defp check_config!(), do: nil
-  else
-    defp check_config!(), do: PushEx.Config.check!()
+  def children() do
+    [
+      pre_endpoint_children(),
+      PushExWeb.Endpoint,
+      post_endpoint_children()
+    ]
+    |> List.flatten()
   end
 
   def pre_endpoint_children(),
@@ -38,13 +33,14 @@ defmodule PushEx.Application do
       {PushExWeb.PushTracker, [pool_size: pool_size()]}
     ]
 
-  def config_change(changed, _new, removed) do
-    PushExWeb.Endpoint.config_change(changed, removed)
-    :ok
-  end
-
   def pool_size do
     Application.get_env(:push_ex, :internal_pool_size, 1)
+  end
+
+  if Mix.env() == :test do
+    defp check_config!(), do: nil
+  else
+    defp check_config!(), do: PushEx.Config.check!()
   end
 
   defp set_pool_size() do

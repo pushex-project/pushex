@@ -32,5 +32,5 @@ defmodule PushEx.Instrumentation.Supervisor do
     supervise(shards, strategy: :one_for_one)
   end
 
-  defp pool_size(), do: PushEx.Application.pool_size()
+  defp pool_size(), do: PushEx.Supervisor.pool_size()
 end
