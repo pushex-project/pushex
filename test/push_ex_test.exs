@@ -47,6 +47,18 @@ defmodule PushExTest do
     end
   end
 
+  describe "connected_transport_pids/0" do
+    test "it is exposed" do
+      assert PushEx.connected_transport_pids() == []
+    end
+  end
+
+  describe "connected_channel_pids/0" do
+    test "it is exposed" do
+      assert PushEx.connected_channel_pids() == []
+    end
+  end
+
   defp with_instrumentation(_) do
     PushEx.Test.MockInstrumenter.setup_config()
 

@@ -19,6 +19,16 @@ defmodule PushEx do
   defdelegate connected_channel_count(), to: Instrumentation.Tracker
 
   @doc """
+  Returns the pids of connected transport processes (Socket processes).
+  """
+  defdelegate connected_transport_pids(), to: Instrumentation.Tracker
+
+  @doc """
+  Returns the pids of connected Channel processes.
+  """
+  defdelegate connected_channel_pids(), to: Instrumentation.Tracker
+
+  @doc """
   Returns a child_spec that can be used to start the PushEx web endpoint.
   """
   defdelegate child_spec(opts), to: PushEx.Supervisor
