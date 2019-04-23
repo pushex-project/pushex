@@ -22,6 +22,8 @@ defmodule PushEx.Instrumentation.TrackerTest do
 
       assert Tracker.connected_channel_count(pid: pid) == 1
       assert Tracker.connected_socket_count(pid: pid) == 0
+      assert [cpid] = Tracker.connected_channel_pids(pid: pid)
+      assert is_pid(cpid)
 
       assert Tracker.track_channel(socket2, pid: pid) == :ok
 
@@ -89,6 +91,8 @@ defmodule PushEx.Instrumentation.TrackerTest do
 
       assert Tracker.connected_channel_count(pid: pid) == 0
       assert Tracker.connected_socket_count(pid: pid) == 1
+      assert [tpid] = Tracker.connected_transport_pids(pid: pid)
+      assert is_pid(tpid)
 
       assert Tracker.track_socket(socket2, pid: pid) == :ok
       empty_map = %{}
@@ -105,6 +109,7 @@ defmodule PushEx.Instrumentation.TrackerTest do
       assert Tracker.connected_socket_count(pid: pid) == 1
       Process.exit(transport_pid2, :kill) && Process.sleep(10)
       assert Tracker.connected_socket_count(pid: pid) == 0
+      assert Tracker.connected_transport_pids() == []
 
       assert Tracker.state(pid: pid) == %{
                channel_pids: %{},
