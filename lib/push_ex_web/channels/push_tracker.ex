@@ -29,15 +29,23 @@ defmodule PushExWeb.PushTracker do
   end
 
   def track(%Phoenix.Socket{topic: topic} = socket) do
-    id = PushEx.Config.socket_impl().presence_identifier(socket)
+    if topic in PushEx.Config.untracked_push_tracker_topics() do
+      {:ok, :ignored_topic}
+    else
+      id = PushEx.Config.socket_impl().presence_identifier(socket)
 
-    Phoenix.Tracker.track(__MODULE__, socket.channel_pid, topic, id, %{
-      online_at: PushEx.unix_ms_now()
-    })
+      Phoenix.Tracker.track(__MODULE__, socket.channel_pid, topic, id, %{
+        online_at: PushEx.unix_ms_now()
+      })
+    end
   end
 
   def listeners?(topic) do
-    Phoenix.Tracker.list(__MODULE__, topic)
-    |> Enum.any?()
+    if topic in PushEx.Config.untracked_push_tracker_topics() do
+      true
+    else
+      Phoenix.Tracker.list(__MODULE__, topic)
+      |> Enum.any?()
+    end
   end
 end

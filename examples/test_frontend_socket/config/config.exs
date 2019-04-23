@@ -25,6 +25,9 @@ config :push_ex, PushExWeb.PushSocket, socket_impl: TestFrontendSocket
 
 config :push_ex, PushExWeb.PushController, controller_impl: TestFrontendSocket
 
+config :push_ex, PushExWeb.PushTracker,
+  untracked_topics: ["my-public-channel", "other-public-channel"]
+
 additional_plug = quote do
   pipeline :empty do
   end
