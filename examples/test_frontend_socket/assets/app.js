@@ -43,12 +43,17 @@
 
   joinChannel("test")
   joinChannel("test2")
+  joinChannel("my-public-channel")
 
   pushex.subscribe('test').bind('*', (event, data) => {
     stageNotification(`test: ${event}-${data}`)
     console.log('test channel received event/data', event, data)
   })
   pushex.subscribe('test2').bind('*', (event, data) => {
+    stageNotification(`test2: ${event}: ${data}`)
+    console.log('test2 channel received event/data', event, data)
+  })
+  pushex.subscribe('my-public-channel').bind('*', (event, data) => {
     stageNotification(`test2: ${event}: ${data}`)
     console.log('test2 channel received event/data', event, data)
   })

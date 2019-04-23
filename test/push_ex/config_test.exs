@@ -90,4 +90,16 @@ defmodule PushEx.ConfigTest do
       Config.check!()
     end
   end
+
+  describe "untracked_push_tracker_topics/0" do
+    test "defaults to an empty list" do
+      Application.delete_env(:push_ex, PushExWeb.PushTracker)
+      assert Config.untracked_push_tracker_topics() == []
+    end
+
+    test "a value can be provided" do
+      Application.put_env(:push_ex, PushExWeb.PushTracker, untracked_topics: ["test", "test2"])
+      assert Config.untracked_push_tracker_topics() == ["test", "test2"]
+    end
+  end
 end

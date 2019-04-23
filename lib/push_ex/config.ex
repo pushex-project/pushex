@@ -51,6 +51,16 @@ defmodule PushEx.Config do
     |> Keyword.get(:push_listeners, [])
   end
 
+  @doc """
+  The list of topics which should be treated as always online and not tracked. This is useful for the situation
+  where there is a public topic that most likely always has a listener. It is very expensive to track these topics.
+  These topics will be tracked in `Instrumentation.Tracker` but not `Phoenix.Tracker` for performance reasons.
+  """
+  def untracked_push_tracker_topics() do
+    Application.get_env(:push_ex, PushExWeb.PushTracker, [])
+    |> Keyword.get(:untracked_topics, [])
+  end
+
   def check!() do
     check_socket_impl!()
     check_controller_impl!()
