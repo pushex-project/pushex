@@ -61,6 +61,14 @@ defmodule PushEx.Config do
     |> Keyword.get(:untracked_topics, [])
   end
 
+  @doc """
+  Whether sockets will be automatically disconnected on shutdown, defaults to false for safety reasons
+  """
+  def disconnect_sockets_on_shutdown() do
+    Application.get_env(:push_ex, PushExWeb.PushSocket, [])
+    |> Keyword.get(:disconnect_sockets_on_shutdown, false)
+  end
+
   def check!() do
     check_socket_impl!()
     check_controller_impl!()
