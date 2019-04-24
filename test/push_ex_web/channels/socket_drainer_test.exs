@@ -77,6 +77,7 @@ defmodule PushExWeb.SocketDrainerTest do
 
     on_exit(fn ->
       Process.exit(pid, :kill)
+      PushExWeb.Config.close_connections!(false)
     end)
 
     {:ok, %{pid: pid}}
