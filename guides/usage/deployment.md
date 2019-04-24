@@ -26,6 +26,13 @@ You should be very careful about [Heroku's connection limits](http://veldstra.or
 
 Please follow the [PubSub guide](/pub_sub.html) in order to configure PubSub for your deployment. Note that you must use the Redis adapter for PubSub if deploying to Heroku.
 
+## Taking a Node Offline
+
+You may or may not be taking Nodes offline for deployments. I am doing so with Kubernetes and Heroku also requires
+restarting for deployments. PushEx tries to handle a lot of this for you by providing exit listeners for the web
+server and for the Push.ItemProducer data pipeline. Each item is given 15seconds to complete (30s) total. This
+should minimize the likelihood of a process being offline but connections still trying to use the process.
+
 ## Recommendations
 
 Every company will be different with regards to how they deploy application: docker, amazon, google, heroku, kubernetes, the list goes on. Therefore, it's impossible to make a direct recommendation of what you should do when deploying PushEx. However, I can caution that Heroku will most likely be a bad choice for large applications and instead you should consider other routes.
