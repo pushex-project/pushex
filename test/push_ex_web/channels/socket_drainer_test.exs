@@ -7,6 +7,8 @@ defmodule PushExWeb.SocketDrainerTest do
   setup :with_tracker
 
   test "no connected sockets completes right away", %{pid: pid} do
+    PushExWeb.Config.close_connections!(false)
+
     {:ok, drain_pid} =
       Supervisor.start_link(
         [
@@ -15,8 +17,12 @@ defmodule PushExWeb.SocketDrainerTest do
         strategy: :one_for_one
       )
 
+    assert PushExWeb.Config.close_connections?() == false
+
     Process.exit(drain_pid, :normal) && Process.sleep(50)
     refute Process.alive?(drain_pid)
+
+    assert PushExWeb.Config.close_connections?() == true
   end
 
   test "1 connected socket doesn't complete", %{pid: pid} do
