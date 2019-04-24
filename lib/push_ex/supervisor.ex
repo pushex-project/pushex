@@ -20,28 +20,33 @@ defmodule PushEx.Supervisor do
   end
 
   defp ranch_connection_drainers() do
-    ranch_connection_drainer_http() ++ ranch_connection_drainer_https()
+    ranch_connection_drainer_endpoints()
+    |> Enum.map(fn phx_endpoint_mod ->
+      %{
+        id: Module.concat(RanchConnectionDrainer, phx_endpoint_mod),
+        start: {RanchConnectionDrainer, :start_link, [phx_endpoint_mod]},
+        shutdown: @shutdown_timeout
+      }
+    end)
   end
 
   defp socket_drainer() do
     if PushEx.Config.disconnect_sockets_on_shutdown() do
       [
-        {PushExWeb.SocketDrainer, shutdown: @shutdown_timeout}
+        {PushExWeb.SocketDrainer, shutdown: @shutdown_timeout, ranch_refs: ranch_connection_drainer_endpoints}
       ]
     else
       []
     end
   end
 
+  defp ranch_connection_drainer_endpoints() do
+    ranch_connection_drainer_http() ++ ranch_connection_drainer_https()
+  end
+
   defp ranch_connection_drainer_http() do
     if Application.get_env(:push_ex, PushExWeb.Endpoint) |> Keyword.get(:http) do
-      [
-        %{
-          id: RanchConnectionDrainer.HTTP,
-          start: {RanchConnectionDrainer, :start_link, [PushExWeb.Endpoint.HTTP]},
-          shutdown: @shutdown_timeout
-        }
-      ]
+      [PushExWeb.Endpoint.HTTP]
     else
       []
     end
@@ -49,13 +54,7 @@ defmodule PushEx.Supervisor do
 
   defp ranch_connection_drainer_https() do
     if Application.get_env(:push_ex, PushExWeb.Endpoint) |> Keyword.get(:https) do
-      [
-        %{
-          id: RanchConnectionDrainer.HTTPS,
-          start: {RanchConnectionDrainer, :start_link, [PushExWeb.Endpoint.HTTPS]},
-          shutdown: @shutdown_timeout
-        }
-      ]
+      [PushExWeb.Endpoint.HTTPS]
     else
       []
     end

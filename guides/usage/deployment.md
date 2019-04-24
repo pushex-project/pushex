@@ -44,7 +44,7 @@ config :push_ex, PushExWeb.PushSocket,
 
 Local socket transports will be sent a disconnect broadcast. The client will automatically start reconnecting
 to establish the connection. It is important that your load balancer does not send any new connections to the
-old node or it will not be able to shutdown cleanly.
+old node or they will fail because the web server will not accept new connections.
 
 ## Recommendations
 

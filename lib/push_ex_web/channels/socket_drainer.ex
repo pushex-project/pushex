@@ -6,28 +6,37 @@ defmodule PushExWeb.SocketDrainer do
 
   def child_spec(options) when is_list(options) do
     tracker_ref = Keyword.get(options, :tracker_ref, PushEx.Instrumentation.Tracker)
+    ranch_refs = Keyword.get(options, :ranch_refs, [])
     shutdown = Keyword.fetch!(options, :shutdown)
 
     %{
       id: __MODULE__,
-      start: {__MODULE__, :start_link, [tracker_ref]},
+      start: {__MODULE__, :start_link, [tracker_ref, ranch_refs]},
       shutdown: shutdown
     }
   end
 
-  def start_link(tracker_ref) do
-    GenServer.start_link(__MODULE__, [tracker_ref])
+  def start_link(tracker_ref, ranch_refs) do
+    GenServer.start_link(__MODULE__, [tracker_ref, ranch_refs])
   end
 
-  def init([tracker_ref]) do
+  def init([tracker_ref, ranch_refs]) do
     Process.flag(:trap_exit, true)
-    {:ok, tracker_ref}
+    {:ok, {tracker_ref, ranch_refs}}
   end
 
-  def terminate(_reason, tracker_ref) do
+  def terminate(_reason, {tracker_ref, ranch_refs}) do
+    suspend_ranch(ranch_refs)
     Logger.info("Waiting for sockets to drain for PushExWeb.PushSocket #{inspect(tracker_ref)}...")
     :ok = wait_for_drain_loop(tracker_ref)
     Logger.info("Sockets successfully drained for PushExWeb.PushSocket #{inspect(tracker_ref)}")
+  end
+
+  defp suspend_ranch(ranch_refs) do
+    Enum.each(ranch_refs, fn ranch_ref ->
+      Logger.info("Suspending listener for PushExWeb.PushSocket #{inspect(ranch_ref)}")
+      :ok = :ranch.suspend_listener(ranch_ref)
+    end)
   end
 
   defp wait_for_drain_loop(tracker_ref) do
