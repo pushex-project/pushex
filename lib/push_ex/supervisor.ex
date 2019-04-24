@@ -10,10 +10,18 @@ defmodule PushEx.Supervisor do
       PushExWeb.Endpoint,
       {PushExWeb.PushTracker, [pool_size: PushEx.Application.pool_size()]},
       {PushEx.Push.Drainer, producer_ref: PushEx.Push.ItemProducer, shutdown: 15_000},
-      {RanchConnectionDrainer, ranch_ref: PushExWeb.Endpoint.HTTP, shutdown: 15_000}
+      {RanchConnectionDrainer, ranch_ref: endpoint_mod(), shutdown: 15_000}
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__]
     Supervisor.init(children, opts)
+  end
+
+  defp endpoint_mod() do
+    if Application.get_env(:push_ex, PushExWeb.Endpoint) |> Keyword.get(:https) do
+      PushExWeb.Endpoint.HTTPS
+    else
+      PushExWeb.Endpoint.HTTP
+    end
   end
 end
