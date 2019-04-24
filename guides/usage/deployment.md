@@ -30,7 +30,7 @@ Please follow the [PubSub guide](/pub_sub.html) in order to configure PubSub for
 
 You may or may not be taking Nodes offline for deployments. I am doing so with Kubernetes and Heroku also requires
 restarting for deployments. PushEx tries to handle a lot of this for you by providing exit listeners for the web
-server and for the Push.ItemProducer data pipeline. Each item is given 15seconds to complete (30s) total. This
+server and for the Push.ItemProducer data pipeline. Each item is given 10 seconds to complete (20s) total. This
 should minimize the likelihood of a process being offline but connections still trying to use the process.
 
 ## Recommendations
