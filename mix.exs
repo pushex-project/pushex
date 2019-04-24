@@ -57,6 +57,7 @@ defmodule PushEx.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:plug, "~> 1.7"},
       {:gen_stage, "~> 0.14"},
+      {:ranch_connection_drainer, "~> 0.1.0"},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
