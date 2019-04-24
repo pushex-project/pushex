@@ -30,7 +30,7 @@ defmodule PushExWeb.PushController do
 
   defp maybe_close_connection(conn) do
     if PushExWeb.Config.close_connections?() do
-      put_resp_header(conn, "Connection", "close")
+      put_resp_header(conn, "connection", "close")
     else
       conn
     end
