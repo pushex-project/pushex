@@ -10,6 +10,7 @@ defmodule PushEx.Supervisor do
   def init(_) do
     children =
       [
+        PushExWeb.Config,
         PushExWeb.Endpoint,
         {PushExWeb.PushTracker, [pool_size: PushEx.Application.pool_size()]},
         {PushEx.Push.Drainer, producer_ref: PushEx.Push.ItemProducer, shutdown: @shutdown_timeout}
@@ -33,7 +34,7 @@ defmodule PushEx.Supervisor do
   defp socket_drainer() do
     if PushEx.Config.disconnect_sockets_on_shutdown() do
       [
-        {PushExWeb.SocketDrainer, shutdown: @shutdown_timeout, ranch_refs: ranch_connection_drainer_endpoints}
+        {PushExWeb.SocketDrainer, shutdown: @shutdown_timeout, ranch_refs: ranch_connection_drainer_endpoints()}
       ]
     else
       []

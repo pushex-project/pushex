@@ -22,9 +22,18 @@ defmodule PushExWeb.PushController do
         PushEx.Instrumentation.Push.api_processed()
 
         conn
+        |> maybe_close_connection()
         |> json(%{channel: wrapped_channel, data: data, event: event})
       end)
     end)
+  end
+
+  defp maybe_close_connection(conn) do
+    if PushExWeb.Config.close_connections?() do
+      put_resp_header(conn, "Connection", "close")
+    else
+      conn
+    end
   end
 
   defp with_params_validation(conn, params = %{"channel" => channel, "data" => _, "event" => event}, func)

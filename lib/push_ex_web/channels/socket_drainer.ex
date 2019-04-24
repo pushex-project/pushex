@@ -27,6 +27,7 @@ defmodule PushExWeb.SocketDrainer do
 
   def terminate(_reason, {tracker_ref, ranch_refs}) do
     suspend_ranch(ranch_refs)
+    PushExWeb.Config.close_connections!(true)
     Logger.info("Waiting for sockets to drain for PushExWeb.PushSocket #{inspect(tracker_ref)}...")
     :ok = wait_for_drain_loop(tracker_ref)
     Logger.info("Sockets successfully drained for PushExWeb.PushSocket #{inspect(tracker_ref)}")
