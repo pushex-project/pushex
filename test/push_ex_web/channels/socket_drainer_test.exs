@@ -1,6 +1,5 @@
 defmodule PushExWeb.SocketDrainerTest do
-  # Can not be async because global process names are used
-  use ExUnit.Case, async: false
+  use ExUnit.Case, async: true
 
   alias PushExWeb.SocketDrainer
   alias PushEx.Instrumentation.Tracker
