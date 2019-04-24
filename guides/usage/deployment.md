@@ -33,6 +33,19 @@ restarting for deployments. PushEx tries to handle a lot of this for you by prov
 server and for the Push.ItemProducer data pipeline. Each item is given 10 seconds to complete (20s) total. This
 should minimize the likelihood of a process being offline but connections still trying to use the process.
 
+Sockets can be disconnected when the server is brought offline. This is *not* performed by default as it
+could be the wrong thing to do in certain environments. It is easy to turn on this option with a configuration:
+
+```elixir
+config :push_ex, PushExWeb.PushSocket,
+  socket_impl: TestFrontendSocket,
+  disconnect_sockets_on_shutdown: true
+```
+
+Local socket transports will be sent a disconnect broadcast. The client will automatically start reconnecting
+to establish the connection. It is important that your load balancer does not send any new connections to the
+old node or it will not be able to shutdown cleanly.
+
 ## Recommendations
 
 Every company will be different with regards to how they deploy application: docker, amazon, google, heroku, kubernetes, the list goes on. Therefore, it's impossible to make a direct recommendation of what you should do when deploying PushEx. However, I can caution that Heroku will most likely be a bad choice for large applications and instead you should consider other routes.

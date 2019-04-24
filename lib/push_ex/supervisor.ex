@@ -13,7 +13,7 @@ defmodule PushEx.Supervisor do
         PushExWeb.Endpoint,
         {PushExWeb.PushTracker, [pool_size: PushEx.Application.pool_size()]},
         {PushEx.Push.Drainer, producer_ref: PushEx.Push.ItemProducer, shutdown: @shutdown_timeout}
-      ] ++ ranch_connection_drainers()
+      ] ++ ranch_connection_drainers() ++ socket_drainer()
 
     opts = [strategy: :one_for_one, name: __MODULE__]
     Supervisor.init(children, opts)
@@ -21,6 +21,16 @@ defmodule PushEx.Supervisor do
 
   defp ranch_connection_drainers() do
     ranch_connection_drainer_http() ++ ranch_connection_drainer_https()
+  end
+
+  defp socket_drainer() do
+    if PushEx.Config.disconnect_sockets_on_shutdown() do
+      [
+        {PushExWeb.SocketDrainer, shutdown: @shutdown_timeout}
+      ]
+    else
+      []
+    end
   end
 
   defp ranch_connection_drainer_http() do

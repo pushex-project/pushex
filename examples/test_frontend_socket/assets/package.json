@@ -2,6 +2,6 @@
   "name": "test_frontend",
   "dependencies": {
     "phoenix": "^1.4.0",
-    "pushex": "~> 0.0.7"
+    "pushex": "~> 0.0.10"
   }
 }
