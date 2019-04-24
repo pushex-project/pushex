@@ -9,6 +9,7 @@ defmodule PushEx.Supervisor do
     children = [
       PushExWeb.Endpoint,
       {PushExWeb.PushTracker, [pool_size: PushEx.Application.pool_size()]},
+      {PushEx.Push.Drainer, producer_ref: PushEx.Push.ItemProducer, shutdown: 15_000},
       {RanchConnectionDrainer, ranch_ref: PushExWeb.Endpoint.HTTP, shutdown: 15_000}
     ]
 
