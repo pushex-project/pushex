@@ -8,7 +8,8 @@ defmodule PushEx.Supervisor do
   def init(_) do
     children = [
       PushExWeb.Endpoint,
-      {PushExWeb.PushTracker, [pool_size: PushEx.Application.pool_size()]}
+      {PushExWeb.PushTracker, [pool_size: PushEx.Application.pool_size()]},
+      {RanchConnectionDrainer, ranch_ref: PushExWeb.Endpoint.HTTP, shutdown: 15_000}
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__]
