@@ -143,10 +143,11 @@ defmodule PushExWeb.PushControllerTest do
       params = %{"channel" => channel, "data" => "d", "event" => "e"}
 
       PushExWeb.Config.close_connections!(true)
+
       capture_log(fn ->
         res_conn = post(conn, "/api/push", params)
         assert json_response(res_conn, 200) == %{"channel" => [channel], "data" => "d", "event" => "e"}
-        assert Enum.find(res_conn.resp_headers, & &1 == {"connection", "close"}) == {"connection", "close"}
+        assert Enum.find(res_conn.resp_headers, &(&1 == {"connection", "close"})) == {"connection", "close"}
       end)
     end
 
@@ -157,10 +158,11 @@ defmodule PushExWeb.PushControllerTest do
       params = %{"channel" => channel, "data" => "d", "event" => "e"}
 
       PushExWeb.Config.close_connections!(false)
+
       capture_log(fn ->
         res_conn = post(conn, "/api/push", params)
         assert json_response(res_conn, 200) == %{"channel" => [channel], "data" => "d", "event" => "e"}
-        assert Enum.find(res_conn.resp_headers, & &1 == {"connection", "close"}) == nil
+        assert Enum.find(res_conn.resp_headers, &(&1 == {"connection", "close"})) == nil
       end)
     end
   end
