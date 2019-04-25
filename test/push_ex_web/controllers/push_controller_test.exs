@@ -134,4 +134,36 @@ defmodule PushExWeb.PushControllerTest do
       assert log =~ "Push.ItemServer no_listeners channel=modified event=e"
     end
   end
+
+  describe "Config.close_connections?" do
+    test "Connection: close header is added to the response", %{conn: conn, test: channel} do
+      PushEx.Test.MockController.setup_config(:logging)
+      PushEx.Test.MockInstrumenter.setup_config()
+      channel = to_string(channel)
+      params = %{"channel" => channel, "data" => "d", "event" => "e"}
+
+      PushExWeb.Config.close_connections!(true)
+
+      capture_log(fn ->
+        res_conn = post(conn, "/api/push", params)
+        assert json_response(res_conn, 200) == %{"channel" => [channel], "data" => "d", "event" => "e"}
+        assert Enum.find(res_conn.resp_headers, &(&1 == {"connection", "close"})) == {"connection", "close"}
+      end)
+    end
+
+    test "Connection: close header is not added to the response when not set", %{conn: conn, test: channel} do
+      PushEx.Test.MockController.setup_config(:logging)
+      PushEx.Test.MockInstrumenter.setup_config()
+      channel = to_string(channel)
+      params = %{"channel" => channel, "data" => "d", "event" => "e"}
+
+      PushExWeb.Config.close_connections!(false)
+
+      capture_log(fn ->
+        res_conn = post(conn, "/api/push", params)
+        assert json_response(res_conn, 200) == %{"channel" => [channel], "data" => "d", "event" => "e"}
+        assert Enum.find(res_conn.resp_headers, &(&1 == {"connection", "close"})) == nil
+      end)
+    end
+  end
 end
