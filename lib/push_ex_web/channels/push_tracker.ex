@@ -40,12 +40,29 @@ defmodule PushExWeb.PushTracker do
     end
   end
 
-  def listeners?(topic) do
+  def listeners?(topic, timeout \\ 5000) do
     if topic in PushEx.Config.untracked_push_tracker_topics() do
       true
     else
-      Phoenix.Tracker.list(__MODULE__, topic)
-      |> Enum.any?()
+      try do
+        list_topic_state(topic, timeout)
+        |> Enum.any?()
+      catch
+        :exit, {:timeout, _} ->
+          true
+      end
     end
+  end
+
+  defp list_topic_state(topic, timeout) do
+    __MODULE__
+    |> Phoenix.Tracker.Shard.name_for_topic(topic, pool_size())
+    |> GenServer.call({:list, topic}, timeout)
+    |> Phoenix.Tracker.State.get_by_topic(topic)
+  end
+
+  defp pool_size() do
+    [{:pool_size, size}] = :ets.lookup(__MODULE__, :pool_size)
+    size
   end
 end
