@@ -13,11 +13,13 @@ defmodule PushExWeb.PushTrackerTest do
       PushEx.Test.MockSocket.setup_config()
 
       topic = make_ref()
-      assert {:ok, ref} = PushTracker.track(%Phoenix.Socket{
-        topic: topic,
-        channel_pid: self(),
-        id: make_ref()
-      })
+
+      assert {:ok, ref} =
+               PushTracker.track(%Phoenix.Socket{
+                 topic: topic,
+                 channel_pid: self(),
+                 id: make_ref()
+               })
 
       assert [{"id", %{online_at: _, phx_ref: ^ref}}] = Phoenix.Tracker.list(PushTracker, topic)
     end
@@ -28,11 +30,12 @@ defmodule PushExWeb.PushTrackerTest do
       topic = make_ref()
       Application.put_env(:push_ex, PushExWeb.PushTracker, untracked_topics: ["x", topic])
 
-      assert {:ok, :ignored_topic} = PushTracker.track(%Phoenix.Socket{
-        topic: topic,
-        channel_pid: self(),
-        id: make_ref()
-      })
+      assert {:ok, :ignored_topic} =
+               PushTracker.track(%Phoenix.Socket{
+                 topic: topic,
+                 channel_pid: self(),
+                 id: make_ref()
+               })
 
       assert Phoenix.Tracker.list(PushTracker, topic) == []
     end
@@ -48,11 +51,13 @@ defmodule PushExWeb.PushTrackerTest do
 
       topic = make_ref()
       pid = spawn(fn -> Process.sleep(10_000) end)
-      assert {:ok, ref} = PushTracker.track(%Phoenix.Socket{
-        topic: topic,
-        channel_pid: pid,
-        id: make_ref()
-      })
+
+      assert {:ok, ref} =
+               PushTracker.track(%Phoenix.Socket{
+                 topic: topic,
+                 channel_pid: pid,
+                 id: make_ref()
+               })
 
       assert PushTracker.listeners?(topic)
 
