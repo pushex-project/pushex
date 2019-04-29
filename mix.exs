@@ -1,7 +1,7 @@
 defmodule PushEx.MixProject do
   use Mix.Project
 
-  @version "1.0.1-rc2"
+  @version "1.0.1-rc3"
 
   def project do
     [
