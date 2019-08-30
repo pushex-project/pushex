@@ -23,7 +23,8 @@ defmodule PushExTest do
       push = %PushEx.Push{channel: "c", event: "e", data: "d", unix_ms: 0}
       push_and_sleep(push)
 
-      assert_receive {:trace, ^pid, :receive, {:"$gen_cast", {:notify, ^push}}}
+      assert_receive {:trace, ^pid, :receive, {:"$gen_cast", {:notify, ^push, at}}}
+      assert_in_delta(at, PushEx.unix_ms_now(), 500)
     end
   end
 
