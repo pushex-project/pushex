@@ -21,11 +21,11 @@ defmodule PushEx.Push.ItemProducer do
   end
 
   def push(item = %PushEx.Push{}, pid \\ __MODULE__) do
-    GenStage.cast(pid, {:notify, item})
+    GenStage.cast(pid, {:notify, item, PushEx.unix_ms_now()})
   end
 
-  def handle_cast({:notify, item}, state) do
-    {:noreply, [%{item: item, at: PushEx.unix_ms_now()}], state}
+  def handle_cast({:notify, item, at}, state) do
+    {:noreply, [%{item: item, at: at}], state}
   end
 
   def handle_demand(demand, keys) when demand > 0 do
