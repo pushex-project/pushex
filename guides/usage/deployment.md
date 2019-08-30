@@ -24,7 +24,7 @@ You should be very careful about [Heroku's connection limits](http://veldstra.or
 
 ## PubSub
 
-Please follow the [PubSub guide](/pub_sub.html) in order to configure PubSub for your deployment. Note that you must use the Redis adapter for PubSub if deploying to Heroku.
+Please follow the [PubSub guide](https://hexdocs.pm/push_ex/pub_sub.html) in order to configure PubSub for your deployment. Note that you must use the Redis adapter for PubSub if deploying to Heroku.
 
 ## Taking a Node Offline
 
