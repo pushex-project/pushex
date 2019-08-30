@@ -5,9 +5,11 @@
 [![Hex.pm](https://img.shields.io/hexpm/l/push_ex.svg)](https://github.com/pushex-project/pushex/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/pushex-project/pushex.svg?branch=master)](https://travis-ci.org/pushex-project/pushex)
 
-PushEx is an implementation of Phoenix websockets/channels which handles best practices of running websockets for you, but allows your business logic to be specified through simple behaviour modules.
+PushEx is an implementation of Phoenix Channels which handles best practices of running WebSockets for you, but
+allows your business logic to be specified through simple behaviour modules.
 
-PushEx is currently in release candidate of `1.0.1`. The library is fully functional, but I am waiting until we are using this in production before releasing `1.0.1`. Production version of `1.0.0` is skipped due to glitch in hex.pm with too many rc versions (I'm liberal about cutting new pre-releases to test new features as needed).
+PushEx is in use at SalesLoft, powering a large amount of pushes per day. It has been stable since early 2019, with no
+operational incidents.
 
 ## Key Links
 
@@ -42,7 +44,7 @@ The [PushEx docs](https://hexdocs.pm/push_ex) contain many guides such as authen
 Add the following to your mix.exs `deps` in order to get the latest version of PushEx:
 
 ```
-  {:push_ex, "~> 1.0.0-rc6"},
+  {:push_ex, "~> 1.0.2"},
 ```
 
 ## Examples
@@ -52,3 +54,8 @@ Examples are located in the examples directory. The test_frontend_socket example
 ## Company Sponsor
 
 A big thanks to [SalesLoft](https://salesloft.com) for helping with the development and open-sourcing of PushEx. Their support of my professional and personal time into this project (it was formed in an Innovation Week) is the type of thing that makes them [Atlanta's best place to work](https://www.ajc.com/business/growing-software-firm-built-core-values/Xjnm3EnCNe4Cub0JNbPOZL/).
+
+## Real-Time Phoenix Book
+
+Consider checking out my book [Real-Time Phoenix](https://pragprog.com/book/sbsockets/real-time-phoenix) if you are interested
+in writing real-time systems in Elixir.
