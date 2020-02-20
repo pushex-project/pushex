@@ -10,8 +10,7 @@ defmodule PushEx.Application do
     children = [
       PushEx.Push.ItemProducer,
       PushEx.Push.ItemConsumer,
-      PushEx.Instrumentation.Tracker,
-      PushEx.Instrumentation.Supervisor
+      PushEx.Instrumentation.Tracker
     ]
 
     opts = [strategy: :one_for_one, name: PushEx.Supervisor]
