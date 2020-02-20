@@ -11,7 +11,7 @@ Be careful with how you are handling your push logging. There could be sensitive
 
 ## Context
 
-Each instrumentation includes a `PushEx.Instrumentation.Push.Context` argument which provides information such as when the event originated. Events are processed asynchronously, which means that the processing time could be lagged under load.
+Each instrumentation includes a `PushEx.Instrumentation.Push.Context` argument which provides information such as when the event originated. Events are processed synchronously, which means that the service could slow down if your instrumentation is expensive. You could manually switch to asynchronous in this case, although I have been bit by this approach.
 
 ## HTTP API
 
