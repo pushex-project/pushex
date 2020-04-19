@@ -64,11 +64,15 @@ use Mix.Config
 config :push_ex, PushExWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: PushExWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: PushEx.PubSub, adapter: Phoenix.PubSub.PG2, pool_size: 4],
+  pubsub_server: PushEx.PubSub,
   http: [port: 4004],
   check_origin: false,
   watchers: [],
   server: true
+
+# Set the pool size to the number of cores of your server
+config :push_ex, PushEx.PubSub,
+  config: [adapter: Phoenix.PubSub.PG2, pool_size: 4]
 
 # Configures Elixir's Logger (vary based on deployment environment)
 config :logger, :console,
