@@ -1,5 +1,5 @@
 defmodule PushEx.Push.ItemServerTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias PushEx.Push.ItemServer
   import ExUnit.CaptureLog
