@@ -64,7 +64,7 @@ defmodule PushEx.Push.DrainerTest do
     assert :ok = GenStage.stop(producer_pid)
     refute Process.alive?(producer_pid)
 
-    Process.exit(drain_pid, :normal) && Process.sleep(25)
+    Process.exit(drain_pid, :normal) && Process.sleep(100)
     refute Process.alive?(drain_pid)
   end
 
