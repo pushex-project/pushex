@@ -11,8 +11,7 @@ config :push_ex, PushExWeb.Endpoint,
   render_errors: [view: PushExWeb.ErrorView, accepts: ~w(json)],
   pubsub_server: PushEx.PubSub
 
-config :push_ex, PushEx.PubSub,
-  adapter: Phoenix.PubSub.PG2
+config :push_ex, PushEx.PubSub, config: [adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,

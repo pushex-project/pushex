@@ -11,7 +11,7 @@ defmodule PushEx.Supervisor do
     children =
       [
         PushExWeb.Config,
-        {Phoenix.PubSub, name: PushEx.PubSub, adapter: pubsub_adapter()},
+        {Phoenix.PubSub, pubsub_config()},
         PushExWeb.Endpoint,
         {PushExWeb.PushTracker, [pool_size: PushEx.Application.pool_size()]},
         {PushEx.Push.Drainer, producer_ref: PushEx.Push.ItemProducer, shutdown: @shutdown_timeout}
@@ -62,7 +62,11 @@ defmodule PushEx.Supervisor do
     end
   end
 
-  defp pubsub_adapter() do
-    Application.get_env(:push_ex, PushEx.PubSub) |> Keyword.get(:adapter, Phoenix.PubSub.PG2)
+  defp pubsub_config() do
+    config =
+      Application.get_env(:push_ex, PushEx.PubSub)
+      |> Keyword.get(:adapter, adapter: Phoenix.PubSub.PG2)
+
+    Keyword.merge([name: PushEx.PubSub], config)
   end
 end
