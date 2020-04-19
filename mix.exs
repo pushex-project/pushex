@@ -50,13 +50,13 @@ defmodule PushEx.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.0"},
-      {:phoenix_pubsub, "~> 1.0"},
+      {:phoenix, "~> 1.5.0-rc"},
+      {:phoenix_pubsub, "~> 2.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
+      {:plug_cowboy, "~> 2.1"},
       {:plug, "~> 1.7"},
-      {:gen_stage, "~> 0.14"},
+      {:gen_stage, "~> 1.0.0"},
       {:ranch_connection_drainer, "~> 0.1.0"},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]

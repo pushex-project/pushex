@@ -9,7 +9,10 @@ use Mix.Config
 config :push_ex, PushExWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: PushExWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: PushEx.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: PushEx.PubSub
+
+config :push_ex, PushEx.PubSub,
+  adapter: Phoenix.PubSub.PG2
 
 # Configures Elixir's Logger
 config :logger, :console,

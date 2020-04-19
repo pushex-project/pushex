@@ -21,7 +21,7 @@ defmodule PushExWeb.PushChannelTest do
           |> subscribe_and_join(PushChannel, "c")
         end)
 
-      assert log =~ "Replied c :ok"
+      assert log =~ "JOINED c in"
       assert log =~ "LoggingSocket channel_join/3 #{inspect({"c", %{}, "socket"})}"
       assert log =~ "LoggingSocket presence_identifier/1 {socket}"
     end
@@ -52,7 +52,7 @@ defmodule PushExWeb.PushChannelTest do
                       |> subscribe_and_join(PushChannel, "c") == {:error, %{reason: "unauthorized"}}
 
                Process.sleep(20)
-             end) =~ "Replied c :error"
+             end) =~ "REFUSED JOIN c in"
 
       assert PushEx.Instrumentation.Tracker.connected_channel_count() == 0
       refute PushExWeb.PushTracker.listeners?("c")

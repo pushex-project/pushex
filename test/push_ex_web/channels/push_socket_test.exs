@@ -13,7 +13,7 @@ defmodule PushExWeb.PushSocketTest do
           assert {:ok, socket} = connect(PushSocket, %{})
         end)
 
-      assert log =~ "Replied PushExWeb.PushSocket :ok"
+      assert log =~ "CONNECTED TO PushExWeb.PushSocket in"
       assert log =~ "LoggingSocket socket_connect/2 #{inspect({%{}, "socket"})}"
       assert log =~ "LoggingSocket socket_id/1 {socket}"
       assert log =~ "LoggingSocket presence_identifier/1 {socket}"
