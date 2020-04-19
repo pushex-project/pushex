@@ -2,7 +2,7 @@ defmodule PushExWeb.PushSocket do
   @moduledoc false
 
   use Phoenix.Socket
-  defoverridable [init: 1]
+  defoverridable init: 1
 
   # Override Phoenix.Socket init in order to track the socket (with transport_pid) in pushex tracker
   def init(state) do
