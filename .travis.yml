@@ -18,3 +18,10 @@ script:
 branches:
   only:
     - master
+
+jobs:
+  exclude:
+  - elixir: 1.10.2
+    otp_release: 21.1
+  - elixir: 1.10.2
+    otp_release: 20.3
