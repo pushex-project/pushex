@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     name: Build and test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     env:
       MIX_ENV: test
       ELIXIR_ENV: test
