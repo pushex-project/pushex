@@ -10,13 +10,17 @@ jobs:
     env:
       MIX_ENV: test
       ELIXIR_ENV: test
+    strategy:
+      matrix:
+        otp: ['20.3', '21.1']
+        elixir: ['1.7.3']
     steps:
     - uses: actions/checkout@v2
     - name: Set up Elixir
       uses: erlef/setup-elixir@v1
       with:
-        elixir-version: '1.7.3' # Define the elixir version [required]
-        otp-version: '21.1' # Define the OTP version [required]
+        otp-version: ${{matrix.otp}}
+        elixir-version: ${{matrix.elixir}}
 
     - name: Restore dependencies cache
       uses: actions/cache@v2
