@@ -29,7 +29,7 @@ defmodule PushExWeb.PushTracker do
   end
 
   def track(%Phoenix.Socket{topic: topic} = socket) do
-    if topic in PushEx.Config.untracked_push_tracker_topics() do
+    if tracker_disabled_for?(topic) do
       {:ok, :ignored_topic}
     else
       id = PushEx.Config.socket_impl().presence_identifier(socket)
@@ -41,7 +41,7 @@ defmodule PushExWeb.PushTracker do
   end
 
   def listeners?(topic, timeout \\ 5000) do
-    if topic in PushEx.Config.untracked_push_tracker_topics() do
+    if tracker_disabled_for?(topic) do
       true
     else
       try do
@@ -52,6 +52,10 @@ defmodule PushExWeb.PushTracker do
           true
       end
     end
+  end
+
+  defp tracker_disabled_for?(topic) do
+    PushEx.Config.tracker_disabled?() || topic in PushEx.Config.untracked_push_tracker_topics()
   end
 
   defp list_topic_state(topic, timeout) do

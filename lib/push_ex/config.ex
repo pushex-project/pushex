@@ -62,6 +62,15 @@ defmodule PushEx.Config do
   end
 
   @doc """
+  Whether to disable the tracker, defaults to false. This is useful in high join-throughput environments where tracker
+  may put CPU pressure on the node. When the tracker is disabled, every message will be broadcasted.
+  """
+  def tracker_disabled?() do
+    Application.get_env(:push_ex, PushExWeb.PushTracker, [])
+    |> Keyword.get(:tracker_disabled?, false)
+  end
+
+  @doc """
   Whether sockets will be automatically disconnected on shutdown, defaults to false for safety reasons
   """
   def disconnect_sockets_on_shutdown() do
