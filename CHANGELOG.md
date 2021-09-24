@@ -10,6 +10,8 @@ This release bumps Phoenix to 1.5, which comes with some breaking changes to how
 
 In addition, we now only support/test for OTP22+ and Elixir 1.11+. We recommend using the latest OTP and Elixir versions.
 
+There's a corresponding `0.2.0` release for phoenix JS client that bumps to the latest Phoenix JS. It's recommended to update both at the same time, but shouldn't be required.
+
 ## Migration Instructions
 
 - Update your config.exs file
