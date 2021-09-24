@@ -12,23 +12,12 @@ jobs:
       ELIXIR_ENV: test
     strategy:
       matrix:
-        otp: ['20.3', '21.1', '22.3.4', '23.2.7', '24.1']
-        elixir: ['1.7.3', '1.11.4', '1.12.3']
+        otp: ['22.3.4', '23.2.7', '24.1']
+        elixir: ['1.11.4', '1.12.3']
         exclude:
-          - otp: '20.3'
-            elixir: '1.11.4'
-          - otp: '20.3'
-            elixir: '1.12.3'
-          - otp: '21.1'
-            elixir: '1.12.3'
-          - otp: '22.3.4'
-            elixir: '1.12.3'
-          - otp: '22.3.4'
-            elixir: '1.7.3'
-          - otp: '23.2.7'
-            elixir: '1.7.3'
-          - otp: '24.1'
-            elixir: '1.7.3'
+          # Example, but this doesn't need excluded
+          # - otp: '22.3.4'
+          #   elixir: '1.12.3'
 
 
     steps:
