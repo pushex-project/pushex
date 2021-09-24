@@ -6,8 +6,6 @@ Every release, along with the migration instructions, is documented on the Githu
 
 ## Migration Instructions
 
-TODO_SET_VERSION:
-
 This release bumps Phoenix to 1.5, which comes with some breaking changes to how PubSub is configured. Everything will operate the same way, but is required to be setup differently now.
 
 - Update your config.exs file
@@ -25,7 +23,8 @@ If you have a custom config in pubsub_server previously, you must update that in
 
 ```elixir
 config :push_ex, PushEx.PubSub,
-  config: [adapter: Phoenix.PubSub.PG2, pool_size: 4]
+  adapter: Phoenix.PubSub.PG2,
+  pool_size: 4
 ```
 
-The actual options inside of config are identical to `pubsub_server`, but you don't need to set the `name` because that's handled in code for you.
+The actual options inside of config are identical to `pubsub_server`, but you *should not* set the `name` because that's handled in code for you.
