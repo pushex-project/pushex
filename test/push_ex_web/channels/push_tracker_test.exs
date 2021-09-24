@@ -72,7 +72,7 @@ defmodule PushExWeb.PushTrackerTest do
       topic = make_ref()
       pid = spawn(fn -> Process.sleep(10_000) end)
 
-      assert {:ok, ref} =
+      assert {:ok, _ref} =
                PushTracker.track(%Phoenix.Socket{
                  topic: topic,
                  channel_pid: pid,

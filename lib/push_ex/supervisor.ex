@@ -11,6 +11,7 @@ defmodule PushEx.Supervisor do
     children =
       [
         PushExWeb.Config,
+        {Phoenix.PubSub, pubsub_config()},
         PushExWeb.Endpoint,
         {PushExWeb.PushTracker, [pool_size: PushEx.Application.pool_size()]},
         {PushEx.Push.Drainer, producer_ref: PushEx.Push.ItemProducer, shutdown: @shutdown_timeout}
@@ -18,6 +19,11 @@ defmodule PushEx.Supervisor do
 
     opts = [strategy: :one_for_one, name: __MODULE__]
     Supervisor.init(children, opts)
+  end
+
+  def pubsub_config() do
+    config = Application.get_env(:push_ex, PushEx.PubSub, [])
+    Keyword.merge([name: PushEx.PubSub, adapter: Phoenix.PubSub.PG2], config)
   end
 
   defp ranch_connection_drainers() do

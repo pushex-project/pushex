@@ -23,6 +23,7 @@ defmodule TestFrontendSocket.MixProject do
   defp deps do
     [
       {:push_ex, ">= 0.0.0", path: "../.."},
+      {:phoenix_pubsub_redis, "~> 3.0"},
       {:benchee, "~> 0.11", only: :dev}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},

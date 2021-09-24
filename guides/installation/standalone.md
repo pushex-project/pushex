@@ -10,14 +10,17 @@ A standalone installation is preferred and is how I would run any serious push s
 
 ## Pre-installation
 
-Ensure that your Elixir is version >= 1.7 and that your Erlang is >= OTP21. You can attempt installation without this, but it is not recommended due to Phoenix 1.4 requirements:
+Ensure that your Elixir is version >= 1.12 and that your Erlang is >= OTP24:
 
 ```
 elixir --version
-Erlang/OTP 21 [erts-10.1.1] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [hipe]
-
-Elixir 1.7.4 (compiled with Erlang/OTP 21)
+Erlang/OTP 24 [erts-12.0.3] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1]
+Elixir 1.12.3 (compiled with Erlang/OTP 24)
 ```
+
+You can attempt installation without this, check the `.github/workflows/elixir.yml` file
+to see the test matrix that's supported. Generally, we only support the most recent versions
+depending on the needs of Phoenix / Elixir.
 
 ## Instructions
 
@@ -64,11 +67,16 @@ use Mix.Config
 config :push_ex, PushExWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: PushExWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: PushEx.PubSub, adapter: Phoenix.PubSub.PG2, pool_size: 4],
+  pubsub_server: PushEx.PubSub,
   http: [port: 4004],
   check_origin: false,
   watchers: [],
   server: true
+
+# Set the pool size to the number of cores of your server
+config :push_ex, PushEx.PubSub,
+  adapter: Phoenix.PubSub.PG2,
+  pool_size: 4
 
 # Configures Elixir's Logger (vary based on deployment environment)
 config :logger, :console,

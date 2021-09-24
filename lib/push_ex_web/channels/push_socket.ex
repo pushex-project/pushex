@@ -1,9 +1,13 @@
 defmodule PushExWeb.PushSocket do
   @moduledoc false
 
+  use Phoenix.Socket
+  defoverridable init: 1
+
   # Override Phoenix.Socket init in order to track the socket (with transport_pid) in pushex tracker
   def init(state) do
-    case Phoenix.Socket.__init__(state) do
+    super(state)
+    |> case do
       res = {:ok, {_, %Phoenix.Socket{} = socket}} ->
         PushEx.Instrumentation.Tracker.track_socket(socket)
         res
@@ -12,8 +16,6 @@ defmodule PushExWeb.PushSocket do
         res
     end
   end
-
-  use Phoenix.Socket
 
   channel "*", PushExWeb.PushChannel
 

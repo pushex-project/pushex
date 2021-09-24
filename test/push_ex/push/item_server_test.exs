@@ -1,5 +1,5 @@
 defmodule PushEx.Push.ItemServerTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias PushEx.Push.ItemServer
   import ExUnit.CaptureLog
@@ -23,7 +23,7 @@ defmodule PushEx.Push.ItemServerTest do
   describe "start_link/1" do
     test "a process is started that successfully completes, without mocks" do
       assert capture_log(fn ->
-               assert {:ok, pid} = ItemServer.start_link(%{item: @push, at: 1})
+               assert {:ok, _pid} = ItemServer.start_link(%{item: @push, at: 1})
                Process.sleep(20)
              end) =~ "[debug] Push.ItemServer no_listeners channel=c event=e ms_in_stage="
     end
@@ -31,7 +31,7 @@ defmodule PushEx.Push.ItemServerTest do
     test "a mock channel API shows the call type" do
       log =
         capture_log(fn ->
-          assert {:ok, pid} = ItemServer.start_link(%{item: @push, at: 1}, channel_api_mod: MockChannelApi)
+          assert {:ok, _pid} = ItemServer.start_link(%{item: @push, at: 1}, channel_api_mod: MockChannelApi)
           Process.sleep(50)
         end)
 
