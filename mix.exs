@@ -51,7 +51,7 @@ defmodule PushEx.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.0-rc"},
+      {:phoenix, "~> 1.5.13"},
       {:phoenix_pubsub, "~> 2.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
