@@ -57,8 +57,10 @@ defmodule PushEx.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.1"},
       {:plug, "~> 1.7"},
-      {:gen_stage, "~> 1.0.0"},
+      {:gen_stage, "~> 1.1"},
       {:ranch_connection_drainer, "~> 0.1.0"},
+      # Once phoenix 1.6 is released, this can be updated to 1.0, until then warnings
+      {:telemetry, "~> 0.4"},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end

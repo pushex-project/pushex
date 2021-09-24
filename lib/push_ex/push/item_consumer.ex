@@ -11,7 +11,7 @@ defmodule PushEx.Push.ItemConsumer do
 
   def init(subscribe_to: subscribe_mod, worker: worker_mod) do
     children = [
-      worker(worker_mod, [], restart: :transient)
+      %{id: Worker, start: {worker_mod, :start_link, []}, restart: :transient}
     ]
 
     opts = [
