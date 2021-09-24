@@ -2,11 +2,15 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-Every release, along with the migration instructions, is documented on the Github [Releases page](https://github.com/pushex-project/pushex/releases).
+Every release, along with the migration instructions, is documented on the Github [Releases page](https://github.com/pushex-project/pushex/releases). The latest release will appear here.
 
-## Migration Instructions
+# Version 2.0.0
 
 This release bumps Phoenix to 1.5, which comes with some breaking changes to how PubSub is configured. Everything will operate the same way, but is required to be setup differently now.
+
+In addition, we now only support/test for OTP22+ and Elixir 1.11+. We recommend using the latest OTP and Elixir versions.
+
+## Migration Instructions
 
 - Update your config.exs file
 
