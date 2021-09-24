@@ -3,7 +3,11 @@ defmodule PushExWeb.PushTrackerTest do
   alias PushExWeb.PushTracker
 
   setup do
-    Application.put_env(:push_ex, PushExWeb.PushTracker, untracked_topics: [])
+    Application.put_env(:push_ex, PushExWeb.PushTracker, untracked_topics: [], tracker_disabled?: false)
+
+    on_exit(fn ->
+      Application.put_env(:push_ex, PushExWeb.PushTracker, untracked_topics: [], tracker_disabled?: false)
+    end)
 
     :ok
   end
@@ -29,6 +33,22 @@ defmodule PushExWeb.PushTrackerTest do
 
       topic = make_ref()
       Application.put_env(:push_ex, PushExWeb.PushTracker, untracked_topics: ["x", topic])
+
+      assert {:ok, :ignored_topic} =
+               PushTracker.track(%Phoenix.Socket{
+                 topic: topic,
+                 channel_pid: self(),
+                 id: make_ref()
+               })
+
+      assert Phoenix.Tracker.list(PushTracker, topic) == []
+    end
+
+    test "the tracker can be disabled and will not track" do
+      PushEx.Test.MockSocket.setup_config()
+
+      topic = make_ref()
+      Application.put_env(:push_ex, PushExWeb.PushTracker, tracker_disabled?: true)
 
       assert {:ok, :ignored_topic} =
                PushTracker.track(%Phoenix.Socket{
@@ -69,6 +89,12 @@ defmodule PushExWeb.PushTrackerTest do
     test "true if the channel is untracked" do
       topic = make_ref()
       Application.put_env(:push_ex, PushExWeb.PushTracker, untracked_topics: ["x", topic])
+      assert PushTracker.listeners?(topic)
+    end
+
+    test "true if the tracker is disabled" do
+      topic = make_ref()
+      Application.put_env(:push_ex, PushExWeb.PushTracker, tracker_disabled?: true)
       assert PushTracker.listeners?(topic)
     end
 
