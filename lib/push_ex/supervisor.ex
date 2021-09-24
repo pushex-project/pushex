@@ -21,6 +21,11 @@ defmodule PushEx.Supervisor do
     Supervisor.init(children, opts)
   end
 
+  def pubsub_config() do
+    config = Application.get_env(:push_ex, PushEx.PubSub, [])
+    Keyword.merge([name: PushEx.PubSub, adapter: Phoenix.PubSub.PG2], config)
+  end
+
   defp ranch_connection_drainers() do
     ranch_connection_drainer_endpoints()
     |> Enum.map(fn phx_endpoint_mod ->
@@ -60,13 +65,5 @@ defmodule PushEx.Supervisor do
     else
       []
     end
-  end
-
-  defp pubsub_config() do
-    config =
-      Application.get_env(:push_ex, PushEx.PubSub)
-      |> Keyword.get(:adapter, adapter: Phoenix.PubSub.PG2)
-
-    Keyword.merge([name: PushEx.PubSub], config)
   end
 end

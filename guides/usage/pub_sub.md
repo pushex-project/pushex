@@ -36,7 +36,8 @@ The setup of PubSub in PushEx is done through your `config.exs` file. Since Phoe
 
 ```elixir
 config :push_ex, PushEx.PubSub,
-  config: [adapter: Phoenix.PubSub.PG2, pool_size: 4]
+  adapter: Phoenix.PubSub.PG2,
+  pool_size: 4
 ```
 
 Please note that pool_size is set in the above config. I recommend setting this to the number of CPUs of your server size. Doing so helps remove a performance bottle neck that occurs at very high usage.
@@ -45,7 +46,9 @@ You can setup `PubSub.Redis` by following the [module's documentation](https://g
 
 ```elixir
 config :push_ex, PushEx.PubSub,
-  config: [adapter: Phoenix.PubSub.Redis, host: "192.168.1.100", node_name: System.get_env("NODE")]
+  adapter: Phoenix.PubSub.Redis,
+  host: "192.168.1.100",
+  node_name: System.get_env("NODE")
 ```
 
 ## Considerations

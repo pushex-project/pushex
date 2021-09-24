@@ -4,7 +4,7 @@ use Mix.Config
 config :push_ex, PushExWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: PushExWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: PushEx.PubSub, adapter: Phoenix.PubSub.PG2, pool_size: 4],
+  pubsub_server: PushEx.PubSub,
   http: [port: String.to_integer(System.get_env("PORT") || "4004")],
   check_origin: false,
   watchers: [],
@@ -18,6 +18,16 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :push_ex, PushEx.PubSub,
+  adapter: Phoenix.PubSub.PG2,
+  pool_size: 4
+
+# Redis example (lib included in mix.exs)
+# config :push_ex, PushEx.PubSub,
+#   adapter: Phoenix.PubSub.Redis,
+#   host: "192.168.1.100",
+#   node_name: System.get_env("NODE")
 
 config :push_ex, PushEx.Instrumentation, push_listeners: [TestFrontendSocket.PushInstrumenter]
 

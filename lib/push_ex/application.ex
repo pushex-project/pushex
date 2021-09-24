@@ -28,8 +28,7 @@ defmodule PushEx.Application do
 
   defp set_pool_size() do
     presence_pool_size =
-      Application.get_env(:push_ex, PushExWeb.Endpoint)
-      |> Keyword.get(:pubsub, [])
+      PushEx.Supervisor.pubsub_config()
       |> Keyword.get(:pool_size, 1)
 
     Application.put_env(:push_ex, :internal_pool_size, presence_pool_size)
