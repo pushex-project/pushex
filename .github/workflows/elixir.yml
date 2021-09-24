@@ -14,7 +14,7 @@ jobs:
       matrix:
         otp: ['22.3.4', '23.2.7', '24.1']
         elixir: ['1.11.4', '1.12.3']
-        exclude:
+        # exclude:
           # Example, but this doesn't need excluded
           # - otp: '22.3.4'
           #   elixir: '1.12.3'
