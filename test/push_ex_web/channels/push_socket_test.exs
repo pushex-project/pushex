@@ -10,7 +10,7 @@ defmodule PushExWeb.PushSocketTest do
 
       log =
         capture_log(fn ->
-          assert {:ok, socket} = connect(PushSocket, %{})
+          assert {:ok, _socket} = connect(PushSocket, %{})
         end)
 
       assert log =~ "CONNECTED TO PushExWeb.PushSocket in"
