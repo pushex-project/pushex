@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configures the endpoint
 config :push_ex, PushExWeb.Endpoint,
