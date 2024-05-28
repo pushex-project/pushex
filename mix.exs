@@ -7,7 +7,7 @@ defmodule PushEx.MixProject do
     [
       app: :push_ex,
       version: @version,
-      elixir: "~> 1.15.5",
+      elixir: "~> 1.15.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       elixirc_options: [warnings_as_errors: true],
