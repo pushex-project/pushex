@@ -1,15 +1,15 @@
 defmodule PushEx.MixProject do
   use Mix.Project
 
-  @version "2.0.0"
+  @version "2.1.0"
 
   def project do
     [
       app: :push_ex,
       version: @version,
-      elixir: "~> 1.7",
+      elixir: "~> 1.15.7",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       elixirc_options: [warnings_as_errors: true],
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -51,13 +51,14 @@ defmodule PushEx.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.13"},
+      {:phoenix, "~> 1.7"},
+      {:phoenix_view, "~> 2.0"},
       {:phoenix_pubsub, "~> 2.0"},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.1"},
+      {:gettext, "~> 0.23"},
+      {:jason, "~> 1.4"},
+      {:plug_cowboy, "~> 2.6"},
       {:plug, "~> 1.7"},
-      {:gen_stage, "~> 1.1"},
+      {:gen_stage, "~> 1.2.1"},
       {:ranch_connection_drainer, "~> 0.1.0"},
       # Once phoenix 1.6 is released, this can be updated to 1.0, until then warnings
       {:telemetry, "~> 0.4"},

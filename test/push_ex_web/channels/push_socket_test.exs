@@ -41,7 +41,7 @@ defmodule PushExWeb.PushSocketTest do
                    ^transport_pid => %{
                      identifier: "id",
                      online_at: _,
-                     type: :channel_test
+                     type: {Phoenix.ChannelTest, _}
                    }
                  }
                } = PushEx.Instrumentation.Tracker.state()
