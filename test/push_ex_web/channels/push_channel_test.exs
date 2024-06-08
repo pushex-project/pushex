@@ -111,6 +111,8 @@ defmodule PushExWeb.PushChannelTest do
         assert_push("msg", ^output)
       end)
 
+      # The handle_out push happens before delivery and they can race in test
+      Process.sleep(100)
       assert PushEx.Test.MockInstrumenter.state().delivered == [[@push, :ctx]]
     end
   end

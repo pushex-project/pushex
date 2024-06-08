@@ -5,6 +5,9 @@ defmodule PushExWeb.ConfigTest do
 
   describe "close_connections?/0" do
     test "it is false by default" do
+      # Test flakes without restarting the config server
+      Process.exit(Process.whereis(Config), :kill)
+      Process.sleep(100)
       assert Config.close_connections?() == false
     end
 
