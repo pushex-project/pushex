@@ -35,11 +35,22 @@ defmodule PushEx.Config do
   end
 
   @doc """
+  The endpoint and other configuration associated with it (like the OTP app)
+  """
+  def endpoint_config() do
+    Application.get_env(:push_ex, PushExWeb.PushSocket, [])
+    |> Keyword.get(:endpoint, %{otp_app: :push_ex, module: PushExWeb.Endpoint})
+    |> case do
+      %{otp_app: _, module: _} = ret -> ret
+      endpoint_mod -> %{otp_app: :push_ex, module: endpoint_mod}
+    end
+  end
+
+  @doc """
   The Phoenix.Endpoint implementation to be used.
   """
   def endpoint() do
-    Application.get_env(:push_ex, PushExWeb.PushSocket, [])
-    |> Keyword.get(:endpoint, PushExWeb.Endpoint)
+    endpoint_config().module
   end
 
   @doc """

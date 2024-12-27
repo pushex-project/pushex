@@ -45,11 +45,18 @@ defmodule PushEx.ConfigTest do
     test "defaults to PushExWeb.Endpoint" do
       Application.delete_env(:push_ex, PushExWeb.PushSocket)
       assert Config.endpoint() == PushExWeb.Endpoint
+      assert Config.endpoint_config() == %{otp_app: :push_ex, module: PushExWeb.Endpoint}
     end
 
     test "a value can be provided" do
       Application.put_env(:push_ex, PushExWeb.PushSocket, endpoint: :test)
       assert Config.endpoint() == :test
+    end
+
+    test "OTP app can be provided" do
+      Application.put_env(:push_ex, PushExWeb.PushSocket, endpoint: %{otp_app: :opaque, module: :test})
+      assert Config.endpoint() == :test
+      assert Config.endpoint_config() == %{otp_app: :opaque, module: :test}
     end
   end
 
