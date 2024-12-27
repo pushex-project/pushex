@@ -1,7 +1,7 @@
 defmodule PushEx.MixProject do
   use Mix.Project
 
-  @version "2.1.0"
+  @version "2.1.1-rc"
 
   def project do
     [
@@ -61,7 +61,7 @@ defmodule PushEx.MixProject do
       {:gen_stage, "~> 1.2.1"},
       {:ranch_connection_drainer, "~> 0.1.0"},
       # Once phoenix 1.6 is released, this can be updated to 1.0, until then warnings
-      {:telemetry, "~> 0.4"},
+      {:telemetry, "~> 1.0"},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
