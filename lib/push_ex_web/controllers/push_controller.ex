@@ -48,7 +48,13 @@ defmodule PushExWeb.PushController do
   end
 
   defp with_auth(conn, params, func) do
-    case PushEx.Config.controller_impl().auth(conn, params) do
+    controller_impl =
+      case PushEx.Config.controller_impl() do
+        :not_implemented -> raise "PushExWeb.PushController is not implemented (from your app config)"
+        ret -> ret
+      end
+
+    case controller_impl.auth(conn, params) do
       :ok ->
         func.(conn, params)
 

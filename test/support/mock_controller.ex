@@ -15,6 +15,10 @@ defmodule PushEx.Test.MockController do
     Application.put_env(:push_ex, PushExWeb.PushController, controller_impl: PushEx.Test.MockController.SpecificOkController)
   end
 
+  def setup_config(:not_implemented) do
+    Application.put_env(:push_ex, PushExWeb.PushController, controller_impl: :not_implemented)
+  end
+
   defmodule LoggingController do
     @behaviour PushEx.Behaviour.Controller
     require Logger
