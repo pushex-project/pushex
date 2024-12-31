@@ -32,7 +32,7 @@ defmodule PushEx.Supervisor do
     PushEx.Config.endpoint_config().module
   end
 
-  defp custom_endpoint?() do
+  defp custom_endpoint? do
     endpoint_module() != PushExWeb.Endpoint
   end
 
