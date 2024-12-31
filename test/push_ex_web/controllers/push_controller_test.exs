@@ -135,6 +135,17 @@ defmodule PushExWeb.PushControllerTest do
     end
   end
 
+  describe "not_implemented" do
+    test "an error is raised", %{conn: conn, test: channel} do
+      PushEx.Test.MockController.setup_config(:not_implemented)
+      params = %{"channel" => channel, "data" => "d", "event" => "e"}
+
+      assert_raise(RuntimeError, "PushExWeb.PushController is not implemented (from your app config)", fn ->
+        post(conn, "/api/push", params)
+      end)
+    end
+  end
+
   describe "Config.close_connections?" do
     test "Connection: close header is added to the response", %{conn: conn, test: channel} do
       PushEx.Test.MockController.setup_config(:logging)

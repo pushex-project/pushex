@@ -4,6 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Every release, along with the migration instructions, is documented on the Github [Releases page](https://github.com/pushex-project/pushex/releases). The latest release will appear here.
 
+# Version 2.2.0
+
+* `config :push_ex, PushExWeb.PushSocket, endpoint:` now supports an option to provide the OTP app name and endpoint module. This is done in a backwards compatible way. The new option format is `%{otp_app: :push_ex, module: PushExWeb.Endpoint}`
+* If a custom endpoint module is provided, PushExWeb.Endpoint will not be started. This is useful for starting PushEx in a standalone mode.
+* Telemetry version is updated to looser constraint ~> 1.0
+
+# Version 2.1.0
+
+This release bumps libraries to latest versions.
+
 # Version 2.0.0
 
 This release bumps Phoenix to 1.5, which comes with some breaking changes to how PubSub is configured. Everything will operate the same way, but is required to be setup differently now.

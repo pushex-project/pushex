@@ -10,7 +10,9 @@ defmodule PushEx.Config do
   end
 
   @doc """
-  Module to be used for PushEx.Behaviour.Controller implementation
+  Module to be used for PushEx.Behaviour.Controller implementation.
+
+  Use the value `:not_implemented` if PushEx should not provide this endpoint.
   """
   def controller_impl() do
     Application.get_env(:push_ex, PushExWeb.PushController, [])
@@ -35,11 +37,28 @@ defmodule PushEx.Config do
   end
 
   @doc """
+  The endpoint and other configuration associated with it (like the OTP app).
+
+  Pass a map in the format `%{otp_app: :push_ex, module: PushExWeb.Endpoint}` to override the
+  OTP app and endpoint module. If you just pass in the endpoint module, it will still use the
+  `:push_ex` OTP app for configuration.
+
+  If a custom OTP app + endpoint module is provided, PushExWeb.Endpoint will not be started.
+  """
+  def endpoint_config() do
+    Application.get_env(:push_ex, PushExWeb.PushSocket, [])
+    |> Keyword.get(:endpoint, %{otp_app: :push_ex, module: PushExWeb.Endpoint})
+    |> case do
+      %{otp_app: _, module: _} = ret -> ret
+      endpoint_mod -> %{otp_app: :push_ex, module: endpoint_mod}
+    end
+  end
+
+  @doc """
   The Phoenix.Endpoint implementation to be used.
   """
   def endpoint() do
-    Application.get_env(:push_ex, PushExWeb.PushSocket, [])
-    |> Keyword.get(:endpoint, PushExWeb.Endpoint)
+    endpoint_config().module
   end
 
   @doc """
