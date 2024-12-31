@@ -17,7 +17,7 @@ defmodule PushEx.Supervisor do
         {PushEx.Push.Drainer, producer_ref: PushEx.Push.ItemProducer, shutdown: @shutdown_timeout}
       ] ++ ranch_connection_drainers() ++ socket_drainer()
 
-    children = Enum.reject(children, & is_nil/1)
+    children = Enum.reject(children, &is_nil/1)
 
     opts = [strategy: :one_for_one, name: __MODULE__]
     Supervisor.init(children, opts)
