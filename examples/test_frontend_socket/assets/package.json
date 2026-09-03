@@ -1,7 +1,7 @@
 {
   "name": "test_frontend",
   "dependencies": {
-    "phoenix": "^1.4.0",
+    "phoenix": "^1.8.13",
     "pushex": "^1.0.0"
   }
 }
